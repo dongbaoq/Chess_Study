@@ -1,0 +1,1260 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="theme-color" content="#252b29"><title>The Opening Notebook</title><style>@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Serif+Display&display=swap');
+:root{font-family:'DM Sans',system-ui,sans-serif;color:#d9ded8;background:#202623;font-size:16px;--muted:#96a198;--panel:#303834;--border:#46524a;--accent:#9ab99b}*{box-sizing:border-box}body{margin:0;min-width:320px}button,input,textarea{font:inherit}button{cursor:pointer}button:disabled{opacity:.42;cursor:not-allowed}button:focus-visible,textarea:focus-visible,input:focus-visible{outline:3px solid #c4d8a1;outline-offset:2px}h1,h2,h3,p{margin:0}button{color:inherit}.site-header{height:68px;background:#202622;border-bottom:1px solid #435047;display:flex;align-items:center;justify-content:space-between;padding:0 30px;gap:20px}.brand{display:flex;align-items:center;gap:12px}.brand-mark{font-size:29px;color:#d4dfcf;line-height:1}.brand strong{display:block;font-size:15px;letter-spacing:-.01em}.brand small{display:block;color:#8e9f91;font-size:9px;letter-spacing:.18em;margin-top:3px;font-weight:700}.header-side{display:flex;align-items:center;gap:14px}.header-side>span,.eyebrow{font-size:10px;letter-spacing:.14em;font-weight:700;color:#96aa99}.side-toggle{display:flex;background:#151c18;border:1px solid #46544a;border-radius:7px;padding:3px}.side-toggle button{border:0;border-radius:4px;background:transparent;color:#a6b1a8;padding:8px 13px;font-size:13px;font-weight:700}.side-toggle button[aria-pressed=true]{background:#546c57;color:white}.side-disc{display:inline-block;height:10px;width:10px;border-radius:50%;background:#eee9d9;margin-right:4px}.side-disc.black{background:#222;border:1px solid #aebbb0}.app-layout{display:grid;grid-template-columns:255px minmax(0,1fr);min-height:calc(100vh - 68px)}.sidebar{background:#252d28;border-right:1px solid #414e44;padding:28px 16px;display:flex;flex-direction:column}.sidebar-top{display:flex;align-items:center;justify-content:space-between;padding:0 7px}.sidebar h2{font-size:18px;font-weight:700;margin-top:7px;color:#f1f2e9}.icon-button{border:0;background:none;color:#aebeb0;font-size:24px;line-height:1}.sidebar-description{font-size:12px;color:#91a095;line-height:1.5;margin:12px 7px 22px}.tree{display:flex;flex-direction:column;gap:3px}.tree-row{padding-left:calc(var(--depth) * 14px)}.tree-item{width:100%;display:flex;align-items:center;gap:8px;border:0;border-radius:5px;background:transparent;text-align:left;color:#b4c0b6;padding:10px 8px;font-size:13px}.tree-item:hover{background:#344239}.tree-item.active{background:#526c55;color:#fff;font-weight:700}.folder-icon{width:12px;text-align:center;color:#b8cbb9}.folder-name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tree-count{margin-left:auto;color:#afc4b2;font-size:11px}.empty-tree,.empty-state{color:#98a69b;font-size:13px;line-height:1.55}.add-folder{background:transparent;border:1px solid #526358;border-radius:6px;color:#bdcdbf;padding:11px 12px;margin-top:20px;text-align:left;font-size:13px}.sidebar-help{border-top:1px solid #405046;color:#84968a;font-size:12px;line-height:1.6;margin:30px 7px 0;padding-top:18px}.study-main{padding:26px clamp(20px,3vw,48px) 0;min-width:0}.study-heading{display:flex;justify-content:space-between;align-items:end;gap:16px;max-width:1450px;margin:0 auto 20px}.study-heading h1{font-family:'DM Serif Display',Georgia,serif;font-size:30px;font-weight:400;line-height:1.15;color:#f1f1e8;margin-top:7px}.breadcrumbs{display:flex;gap:8px;flex-wrap:wrap;font-size:12px;color:#a9baab;margin-top:8px}.crumb-sep{color:#62776a}.text-button{padding:5px 0;background:none;border:0;color:#a6c3a4;font-size:12px;font-weight:700;text-align:left}.text-button:hover{color:#e1f1d8}.study-grid{display:grid;grid-template-columns:minmax(360px,650px) minmax(330px,440px);gap:24px;align-items:start;max-width:1450px;margin:0 auto}.board-column{min-width:0}.board-wrap{width:100%;aspect-ratio:1;position:relative;box-shadow:0 8px 30px #0004}.board{display:grid;grid-template-columns:repeat(8,minmax(0,1fr));grid-template-rows:repeat(8,minmax(0,1fr));width:100%;height:100%;aspect-ratio:1}.square{display:grid;place-items:center;position:relative;min-width:0;min-height:0;width:100%;height:100%;padding:0;border:0;border-radius:0;overflow:hidden;user-select:none}.square.light{background:#e9e8d7}.square.dark{background:#77967d}.square.light.last-move{background:#cdd697}.square.dark.last-move{background:#a6b76d}.square.selected{box-shadow:inset 0 0 0 4px #e3c86b}.square.legal:after{content:'';width:25%;height:25%;border-radius:50%;position:absolute;background:#223e2f55;z-index:2;pointer-events:none}.piece{display:block;width:90%;height:90%;z-index:1;pointer-events:none}.piece svg{display:block;width:100%;height:100%}.coord{position:absolute;font-weight:700;font-size:clamp(9px,1vw,12px);line-height:1;z-index:3;pointer-events:none}.coord.rank{top:5px;left:5px}.coord.file{bottom:4px;right:5px}.light .coord{color:#718a70}.dark .coord{color:#edf1df}.board-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px}.board-bottom strong{display:block;font-size:15px;color:#eaf0e6}.board-bottom span{display:block;font-size:12px;color:#a0afa2;margin-top:4px}.board-actions{display:flex;gap:7px}.tool-button,.small-button{border:1px solid #55665a;border-radius:5px;background:#35443a;padding:8px 10px;color:#d4e0d3;font-size:12px;font-weight:700}.tool-button span{display:inline;color:inherit;font-size:inherit;margin:0}.tool-button.active{background:#7b9a72;color:#fff}.board-hint{font-size:12px;color:#9aa89c;line-height:1.5;margin-top:12px}.analysis-panel{background:#303934;border:1px solid #48574c;border-radius:7px;overflow:hidden;min-width:0}.panel-top{display:flex;align-items:center;justify-content:space-between;padding:18px 19px 12px}.panel-top strong{display:block;font-size:15px;color:#f1f3eb;margin-top:6px}.small-button{background:#4b6551;color:white}.move-list{min-height:76px;max-height:180px;overflow:auto;padding:10px 17px;display:flex;align-content:flex-start;flex-wrap:wrap;gap:3px;background:#262e29}.move-row{display:flex;align-items:center;gap:1px}.move-number{font-size:12px;color:#84998a;min-width:25px}.move{border:0;background:transparent;border-radius:4px;padding:7px;color:#d6dfd4;font-size:13px}.move:hover{background:#42554a}.move.current{background:#718b70;color:white;font-weight:700}.empty-moves{font-size:13px;color:#90a093;line-height:1.5}.control-buttons{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid #48564c}.control-buttons button{background:#39483d;border:0;border-right:1px solid #536357;padding:9px;color:#e0e9dd;font-size:22px;line-height:1}.control-buttons button:hover:not(:disabled){background:#4b6150}.line-tools{display:flex;flex-wrap:wrap;gap:18px;padding:10px 19px;border-bottom:1px solid #4a584e}.games-section,.notes-section{padding:19px;border-bottom:1px solid #4a584e}.section-header{display:flex;align-items:start;justify-content:space-between;gap:10px;margin-bottom:13px}.section-header h3{font-size:15px;color:#f1f2ea;margin-top:6px}.game-list{display:flex;flex-direction:column;gap:5px}.game-item{display:flex;align-items:center;gap:10px;width:100%;border:1px solid #506056;border-radius:5px;background:#39473d;color:#e0e9de;text-align:left;padding:10px}.game-item.active{background:#4e6852;border-color:#77947b}.game-piece{font-size:22px}.game-item strong,.game-item small{display:block}.game-item strong{font-size:13px}.game-item small{color:#abbcaf;font-size:11px;margin-top:3px}.chevron{margin-left:auto;font-size:18px}.note-symbol{font-size:18px;color:#9bb79b}.notes-section label,dialog label{display:block;font-size:12px;font-weight:700;color:#bacab9;margin:13px 0 7px}.notes-section label span,dialog label span{font-weight:400;color:#8ea392;margin-left:4px}.notes-section textarea{display:block;width:100%;resize:vertical;border:1px solid #536359;border-radius:5px;background:#252e28;color:#e6ede2;padding:11px 12px;font-size:14px;line-height:1.5;min-height:95px}.notes-section textarea::placeholder{color:#829487}.notes-section.theory textarea{min-height:116px}.notes-section.game-notes textarea{min-height:76px}.notes-section.game-notes{border-bottom:0}footer{display:flex;justify-content:space-between;gap:15px;max-width:1450px;margin:28px auto 0;padding:18px 0;border-top:1px solid #405046;color:#829589;font-size:11px}footer a{color:#9db59e}dialog{width:min(92vw,500px);background:#303a33;color:#e5eee3;border:1px solid #596c5c;border-radius:8px;padding:24px;box-shadow:0 20px 70px #0009}dialog::backdrop{background:#101510b8}.modal-head{display:flex;justify-content:space-between}.modal-head h2{font-family:'DM Serif Display',Georgia,serif;font-size:27px;font-weight:400;margin-top:6px}.form-copy,.form-hint{color:#aebeb1;font-size:13px;line-height:1.55;margin-top:16px}dialog input,dialog textarea{display:block;width:100%;margin-top:7px;background:#202923;color:#eef4eb;border:1px solid #607064;border-radius:5px;padding:11px;line-height:1.5}dialog textarea{min-height:95px;resize:vertical}.form-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:20px}.button{border:1px solid #607563;border-radius:5px;padding:10px 15px;font-weight:700;font-size:13px}.button.primary{background:#6d8e70;color:white}.button.secondary{background:transparent;color:#d2ded1}#toast{position:fixed;left:50%;bottom:25px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#eef4e8;color:#263a2b;padding:12px 16px;border-radius:5px;font-size:13px;box-shadow:0 6px 25px #0005;transition:.2s;z-index:30;max-width:90vw}#toast.show{opacity:1;transform:translate(-50%,0)}
+@media(max-width:1100px){.app-layout{grid-template-columns:205px minmax(0,1fr)}.study-grid{grid-template-columns:minmax(300px,1fr) minmax(300px,.8fr);gap:16px}.study-main{padding-left:20px;padding-right:20px}.site-header{padding:0 20px}}
+@media(max-width:830px){.app-layout{display:block}.sidebar{border-right:0;border-bottom:1px solid #435047;padding:16px 18px}.sidebar-top{padding:0}.sidebar h2{font-size:15px;margin-top:4px}.sidebar-description,.sidebar-help{display:none}.tree{flex-direction:row;overflow-x:auto;margin:12px 0 0;padding-bottom:3px;align-items:center}.tree-row{padding-left:0}.tree-item{white-space:nowrap;width:auto}.tree-row[style*="--depth:1"] .tree-item:before,.tree-row[style*="--depth:2"] .tree-item:before{content:'↳';color:#a8bca9}.add-folder{margin-top:10px;align-self:flex-start;padding:8px 11px}.study-grid{grid-template-columns:minmax(0,1fr);max-width:650px}.study-heading{max-width:650px}.analysis-panel{width:100%}.study-main{padding:22px 16px 0}.board-hint{margin-bottom:3px}footer{max-width:650px}}
+@media(max-width:500px){.site-header{height:auto;min-height:66px;padding:10px 14px}.brand strong{font-size:13px}.brand-mark{font-size:25px}.brand small{font-size:8px}.header-side>span{display:none}.side-toggle button{padding:8px;font-size:12px}.study-heading h1{font-size:25px}.study-heading .text-button{white-space:nowrap}.board-bottom{align-items:start}.board-actions{gap:4px}.tool-button{padding:8px;font-size:11px}.coord{font-size:10px}.coord.rank{top:3px;left:4px}.coord.file{bottom:3px;right:4px}footer{flex-direction:column}.section-header h3{font-size:15px}}
+.moving-piece{position:absolute;width:12.5%;height:12.5%;display:grid;place-items:center;pointer-events:none;z-index:4;will-change:transform}
+.board{touch-action:none}.edit-folder{background:none;border:0;color:#a6c3a4;text-align:left;padding:11px 8px 0;font-size:12px;font-weight:700}.opening-status{font-size:12px;color:#9cac9d;margin-top:6px}.notes-section textarea#note{min-height:220px}.note-context,.note-saved,.sync-status{font-size:12px;color:#a1b1a3;line-height:1.5}.note-context{margin-bottom:10px}.note-saved{margin-top:8px}.sync-section{padding:18px 19px}.sync-status{margin-top:6px}.sync-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:8px}
+.sync-modal-actions{flex-wrap:wrap}
+.folder-actions{display:flex;justify-content:space-between;gap:8px}.danger-link,.game-action.danger{color:#e6a098}.game-entry{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;border:1px solid #506056;border-radius:5px;background:#39473d}.game-entry.active{border-color:#77947b;background:#4e6852}.game-entry .game-item{border:0;background:transparent;min-width:0}.game-entry-actions{display:flex;gap:2px;padding-right:8px}.game-action{border:0;background:transparent;color:#bed0bf;font-size:11px;padding:7px}.game-action:hover{text-decoration:underline}.form-copy strong{color:#e7efe3}
+dialog select{display:block;width:100%;margin-top:7px;background:#202923;color:#eef4eb;border:1px solid #607064;border-radius:5px;padding:11px;font:inherit}
+.move-explorer{margin:16px 0 20px;background:#303934;border:1px solid #48574c;border-radius:7px;overflow:hidden}.move-explorer-header{padding:17px 18px 12px;display:flex;justify-content:space-between;align-items:end;gap:12px}.move-explorer-header h2{font-size:16px;color:#eef2e9;margin:6px 0 0}.move-line-title{font-size:12px;color:#afc0b1;text-align:right}.move-explorer .control-buttons{border-top:1px solid #48564c;border-bottom:0}.return-game{margin:10px 18px 13px}
+.move-explorer .move-tree{margin:0;border:0;border-radius:0;box-shadow:none}
+.storage-warning{margin-top:12px;max-width:700px;background:#422c28;color:#ffd7cb;border:1px solid #96635b;border-radius:6px;padding:10px 12px;font-size:13px;line-height:1.5}.storage-warning[hidden]{display:none}.storage-warning .text-button{color:#ffe2ca;margin-left:6px}
+
+.study-notes{min-width:0;color:#e5e7e5;background:#272b29;border:1px solid #414743;border-radius:7px;overflow:hidden}
+.study-notes-bar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 15px;border-bottom:1px solid #414743;color:#c4c9c5;font-size:11px;font-weight:700;letter-spacing:.1em}
+.study-autosave{color:#959d98;font-size:11px;font-weight:400;letter-spacing:0}
+.study-path-area{padding:12px 15px;border-bottom:1px solid #414743;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.study-field-label{color:#aeb5b0;font-size:12px;font-weight:700;line-height:1.4}
+.study-path-toggles{display:flex;flex-wrap:wrap;gap:6px}
+.study-path-toggle{border:1px solid #555d58;background:#2d322f;color:#aeb6b0;border-radius:5px;padding:6px 9px;font-size:12px;font-weight:600;line-height:1.25;text-align:left}
+.study-path-toggle.is-on{background:#505754;border-color:#727a75;color:#f5f6f4}.study-path-toggle:hover{border-color:#aeb6b0}
+.study-cards{display:grid;gap:0;padding:0 15px}.study-opening-card,.study-game-card{padding:15px 0;border-bottom:1px solid #414743}
+.study-card-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:11px}.study-card-heading h3{font-size:15px;font-weight:700;color:#f1f2f0;margin:3px 0 0;line-height:1.3}
+.study-level,.study-card-current{font-size:10px;letter-spacing:.1em;font-weight:700;color:#959d98;line-height:1.4}.study-card-current{white-space:nowrap}
+.study-note-section+.study-note-section{margin-top:13px}.study-note-label-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:5px}
+.study-note-text{color:#e3e7e3;font-size:15px;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}.study-note-text.is-empty{color:#929a94;font-size:13px;font-style:italic}
+.study-edit,.study-link{border:0;background:transparent;color:#c2cbc5;font-size:12px;font-weight:700;padding:3px 0}.study-edit:hover,.study-link:hover{text-decoration:underline;color:#fff}
+.study-notes textarea.study-editor{display:block;width:100%;resize:vertical;background:#1d201f;color:#f2f4f1;border:1px solid #6a746d;border-radius:5px;padding:9px 10px;font-family:inherit;font-size:15px;line-height:1.55;min-height:72px}.study-notes textarea.study-editor::placeholder{color:#929a94}.study-notes textarea:focus-visible,.study-notes button:focus-visible{outline:3px solid #b2bfb5;outline-offset:2px}
+.study-blunders-header{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px;padding-top:12px;border-top:1px solid #3a403c}.study-blunders-header h4{color:#e0b1ac;font-size:13px;margin:0}.study-add-warning{border:1px solid #815f5b;background:#352b2a;color:#f1b4ae;border-radius:5px;padding:6px 8px;font-size:12px;font-weight:700;white-space:nowrap}.study-add-warning:hover{background:#493432}
+.study-blunder{margin-top:9px;padding:11px 12px;background:#342b2a;border:1px solid #704d49;border-left:3px solid #e07870;border-radius:5px}.study-blunder-heading{display:flex;justify-content:space-between;gap:8px;margin-bottom:9px}.study-blunder-badge{color:#ffaaa1;font-size:10px;letter-spacing:.09em;font-weight:800}.study-blunder-move{font-size:12px;color:#edc0ba;font-weight:700}.study-blunder .study-field-label{color:#d7bbb7}.study-blunder .study-note-text{color:#f4e2df}.study-blunder textarea.study-editor{background:#251f1e;border-color:#946963}.study-warning-actions{display:flex;justify-content:space-between;gap:10px;margin-top:8px}.study-warning-actions .study-link{color:#e1aca5}.study-link:disabled{color:#8e7c79;cursor:not-allowed;text-decoration:none}.study-remove{color:#bd9792}.confirming .study-remove{color:#ffc2b7}
+.study-empty{font-size:12px;color:#949d96;line-height:1.45;margin:8px 0 0}.study-no-opening{padding:12px 15px}.study-game-section{padding:0 15px}.study-game-card{border-bottom:0}.study-game-card .study-note-section+.study-note-section{padding-top:12px;border-top:1px solid #3a403c}
+@media(max-width:500px){.study-notes-bar{padding:11px 12px}.study-path-area{padding:10px 12px}.study-cards,.study-game-section{padding-left:12px;padding-right:12px}.study-card-heading h3{font-size:14px}.study-note-text{font-size:14px}.study-blunders-header{align-items:start;flex-wrap:wrap}}
+
+.move-tree{margin-top:18px;border:1px solid #4b5b50;border-radius:8px;background:#2c3530;color:#e6ede5;overflow:hidden;box-shadow:0 5px 20px #101b132c}
+.move-tree-heading{display:flex;align-items:start;justify-content:space-between;gap:16px;padding:17px 19px 14px;border-bottom:1px solid #45554a}
+.move-tree-overline{display:block;font-size:10px;line-height:1.3;letter-spacing:.13em;font-weight:700;color:#9bb69f}
+.move-tree-heading h2{font-family:'DM Serif Display',Georgia,serif;font-size:21px;font-weight:400;line-height:1.2;color:#f2f4ec;margin:5px 0}
+.move-tree-heading p{font-size:12px;line-height:1.4;color:#9fafa1;margin:0}
+.move-tree-legend{flex:none;font-size:11px;line-height:1.4;color:#aab9ac;white-space:nowrap;margin-top:3px}
+.move-tree-legend span,.move-tree-blunder{color:#ef8680;font-weight:800;letter-spacing:-.04em}
+.move-tree-content{padding:11px 13px 14px;max-height:310px;overflow:auto}
+.move-tree-line{display:flex;align-items:flex-start;gap:4px;margin:2px 0;padding-left:calc(var(--branch-depth, 0) * 14px)}
+.move-tree-line.is-variation{border-left:1px solid #52675a;margin-left:7px}
+.move-tree-sequence{display:flex;flex-wrap:wrap;align-items:center;gap:2px 3px;min-width:0;line-height:1.7}
+.move-tree-token{display:inline-flex;align-items:center;gap:2px;max-width:100%}
+.move-tree-number{font-size:12px;line-height:1;color:#91a395;margin:0 2px 0 5px;white-space:nowrap}
+.move-tree-move{border:0;border-radius:4px;background:transparent;color:#e2e9de;font-size:14px;font-weight:600;line-height:1.3;padding:4px 5px;white-space:nowrap}
+.move-tree-move:hover{background:#44594a}.move-tree-move.is-current{background:#769371;color:#fff}.move-tree-move:focus-visible,.move-tree-disclosure:focus-visible{outline:3px solid #b6d4a9;outline-offset:2px}
+.move-tree-blunder{font-size:12px;margin-left:3px;color:#ff9490}.move-tree-folder{display:inline-block;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:#415649;color:#c6dbc7;border-radius:3px;padding:2px 5px;font-size:10px;font-weight:700;line-height:1.4;margin:0 3px}
+.move-tree-disclosure{flex:none;border:0;background:transparent;color:#b7c7b9;width:20px;height:27px;line-height:1;padding:0;font-size:14px}.move-tree-branch-mark{flex:none;width:20px;text-align:center;color:#83998a;font-size:13px;line-height:27px}
+.move-tree-empty{color:#a5b3a7;font-size:13px;line-height:1.5;margin:0;padding:17px 19px}
+@media(max-width:500px){.move-tree-heading{padding:15px;gap:8px}.move-tree-heading h2{font-size:19px}.move-tree-legend{font-size:10px;white-space:normal;text-align:right;max-width:85px}.move-tree-content{padding:10px 8px 13px}.move-tree-line{padding-left:calc(var(--branch-depth,0) * 8px)}.move-tree-folder{max-width:105px}}
+.move-tree-start-row{margin:0 0 4px}.move-tree-start{font-size:12px;color:#a9b9ac}
+
+/* Board and notes are the main study workspace; the library sits underneath. */
+.app-layout{display:block;min-height:calc(100vh - 68px)}
+.study-main{max-width:1270px;margin:0 auto}
+.study-heading{max-width:1174px}
+.study-grid{max-width:1174px;grid-template-columns:minmax(0,650px) minmax(300px,500px);grid-template-areas:"board notes" "library notes";grid-template-rows:auto auto;gap:20px 24px;align-items:start}
+.board-column{grid-area:board;min-width:0}
+#studyNotes.study-notes{grid-area:notes;width:100%;min-width:0;position:sticky;top:18px;max-height:calc(100vh - 36px);overflow-y:auto;overscroll-behavior:contain;scrollbar-color:#707a73 #272b29;scrollbar-width:thin}
+.library-area{grid-area:library;min-width:0;display:grid;grid-template-columns:minmax(190px,.82fr) minmax(0,1.18fr);align-items:start;gap:14px}
+.library-area .sidebar{min-width:0;background:#252d28;border:1px solid #414e44;border-radius:7px;padding:20px 13px}
+.library-area .sidebar-top{padding:0 5px}
+.library-area .sidebar-description{margin:9px 5px 14px}
+.library-area .sidebar-help{margin:20px 5px 0;padding-top:14px}
+.library-area .analysis-panel{width:100%;min-width:0}
+.library-area .game-item strong{overflow-wrap:anywhere}
+.library-area .game-entry-actions{flex-wrap:wrap;justify-content:flex-end}
+@media(max-width:1100px){.study-grid{grid-template-columns:minmax(0,1.15fr) minmax(290px,.85fr);gap:18px}.library-area{grid-template-columns:minmax(170px,.8fr) minmax(0,1.2fr);gap:10px}}
+@media(max-width:830px){.study-grid{max-width:650px;grid-template-columns:minmax(0,1fr);grid-template-areas:"board" "notes" "library";gap:20px}.study-heading{max-width:650px}#studyNotes.study-notes{position:static;max-height:none;overflow:visible;overscroll-behavior:auto}.library-area{grid-template-columns:minmax(0,1fr);gap:14px}.library-area .sidebar{padding:16px 18px}.library-area .sidebar-description,.library-area .sidebar-help{display:none}.library-area .tree{display:flex;flex-direction:column;align-items:stretch;overflow:visible;margin:12px 0 0}.library-area .tree-row{padding-left:calc(var(--depth) * 14px)}.library-area .tree-item{width:100%;white-space:normal}.library-area .tree-row[style*="--depth:1"] .tree-item:before,.library-area .tree-row[style*="--depth:2"] .tree-item:before{content:none}.library-area .add-folder{align-self:stretch}}
+</style></head>
+<body><header class="site-header"><div class="brand"><span class="brand-mark">♞</span><div><strong>The Opening Notebook</strong><small>YOUR CHESS STUDY</small></div></div><div class="header-side"><span>REPERTOIRE</span><div class="side-toggle" aria-label="Choose repertoire"><button id="sideWhite" aria-pressed="true"><span class="side-disc white"></span> White</button><button id="sideBlack" aria-pressed="false"><span class="side-disc black"></span> Black</button></div></div></header>
+<main class="app-layout">
+<section class="study-main"><div class="study-heading"><div><div class="eyebrow">STUDY BOARD</div><div id="breadcrumbs" class="breadcrumbs"></div><h1 id="boardTitle"></h1><p id="openingStatus" class="opening-status"></p><div id="storageWarning" class="storage-warning" role="alert" hidden><span id="storageWarningText"></span> <button id="downloadOriginal" type="button" class="text-button" hidden>Download original library</button> <button id="downloadOriginalMarks" type="button" class="text-button" hidden>Download original markings</button></div></div><button id="flip" class="text-button" title="Flip board without changing repertoire">⇅ &nbsp; Flip board</button></div><div class="study-grid"><div class="board-column"><div class="board-wrap"><div id="board" class="board" aria-label="Chess board"></div></div><div class="board-bottom"><div><strong id="positionLabel"></strong><span id="positionSub"></span></div><div class="board-actions"><button id="drawMode" class="tool-button" aria-pressed="false">✎ <span>Draw</span></button><button id="clearMarks" class="tool-button">Clear marks</button></div></div><p class="board-hint">Drag a piece to move it. Right-click a square or drag an arrow to annotate; on touchscreens, use Draw.</p><section class="move-explorer" aria-label="Moves and variations"><div id="moveTree" class="move-tree"></div><div class="control-buttons"><button id="first" aria-label="First move">|‹</button><button id="prev" aria-label="Previous move">‹</button><button id="next" aria-label="Next move">›</button><button id="last" aria-label="Last move">›|</button></div><button id="returnGame" class="text-button return-game" hidden>Return to game</button></section></div>
+<div id="studyNotes" class="study-notes"></div>
+<section class="library-area" aria-label="Library and games"><aside class="sidebar"><div class="sidebar-top"><div><div class="eyebrow">YOUR REPERTOIRE</div><h2 id="libraryTitle">White openings</h2></div><button id="addRoot" class="icon-button" aria-label="Add top-level opening" title="Add top-level opening">＋</button></div><p class="sidebar-description">Choose a line to explore its position.</p><div id="tree" class="tree"></div><div class="folder-actions"><button id="editFolder" class="edit-folder">Edit opening</button><button id="deleteFolder" class="edit-folder danger-link">Delete opening</button></div><button id="addChild" class="add-folder">＋ &nbsp; Add subfolder</button><div class="sidebar-help">Folders follow the moves of their parent. Your White and Black repertoires are separate.</div></aside>
+<aside class="analysis-panel"><div class="panel-top"><div><div class="eyebrow">YOUR LIBRARY</div><strong>Study tools</strong></div><button id="addGame" class="small-button">＋ Game</button></div><div class="line-tools"><button id="saveLine" class="text-button">Save position to this folder</button><button id="addBranch" class="text-button">＋ Save as subfolder</button></div><div class="games-section"><div class="section-header"><div><div class="eyebrow">GAME JOURNAL</div><h3 id="gamesHeading">Games in this folder</h3></div><button id="openingView" class="text-button">Opening view</button></div><div id="games" class="game-list"></div></div><section class="sync-section"><div class="eyebrow">LIBRARY STORAGE</div><p id="syncStatus" class="sync-status">Saved on this device</p><div class="sync-actions"><button id="syncNow" class="text-button">Synchronize</button><button id="useCloud" class="text-button" hidden>Use cloud copy</button><button id="useLocal" class="text-button" hidden>Upload this device</button><button id="exportData" class="text-button">Export backup</button><button id="importData" class="text-button">Import backup</button><button id="restoreData" class="text-button" hidden>Restore previous copy</button><input id="importFile" type="file" accept="application/json,.json" hidden></div></section></aside></section></div><footer><span>Study a little. Remember a lot.</span><span>Chess pieces by Colin M. L. Burnett · <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a></span></footer></section></main>
+<dialog id="modal"><div class="modal-head"><div><div class="eyebrow">YOUR LIBRARY</div><h2 id="modalTitle"></h2></div><button id="closeModal" class="icon-button" aria-label="Close">×</button></div><form id="modalForm"></form></dialog><div id="toast" role="status"></div><script>
+const FILES = 'abcdefgh';
+const inBounds = (r, c) => r >= 0 && r < 8 && c >= 0 && c < 8;
+const square = (r, c) => FILES[c] + (8 - r);
+const coords = s => [8 - Number(s[1]), FILES.indexOf(s[0])];
+const copy = s => ({ board: s.board.map(row => row.slice()), turn: s.turn, castle: s.castle, ep: s.ep, halfmove: s.halfmove, fullmove: s.fullmove });
+const initial = () => ({ board: [
+  ['bR','bN','bB','bQ','bK','bB','bN','bR'],
+  Array(8).fill('bP'), ...Array.from({length:4}, () => Array(8).fill(null)),
+  Array(8).fill('wP'), ['wR','wN','wB','wQ','wK','wB','wN','wR']
+], turn: 'w', castle: 'KQkq', ep: '-', halfmove: 0, fullmove: 1 });
+
+function attacked(state, r, c, by) {
+  const b = state.board;
+  const pawnRow = r + (by === 'w' ? 1 : -1);
+  for (const dc of [-1,1]) if (inBounds(pawnRow,c+dc) && b[pawnRow][c+dc] === by+'P') return true;
+  for (const [dr,dc] of [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]])
+    if (inBounds(r+dr,c+dc) && b[r+dr][c+dc] === by+'N') return true;
+  for (const [dr,dc] of [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]]) {
+    for (let d = 1; inBounds(r+dr*d,c+dc*d); d++) {
+      const p = b[r+dr*d][c+dc*d];
+      if (!p) continue;
+      if (p[0] === by && ((d === 1 && p[1] === 'K') || (dr && dc && 'BQ'.includes(p[1])) || ((!dr || !dc) && 'RQ'.includes(p[1])))) return true;
+      break;
+    }
+  }
+  return false;
+}
+function inCheck(state, side) {
+  for (let r=0;r<8;r++) for (let c=0;c<8;c++) if (state.board[r][c] === side+'K') return attacked(state,r,c,side === 'w' ? 'b' : 'w');
+  return true;
+}
+function apply(state, m) {
+  const s = copy(state), b = s.board, [r,c] = m.from, [tr,tc] = m.to, p = b[r][c], target = b[tr][tc];
+  b[tr][tc] = m.promotion ? p[0]+m.promotion : p;
+  b[r][c] = null;
+  if (m.enPassant) b[r][tc] = null;
+  if (m.castle) { const rookFrom = m.castle === 'K' ? 7 : 0, rookTo = m.castle === 'K' ? 5 : 3; b[tr][rookTo] = b[tr][rookFrom]; b[tr][rookFrom] = null; }
+  if (p[1] === 'K') s.castle = s.castle.replace(p[0] === 'w' ? /[KQ]/g : /[kq]/g, '');
+  for (const [rr,cc,key] of [[7,0,'Q'],[7,7,'K'],[0,0,'q'],[0,7,'k']]) if ((r===rr&&c===cc)||(tr===rr&&tc===cc)) s.castle = s.castle.replace(key,'');
+  s.ep = p[1] === 'P' && Math.abs(tr-r) === 2 ? square((tr+r)/2,c) : '-';
+  s.halfmove = p[1] === 'P' || target || m.enPassant ? 0 : s.halfmove+1;
+  if (p[0] === 'b') s.fullmove++;
+  s.turn = p[0] === 'w' ? 'b' : 'w';
+  return s;
+}
+function legalMoves(state) {
+  const b = state.board, side = state.turn, out = [];
+  function add(r,c,tr,tc, extra={}) {
+    if (!inBounds(tr,tc) || b[tr][tc]?.[0] === side || b[tr][tc]?.[1] === 'K') return;
+    const promotions = b[r][c][1] === 'P' && (tr === 0 || tr === 7) ? ['Q','R','B','N'] : [null];
+    for (const promotion of promotions) {
+      const m = {from:[r,c], to:[tr,tc], piece:b[r][c], capture:!!b[tr][tc] || !!extra.enPassant, promotion, ...extra};
+      if (!inCheck(apply(state,m),side)) out.push(m);
+    }
+  }
+  for (let r=0;r<8;r++) for (let c=0;c<8;c++) {
+    const p=b[r][c]; if (!p || p[0] !== side) continue;
+    const t=p[1];
+    if (t === 'P') {
+      const dir=side==='w'?-1:1, start=side==='w'?6:1;
+      if (inBounds(r+dir,c) && !b[r+dir][c]) { add(r,c,r+dir,c); if (r===start && !b[r+2*dir][c]) add(r,c,r+2*dir,c); }
+      for (const dc of [-1,1]) if (inBounds(r+dir,c+dc)) {
+        if (b[r+dir][c+dc]?.[0] && b[r+dir][c+dc][0] !== side) add(r,c,r+dir,c+dc);
+        else if (state.ep === square(r+dir,c+dc) && b[r][c+dc] === (side==='w'?'b':'w')+'P') add(r,c,r+dir,c+dc,{enPassant:true});
+      }
+    } else if (t === 'N') {
+      for (const [dr,dc] of [[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]]) add(r,c,r+dr,c+dc);
+    } else if (t === 'K') {
+      for (const [dr,dc] of [[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]]) add(r,c,r+dr,c+dc);
+      const home=side==='w'?7:0, other=side==='w'?'b':'w';
+      if (r===home && c===4 && !inCheck(state,side)) {
+        const k=side==='w'?'K':'k', q=side==='w'?'Q':'q';
+        if (state.castle.includes(k) && b[home][7]===side+'R' && !b[home][5] && !b[home][6] && !attacked(state,home,5,other) && !attacked(state,home,6,other)) add(r,c,home,6,{castle:'K'});
+        if (state.castle.includes(q) && b[home][0]===side+'R' && !b[home][1] && !b[home][2] && !b[home][3] && !attacked(state,home,3,other) && !attacked(state,home,2,other)) add(r,c,home,2,{castle:'Q'});
+      }
+    } else {
+      const dirs = t==='B' ? [[-1,-1],[-1,1],[1,-1],[1,1]] : t==='R' ? [[-1,0],[1,0],[0,-1],[0,1]] : [[-1,-1],[-1,1],[1,-1],[1,1],[-1,0],[1,0],[0,-1],[0,1]];
+      for (const [dr,dc] of dirs) for (let d=1;inBounds(r+dr*d,c+dc*d);d++) {const tr=r+dr*d,tc=c+dc*d; if (b[tr][tc]?.[0]===side) break; add(r,c,tr,tc); if (b[tr][tc]) break;}
+    }
+  }
+  return out;
+}
+function sanFor(state,m,all=legalMoves(state)) {
+  let san;
+  if (m.castle) san = m.castle==='K'?'O-O':'O-O-O';
+  else {
+    const type=m.piece[1], dest=square(...m.to);
+    let dis='';
+    if (type !== 'P') {
+      const others=all.filter(x => x!==m && x.piece[1]===type && x.to[0]===m.to[0] && x.to[1]===m.to[1] && (x.from[0]!==m.from[0]||x.from[1]!==m.from[1]));
+      if (others.length) {
+        if (!others.some(x=>x.from[1]===m.from[1])) dis=FILES[m.from[1]];
+        else if (!others.some(x=>x.from[0]===m.from[0])) dis=String(8-m.from[0]);
+        else dis=square(...m.from);
+      }
+    } else if (m.capture) dis=FILES[m.from[1]];
+    san=(type==='P'?'':type)+dis+(m.capture?'x':'')+dest+(m.promotion?'='+m.promotion:'');
+  }
+  const after=apply(state,m);
+  if (inCheck(after,after.turn)) san += legalMoves(after).length ? '+' : '#';
+  return san;
+}
+function normalize(s) { return s.trim().replace(/0/g,'O').replace(/[!?]+/g,'').replace(/[+#]+$/,'').replace(/e\.p\.?$/i,'').replace(/=/g,'').toLowerCase(); }
+function tokenize(text) {
+  let s=String(text||'').replace(/\[[^\]]*\]/g,' ').replace(/\{[^}]*\}/g,' ').replace(/;[^\n]*/g,' ');
+  let last; do { last=s; s=s.replace(/\([^()]*\)/g,' '); } while(s!==last);
+  return s.replace(/\$\d+/g,' ').replace(/\d+\.{1,3}/g,' ').trim().split(/\s+/).filter(x => x && !/^(1-0|0-1|1\/2-1\/2|\*)$/.test(x));
+}
+class ChessGame {
+  constructor(text='') { this.reset(); if(text) this.load(text); }
+  reset() { this.states=[initial()]; this.moves=[]; this._history=[]; this.index=0; this.error=''; return this; }
+  get state() { return this.states[this.index]; }
+  get board() { return this.state.board; }
+  get turn() { return this.state.turn; }
+  get lastMove() { return this.index ? this.history[this.index-1] : null; }
+  get history() { return this._history || (this._history=[]); }
+  fen() { const s=this.state; return s.board.map(row=>{let n=0,o=''; for(const p of row){if(!p)n++;else {if(n)o+=n; n=0; o+=p[0]==='w'?p[1]:p[1].toLowerCase();}}return o+(n||'');}).join('/')+' '+s.turn+' '+(s.castle||'-')+' '+s.ep+' '+s.halfmove+' '+s.fullmove; }
+  legalMoves() { return legalMoves(this.state).map(m=>({from:square(...m.from),to:square(...m.to),san:sanFor(this.state,m),promotion:m.promotion})); }
+  move(input, to, promotion='Q') {
+    const s=this.state, all=legalMoves(s);
+    let m;
+    if (to) m=all.find(x=>square(...x.from)===input && square(...x.to)===to && (!x.promotion || x.promotion===promotion.toUpperCase()));
+    else {
+      const value=normalize(String(input));
+      m=all.find(x=>normalize(sanFor(s,x,all))===value);
+      if (!m && /^[a-h][1-8][a-h][1-8][qrbn]?$/i.test(value)) m=all.find(x=>square(...x.from)===value.slice(0,2) && square(...x.to)===value.slice(2,4) && (!x.promotion || x.promotion===((value[4]||'q').toUpperCase())));
+    }
+    if (!m) { this.error=`Invalid move: ${input}${to ? '–'+to : ''}`; return false; }
+    const san=sanFor(s,m,all); this.moves=this.moves.slice(0,this.index); this.states=this.states.slice(0,this.index+1); this._history=this.history.slice(0,this.index);
+    this.moves.push(san); this._history.push({from:square(...m.from),to:square(...m.to),san}); this.states.push(apply(s,m)); this.index++; this.error=''; return true;
+  }
+  load(text) { this.reset(); this._history=[]; for (const move of tokenize(text)) if(!this.move(move)) return false; this.go(0); return true; }
+  go(index) { this.index=Math.max(0,Math.min(this.moves.length,Number(index)||0)); return this; }
+  next() { return this.go(this.index+1); }
+  prev() { return this.go(this.index-1); }
+}
+
+
+// Folders store a complete line from the starting position, while parentId
+// records the tree. This makes each node independently usable on the board.
+const LIBRARY_KEY = 'opening-notebook-v2';
+const LEGACY_LIBRARY_KEY = 'opening-notebook-v1';
+
+function migrateLibrary(input, seed = []) {
+  const source = Array.isArray(input) ? input : seed;
+  const folders = source.map(f => ({...f, side: f.side === 'black' ? 'black' : 'white', parentId: f.parentId ?? null, line: typeof f.line === 'string' ? f.line : '', games: Array.isArray(f.games) ? f.games : []}));
+  const byId = new Map(folders.map(f => [f.id, f]));
+  // A missing, cross-side, or cyclic parent must not make the library invisible.
+  for (const folder of folders) {
+    let node = folder, seen = new Set([folder.id]);
+    while (node.parentId !== null) {
+      const parent = byId.get(node.parentId);
+      if (!parent || parent.side !== folder.side || seen.has(parent.id)) { folder.parentId = null; break; }
+      seen.add(parent.id); node = parent;
+    }
+  }
+  return folders;
+}
+
+// A failed read must never be followed by a write over the damaged copy.
+// Keep the guard tied to the particular storage object, without storing data
+// outside the browser or mutating the original value.
+const blockedStores = new WeakMap();
+const isStore = value => (typeof value === 'object' && value !== null) || typeof value === 'function';
+const blockStore = (storage, error) => { if (isStore(storage)) blockedStores.set(storage, error); };
+const validStoredLibrary = value => Array.isArray(value) && value.every(folder => {
+  if (!folder || typeof folder !== 'object' || Array.isArray(folder) || typeof folder.id !== 'string' || typeof folder.name !== 'string') return false;
+  if ('side' in folder && folder.side !== 'white' && folder.side !== 'black') return false;
+  if ('line' in folder && typeof folder.line !== 'string') return false;
+  if ('parentId' in folder && folder.parentId !== null && typeof folder.parentId !== 'string') return false;
+  if ('games' in folder && (!Array.isArray(folder.games) || !folder.games.every(game => game && typeof game === 'object' && !Array.isArray(game) && typeof game.id === 'string' && typeof game.name === 'string' && typeof game.pgn === 'string'))) return false;
+  return true;
+});
+
+/**
+ * Read without ever replacing an unreadable existing library with sample data.
+ * Raw damaged text is returned for an explicit download/recovery action.
+ */
+function readLibrary(storage, seed = []) {
+  let saved, legacy;
+  try {
+    saved = storage.getItem(LIBRARY_KEY);
+    // A present v2 value is authoritative even if it is invalid. Do not silently
+    // fall back to v1 and accidentally overwrite that value with older content.
+    legacy = saved === null ? storage.getItem(LEGACY_LIBRARY_KEY) : null;
+  } catch (_) {
+    const error = {kind:'unavailable', key:null, message:'Browser storage is unavailable. Your library has not been replaced.'};
+    blockStore(storage, {error, key:null, raw:null});
+    return {folders:[], migrated:false, storageError:error, raw:null, writeBlocked:true};
+  }
+  const key = saved !== null ? LIBRARY_KEY : legacy !== null ? LEGACY_LIBRARY_KEY : null;
+  const raw = key === LIBRARY_KEY ? saved : key === LEGACY_LIBRARY_KEY ? legacy : null;
+  if (key !== null) {
+    let parsed;
+    try { parsed = JSON.parse(raw); } catch (_) { parsed = null; }
+    if (!validStoredLibrary(parsed)) {
+      const error = {kind:'corrupt', key, message:'The saved library could not be read. The original data is still preserved; download it before attempting recovery.'};
+      blockStore(storage, {error, key, raw});
+      return {folders:[], migrated:false, storageError:error, raw, writeBlocked:true};
+    }
+    if (isStore(storage)) blockedStores.delete(storage);
+    return {folders:migrateLibrary(parsed,seed), migrated:key===LEGACY_LIBRARY_KEY, storageError:null, raw:null, writeBlocked:false};
+  }
+  if (isStore(storage)) blockedStores.delete(storage);
+  return {folders:migrateLibrary(seed,seed), migrated:false, storageError:null, raw:null, writeBlocked:false};
+}
+
+/** Save only after a safe read, reporting failures to the caller. */
+function saveLibrary(storage, folders) {
+  if (isStore(storage) && blockedStores.has(storage)) {
+    return {ok:false, error:{kind:'blocked', message:'Saving is paused to protect the unreadable library. Download the original data before recovering it.'}};
+  }
+  if (!validStoredLibrary(folders)) return {ok:false,error:{kind:'invalid',message:'This library could not be saved because its data is invalid.'}};
+  try {
+    const serialized = JSON.stringify(folders);
+    storage.setItem(LIBRARY_KEY, serialized);
+    return {ok:true};
+  } catch (error) {
+    const quota = error && (error.name === 'QuotaExceededError' || error.name === 'NS_ERROR_DOM_QUOTA_REACHED');
+    return {ok:false,error:{kind:quota?'quota':'unavailable',message:quota?'Browser storage is full. Changes could not be saved; export a backup.':'Browser storage is unavailable. Changes could not be saved; export a backup.'}};
+  }
+}
+
+/**
+ * Explicit user-confirmed recovery or import. Before replacing any existing raw
+ * library, write and verify a separate recovery copy. A failed checkpoint or a
+ * concurrently changed source aborts the replacement; no existing key is reset.
+ */
+function restoreLibrary(storage, folders) {
+  if (!validStoredLibrary(folders)) return {ok:false,error:{kind:'invalid',message:'The replacement library is invalid; nothing was changed.'}};
+  const blocked = isStore(storage) ? blockedStores.get(storage) : null;
+  let sourceKey = null, sourceRaw = null, backupKey = null;
+  try {
+    const v2 = storage.getItem(LIBRARY_KEY);
+    const v1 = v2 === null ? storage.getItem(LEGACY_LIBRARY_KEY) : null;
+    sourceKey = v2 !== null ? LIBRARY_KEY : v1 !== null ? LEGACY_LIBRARY_KEY : null;
+    sourceRaw = sourceKey === LIBRARY_KEY ? v2 : sourceKey === LEGACY_LIBRARY_KEY ? v1 : null;
+    if (blocked?.key && (blocked.key !== sourceKey || blocked.raw !== sourceRaw)) {
+      return {ok:false,error:{kind:'conflict',message:'The saved library changed during recovery. Reload and inspect it before replacing it.'}};
+    }
+    if (sourceKey !== null) {
+      const stamp = Date.now(); let suffix = 0;
+      do { backupKey = `opening-notebook-recovery-${stamp}-${suffix++}`; }
+      while (storage.getItem(backupKey) !== null && suffix < 1000);
+      if (storage.getItem(backupKey) !== null) return {ok:false,error:{kind:'backup',message:'Could not create a separate recovery copy; nothing was changed.'}};
+      const backup = JSON.stringify({key:sourceKey,raw:sourceRaw,savedAt:stamp});
+      storage.setItem(backupKey,backup);
+      if (storage.getItem(backupKey) !== backup || storage.getItem(sourceKey) !== sourceRaw || storage.getItem(LIBRARY_KEY) !== v2) {
+        return {ok:false,error:{kind:'backup',message:'Could not verify the recovery copy; nothing was changed.'}};
+      }
+    }
+    storage.setItem(LIBRARY_KEY,JSON.stringify(folders));
+    if (isStore(storage)) blockedStores.delete(storage);
+    return {ok:true,backupKey};
+  } catch (error) {
+    const quota = error && (error.name === 'QuotaExceededError' || error.name === 'NS_ERROR_DOM_QUOTA_REACHED');
+    return {ok:false,error:{kind:quota?'quota':'unavailable',message:quota?'There is not enough browser storage to keep a recovery copy. Nothing was replaced.':'A recovery copy could not be saved. Nothing was replaced.'}};
+  }
+}
+
+function folderChildren(folders, side, parentId = null) {
+  return folders.filter(f => f.side === side && (f.parentId ?? null) === parentId);
+}
+
+function folderPath(folders, folderId) {
+  const path = [], seen = new Set();
+  let folder = folders.find(f => f.id === folderId);
+  while (folder && !seen.has(folder.id)) {
+    seen.add(folder.id); path.unshift(folder);
+    folder = folders.find(f => f.id === folder.parentId);
+  }
+  return path;
+}
+
+function formatLine(moves) {
+  return moves.map((move, i) => (i % 2 === 0 ? `${Math.floor(i / 2) + 1}. ` : '') + move).join(' ');
+}
+
+function parseLine(text) {
+  const game = new ChessGame();
+  if (!game.load(text || '')) return {ok: false, error: game.error};
+  return {ok: true, line: formatLine(game.moves), moves: game.moves.slice(), game};
+}
+
+function startsWithLine(moves, prefix) {
+  return prefix.length <= moves.length && prefix.every((move, i) => move === moves[i]);
+}
+
+// continuation is SAN/PGN text relative to the parent position, e.g. "a6 Ba4".
+// For a top-level folder the parent line is empty and input starts at move one.
+function makeContinuation(folders, parentId, side, continuation = '') {
+  const parent = parentId == null ? null : folders.find(f => f.id === parentId);
+  if (parentId != null && (!parent || parent.side !== side)) return {ok: false, error: 'Choose a parent in the same repertoire.'};
+  const parentLine = parent?.line || '';
+  const parsedParent = parseLine(parentLine);
+  if (!parsedParent.ok) return {ok: false, error: 'The parent opening has an invalid move line.'};
+  const result = parseLine(`${parsedParent.line} ${continuation}`.trim());
+  if (!result.ok) return result;
+  return {...result, parentId: parent?.id ?? null, side};
+}
+
+// Validate a complete line before storing it on an existing folder. A parent
+// cannot be shortened/changed in a way that leaves its descendants inconsistent.
+function validateFolderLine(folders, folderId, fullLine) {
+  const folder = folders.find(f => f.id === folderId);
+  if (!folder) return {ok: false, error: 'Opening not found.'};
+  const candidate = parseLine(fullLine);
+  if (!candidate.ok) return candidate;
+  if (folder.parentId != null) {
+    const parent = folders.find(f => f.id === folder.parentId);
+    const parsedParent = parent && parseLine(parent.line);
+    if (!parent || parent.side !== folder.side || !parsedParent.ok || !startsWithLine(candidate.moves, parsedParent.moves)) {
+      return {ok: false, error: 'This line must continue from its parent opening.'};
+    }
+  }
+  const directChildren = folderChildren(folders, folder.side, folder.id);
+  for (const child of directChildren) {
+    const childLine = parseLine(child.line);
+    if (!childLine.ok || !startsWithLine(childLine.moves, candidate.moves)) {
+      return {ok: false, error: `This change would disconnect “${child.name}”. Keep its starting moves or update the child first.`};
+    }
+  }
+  return candidate;
+}
+
+
+// Cache canonical SAN for each folder object and invalidate it when its line is
+// edited. Invalid and empty lines are not opening matches.
+const openingLineCache = new WeakMap();
+function openingMoves(folder) {
+  const text = typeof folder.line === 'string' ? folder.line : '';
+  const cached = openingLineCache.get(folder);
+  if (cached && cached.text === text) return cached.moves;
+  const parsed = parseLine(text);
+  const moves = parsed.ok ? parsed.moves : [];
+  openingLineCache.set(folder, {text, moves});
+  return moves;
+}
+
+function openingDepth(folder, byId, side) {
+  const seen = new Set([folder.id]);
+  let depth = 1, parentId = folder.parentId;
+  while (parentId != null) {
+    const parent = byId.get(parentId);
+    if (!parent || parent.side !== side || seen.has(parent.id)) break;
+    seen.add(parent.id);
+    depth++;
+    parentId = parent.parentId;
+  }
+  return depth;
+}
+
+/**
+ * Match a played line against the user's own opening folders.
+ *
+ * `moves` is the canonical SAN move list actually played so far, e.g. use
+ * engine.moves.slice(0, engine.index), not the full future game. Only folders
+ * in `side` whose complete nonempty line is a prefix are considered. The
+ * longest line wins, then the deepest folder, then preferredId if tied;
+ * remaining ties preserve library order and are explicitly reported.
+ *
+ * Returns { folder, candidates, ambiguous, matchedPlies }; folder is null when
+ * there is no completed match. No remote opening database is consulted.
+ */
+function matchOpening(folders, side, moves, {preferredId = null} = {}) {
+  if (!Array.isArray(folders) || !Array.isArray(moves) || !['white','black'].includes(side)) {
+    return {folder:null, candidates:[], ambiguous:false, matchedPlies:0};
+  }
+  const byId = new Map(folders.filter(folder => folder && typeof folder === 'object').map(folder => [folder.id, folder]));
+  let matches = [], bestLength = 0, bestDepth = 0;
+  for (const folder of folders) {
+    if (!folder || typeof folder !== 'object' || folder.side !== side) continue;
+    const line = openingMoves(folder);
+    if (!line.length || line.length > moves.length || !line.every((move,i) => move === moves[i])) continue;
+    const depth = openingDepth(folder, byId, side);
+    if (line.length > bestLength || (line.length === bestLength && depth > bestDepth)) {
+      matches = [folder]; bestLength = line.length; bestDepth = depth;
+    } else if (line.length === bestLength && depth === bestDepth) matches.push(folder);
+  }
+  const selected = matches.find(folder => folder.id === preferredId) || matches[0] || null;
+  return {folder:selected, candidates:matches, ambiguous:matches.length > 1, matchedPlies:bestLength};
+}
+
+
+const treeLineCache = new WeakMap();
+function parsedFolderLine(folder) {
+  const text = typeof folder.line === 'string' ? folder.line : '';
+  const cached = treeLineCache.get(folder);
+  if (cached?.text === text) return cached.parsed;
+  const parsed = parseLine(text);
+  treeLineCache.set(folder, {text, parsed});
+  return parsed;
+}
+
+/**
+ * Construct a move trie for the selected opening family and the displayed line.
+ * A node's `moves` is its complete prefix from the normal starting position;
+ * callers can use it to navigate the board. Folder endpoints and user-marked
+ * blunders retain their original folder IDs, even for identical move lines.
+ */
+function buildMoveTree({folders = [], side = 'white', folderId = null, moves = [], gameMoves = [], index = 0} = {}) {
+  const library = Array.isArray(folders) ? folders.filter(f => f && f.side === side) : [];
+  const line = Array.isArray(moves) ? moves.filter(m => typeof m === 'string' && m.length > 0) : [];
+  const originalGame = Array.isArray(gameMoves) ? gameMoves.filter(m => typeof m === 'string' && m.length > 0) : [];
+  const position = Math.min(line.length, Math.max(0, Number.isFinite(Number(index)) ? Math.trunc(Number(index)) : 0));
+  const path = folderPath(library, folderId);
+  const origin = path[0] || null;
+  const family = [];
+  if (origin) {
+    const originMoves = parsedFolderLine(origin);
+    const firstMove = originMoves.ok ? originMoves.moves[0] : null;
+    const relatedRoots = library.filter(folder => {
+      if (folder.parentId != null) return false;
+      if (folder.id === origin.id) return true;
+      const parsed = parsedFolderLine(folder);
+      return firstMove && parsed.ok && parsed.moves[0] === firstMove;
+    });
+    const seen = new Set(relatedRoots.map(folder => folder.id));
+    const queue = [...relatedRoots];
+    while (queue.length) {
+      const parent = queue.shift(); family.push(parent);
+      for (const folder of library) if (folder.parentId === parent.id && !seen.has(folder.id)) {
+        seen.add(folder.id); queue.push(folder);
+      }
+    }
+  }
+  const root = {san:null, ply:0, moves:[], children:[], folders:[], blunders:[]};
+  function add(sequence) {
+    let current = root;
+    for (const san of sequence) {
+      let child = current.children.find(entry => entry.san === san);
+      if (!child) {
+        child = {san, ply:current.ply + 1, moves:[...current.moves,san], children:[], folders:[], blunders:[]};
+        current.children.push(child);
+      }
+      current = child;
+    }
+    return current;
+  }
+  // Insertion from the current board/game first makes it the main line.
+  add(line);
+  add(originalGame);
+  for (const folder of family) {
+    const parsed = parsedFolderLine(folder);
+    if (!parsed.ok) continue;
+    const endpoint = add(parsed.moves);
+    endpoint.folders.push({id:folder.id, name:folder.name, side:folder.side});
+    if (!Array.isArray(folder.blunders)) continue;
+    for (const warning of folder.blunders) {
+      if (!warning || !Array.isArray(warning.moves) || !warning.moves.every(m => typeof m === 'string' && m.length)) continue;
+      const warningNode = add(warning.moves);
+      warningNode.blunders.push({id:warning.id || null, folderId:folder.id, folderName:folder.name, text:typeof warning.text === 'string' ? warning.text : '', moveLabel:warning.moveLabel || ''});
+    }
+  }
+  function mark(node) {
+    node.onLine = node.moves.length <= line.length && node.moves.every((move,i) => move === line[i]);
+    node.onGameLine = node.moves.length <= originalGame.length && node.moves.every((move,i) => move === originalGame[i]);
+    node.isCurrent = node.onLine && node.ply === position;
+    node.isPlayed = node.onLine && node.ply <= position;
+    for (const child of node.children) mark(child);
+    node.children.sort((a,b) => Number(b.onLine)-Number(a.onLine));
+  }
+  mark(root);
+  return root;
+}
+
+
+
+/** Inspect a folder and every nested child before asking the user to delete it. */
+function inspectFolderDeletion(folders, folderId) {
+  if (!Array.isArray(folders)) return {ok:false, error:'Library unavailable.'};
+  const root = folders.find(folder => folder.id === folderId);
+  if (!root) return {ok:false, error:'Opening not found.'};
+  const ids = new Set([root.id]), pending = [root.id];
+  // Iterative traversal prevents malformed cyclic data from looping forever.
+  while (pending.length) {
+    const id = pending.shift();
+    for (const child of folders) if (child.side === root.side && child.parentId === id && !ids.has(child.id)) {
+      ids.add(child.id); pending.push(child.id);
+    }
+  }
+  const affected = folders.filter(folder => ids.has(folder.id) && folder.side === root.side);
+  const games = affected.reduce((count, folder) => count + (Array.isArray(folder.games) ? folder.games.length : 0), 0);
+  return {ok:true, folder:root, ids:[...ids], folderCount:affected.length, childCount:affected.length-1, gameCount:games};
+}
+
+/** Mutates the folder array only when explicitly called after confirmation. */
+function deleteFolder(folders, folderId, annotations = null) {
+  const info = inspectFolderDeletion(folders, folderId);
+  if (!info.ok) return info;
+  const ids = new Set(info.ids);
+  const gameIds = new Set(folders.filter(f => f.side === info.folder.side && ids.has(f.id)).flatMap(f => (f.games || []).map(g => g.id)));
+  for (let i=folders.length-1;i>=0;i--) if (folders[i].side === info.folder.side && ids.has(folders[i].id)) folders.splice(i,1);
+  if (annotations && typeof annotations === 'object') {
+    for (const key of Object.keys(annotations)) {
+      const [side,folderId,gameId] = key.split(':');
+      if ((side === 'game' && gameIds.has(folderId)) ||
+          (['white','black'].includes(side) && ((gameId === 'opening' && side === info.folder.side && ids.has(folderId)) || gameIds.has(gameId)))) delete annotations[key];
+    }
+  }
+  return info;
+}
+
+/** Find the owner by folder ID rather than assuming the selected folder owns the game. */
+function deleteGame(folders, ownerId, gameId, annotations = null) {
+  const folder = folders?.find(item => item.id === ownerId);
+  if (!folder || !Array.isArray(folder.games)) return {ok:false,error:'Game folder not found.'};
+  const index = folder.games.findIndex(game => game.id === gameId);
+  if (index < 0) return {ok:false,error:'Game not found.'};
+  const [game] = folder.games.splice(index,1);
+  if (annotations && typeof annotations === 'object') {
+    for (const key of Object.keys(annotations)) {
+      const [side,folderId,id] = key.split(':');
+      if ((side === 'game' && folderId === gameId) || (['white','black'].includes(side) && id === gameId)) delete annotations[key];
+    }
+  }
+  return {ok:true, folder, game};
+}
+
+/** Move one game between any folders and keep its position annotations. */
+function moveGame(folders, ownerId, gameId, targetId, annotations = null) {
+  const from = folders?.find(item => item.id === ownerId), to = folders?.find(item => item.id === targetId);
+  if (!from || !to || !Array.isArray(from.games) || !Array.isArray(to.games)) return {ok:false,error:'Opening folder not found.'};
+  const index = from.games.findIndex(game => game.id === gameId);
+  if (index < 0) return {ok:false,error:'Game not found.'};
+  if (from.id === to.id) return {ok:true, unchanged:true, game:from.games[index], from, to};
+  if (to.games.some(game => game.id === gameId)) return {ok:false,error:'This game is already in the destination folder.'};
+  const game = from.games[index];
+  // Markings keyed by stable game ID or by a formerly matched folder remain
+  // unchanged; the caller's reader can migrate legacy keys if needed.
+  from.games.splice(index,1);to.games.push(game);
+  return {ok:true, game, from, to, unchanged:false};
+}
+
+/** Find the most specific saved opening reached by the complete pasted game. */
+function matchGameFolder(folders, side, pgn, preferredId = null) {
+  if (/\[\s*FEN\s+"[^"]*"\s*\]/i.test(String(pgn)) || /\[\s*SetUp\s+"1"\s*\]/i.test(String(pgn))) return {ok:false,error:'Games with a custom starting position are not supported yet.'};
+  const parsed = parseLine(pgn);
+  if (!parsed.ok) return parsed;
+  if (!parsed.moves.length) return {ok:false,error:'Enter at least one move.'};
+  const match = matchOpening(folders,side,parsed.moves,{preferredId});
+  return {ok:true, ...match, moves:parsed.moves, line:parsed.line};
+}
+
+// Board markings are keyed by position by the caller. The overlay lives beside,
+// rather than inside, the squares, so replacing board.innerHTML is safe.
+let annotationInstance = 0;
+const ANNOTATION_COLORS = {
+  green: '#157f3b',
+  red: '#cf3333',
+  blue: '#2867bc',
+  yellow: '#d5a51e'
+};
+const VALID_SQUARE = /^[a-h][1-8]$/;
+const eventColor = event => event.shiftKey ? 'red' : event.altKey ? 'blue' : (event.ctrlKey || event.metaKey) ? 'yellow' : 'green';
+
+/**
+ * Attach study markings to a board.
+ *
+ * createBoardAnnotations({ board, getFlipped, getKey, read, write, onModeChange })
+ * - board: square grid element whose buttons have data-square="e4".
+ * - getFlipped: returns whether black is at the bottom.
+ * - getKey: returns the identity of the currently displayed position.
+ * - read(key): returns { squares: { e4: 'green' }, arrows: [{from,to,color}] } or null.
+ * - write(key, markings): persists a copy of those markings.
+ * Call refresh() after changing position or recreating squares, setMode(true) to
+ * enable tap/drag drawing on touch screens, clear() to clear the current key.
+ */
+function createBoardAnnotations({ board, getFlipped = () => false, getKey = () => '', read = () => null, write = () => {}, onModeChange = () => {} }) {
+  const host = board.parentElement;
+  if (getComputedStyle(host).position === 'static') host.style.position = 'relative';
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('viewBox', '0 0 8 8');
+  svg.setAttribute('preserveAspectRatio', 'none');
+  svg.setAttribute('aria-hidden', 'true');
+  Object.assign(svg.style, { position: 'absolute', inset: '0', width: '100%', height: '100%', pointerEvents: 'none', zIndex: '5', overflow: 'hidden' });
+  host.appendChild(svg);
+  const prefix = `study-mark-${++annotationInstance}`;
+  let mode = false, gesture = null, pending = null, currentKey = null;
+
+  function normalize(value) {
+    const squares = {}, arrows = [];
+    if (value && typeof value === 'object') {
+      for (const [square, color] of Object.entries(value.squares || {})) if (VALID_SQUARE.test(square) && ANNOTATION_COLORS[color]) squares[square] = color;
+      if (Array.isArray(value.arrows)) for (const item of value.arrows) {
+        if (item && VALID_SQUARE.test(item.from) && VALID_SQUARE.test(item.to) && item.from !== item.to && ANNOTATION_COLORS[item.color]) arrows.push({from: item.from, to: item.to, color: item.color});
+      }
+    }
+    return { squares, arrows };
+  }
+  function point(square) {
+    const col = square.charCodeAt(0)-97, row = 8-Number(square[1]);
+    return getFlipped() ? [7-col+0.5, 7-row+0.5] : [col+0.5, row+0.5];
+  }
+  function render() {
+    const key = String(getKey() ?? '');
+    if (currentKey !== key) { pending = null; currentKey = key; }
+    const markings = normalize(read(key));
+    let out = `<defs>${Object.entries(ANNOTATION_COLORS).map(([name,color])=>`<marker id="${prefix}-${name}" markerWidth="0.38" markerHeight="0.38" refX="0.28" refY="0.19" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L0.38,0.19 L0,0.38 Z" fill="${color}" /></marker>`).join('')}</defs>`;
+    for (const [square,color] of Object.entries(markings.squares)) {
+      const [x,y] = point(square);
+      out += `<rect x="${x-.5}" y="${y-.5}" width="1" height="1" fill="${ANNOTATION_COLORS[color]}" fill-opacity="0.46" />`;
+    }
+    for (const {from,to,color} of markings.arrows) {
+      const [x1,y1] = point(from), [x2,y2] = point(to);
+      const length = Math.hypot(x2-x1,y2-y1);
+      const endX = x2-(x2-x1)/length*.19, endY = y2-(y2-y1)/length*.19;
+      out += `<line x1="${x1}" y1="${y1}" x2="${endX}" y2="${endY}" stroke="${ANNOTATION_COLORS[color]}" stroke-opacity=".88" stroke-width=".15" stroke-linecap="round" marker-end="url(#${prefix}-${color})" />`;
+    }
+    if (pending) { const [x,y] = point(pending.square); out += `<rect x="${x-.46}" y="${y-.46}" width=".92" height=".92" fill="none" stroke="${ANNOTATION_COLORS[pending.color]}" stroke-width=".08" />`; }
+    svg.innerHTML = out;
+  }
+  function toggle(from,to,color) {
+    const key = String(getKey() ?? ''), data = normalize(read(key));
+    if (from === to) {
+      if (data.squares[from] === color) delete data.squares[from]; else data.squares[from] = color;
+    } else {
+      const i = data.arrows.findIndex(a => a.from === from && a.to === to);
+      if (i >= 0) { const old = data.arrows.splice(i,1)[0]; if (old.color !== color) data.arrows.push({from,to,color}); }
+      else data.arrows.push({from,to,color});
+    }
+    write(key,data);
+    render();
+  }
+  function squareAt(x,y) {
+    const element = document.elementFromPoint(x,y), square = element && element.closest('[data-square]');
+    return square && board.contains(square) && VALID_SQUARE.test(square.dataset.square) ? square.dataset.square : null;
+  }
+  function pointerDown(event) {
+    const right = event.button === 2 && event.pointerType !== 'touch';
+    if (!right && !mode) return;
+    const square = squareAt(event.clientX,event.clientY);
+    if (!square) return;
+    event.preventDefault(); event.stopPropagation();
+    gesture = { pointerId: event.pointerId, from: square, right, color: eventColor(event), key: String(getKey() ?? '') };
+    try { board.setPointerCapture(event.pointerId); } catch (_) { /* Pointer capture is optional. */ }
+  }
+  function pointerUp(event) {
+    if (!gesture || gesture.pointerId !== event.pointerId) return;
+    const active = gesture; gesture = null;
+    event.preventDefault(); event.stopPropagation();
+    const end = squareAt(event.clientX,event.clientY);
+    if (!end || active.key !== String(getKey() ?? '')) { pending = null; render(); return; }
+    if (active.right || active.from !== end) { pending = null; toggle(active.from,end,active.color); return; }
+    // In drawing mode two taps choose the endpoints; tapping the same square twice colors it.
+    if (!pending) { pending = {square:end,color:active.color}; render(); }
+    else { const start = pending; pending = null; toggle(start.square,end,start.color); }
+  }
+  function pointerCancel() { gesture = null; }
+  function contextMenu(event) { event.preventDefault(); }
+  function swallowClick(event) { if (mode) { event.preventDefault(); event.stopImmediatePropagation(); } }
+  board.addEventListener('pointerdown',pointerDown,true);
+  board.addEventListener('pointerup',pointerUp,true);
+  board.addEventListener('pointercancel',pointerCancel,true);
+  board.addEventListener('contextmenu',contextMenu);
+  board.addEventListener('click',swallowClick,true);
+  render();
+  return {
+    refresh: render,
+    setMode(value) { mode = !!value; pending = null; board.style.touchAction = mode ? 'none' : ''; board.classList.toggle('drawing-mode',mode); render(); onModeChange(mode); },
+    getMode() { return mode; },
+    clear() { const key=String(getKey() ?? ''); pending=null; write(key,{squares:{},arrows:[]}); render(); },
+    destroy() { board.removeEventListener('pointerdown',pointerDown,true); board.removeEventListener('pointerup',pointerUp,true); board.removeEventListener('pointercancel',pointerCancel,true); board.removeEventListener('contextmenu',contextMenu); board.removeEventListener('click',swallowClick,true); board.style.touchAction=''; board.classList.remove('drawing-mode'); svg.remove(); }
+  };
+}
+
+/**
+ * Attach piece dragging to a board that already handles click-to-move.
+ *
+ * createBoardDrag({ board, canStart, onMove, isDrawing })
+ * `canStart(square)` should return true only for a movable piece.
+ * `onMove(from, to)` should validate and apply the move; it may re-render the board.
+ * `isDrawing()` tells this handler when annotation mode owns the pointer.
+ * The board needs CSS `touch-action: none` for reliable dragging on touch screens.
+ */
+function createBoardDrag({board, canStart = () => false, onMove = () => {}, isDrawing = () => false}) {
+  const host = board.parentElement;
+  let gesture = null, suppressClick = false, clearClickTimer = null;
+  const threshold = 6;
+  function squareAt(x, y) {
+    const element = document.elementFromPoint(x,y);
+    const square = element?.closest('[data-square]');
+    return square && board.contains(square) ? square.dataset.square : null;
+  }
+  function clean() {
+    if (!gesture) return;
+    gesture.sourcePiece.style.visibility = gesture.oldVisibility;
+    gesture.ghost?.remove();
+    gesture = null;
+  }
+  function onPointerDown(e) {
+    if (gesture || isDrawing() || !e.isPrimary || e.button !== 0 || e.ctrlKey || e.metaKey || e.altKey) return;
+    const square = e.target.closest('[data-square]');
+    if (!square || !board.contains(square) || !canStart(square.dataset.square)) return;
+    const piece = square.querySelector('.piece');
+    if (!piece) return;
+    gesture = {id:e.pointerId, from:square.dataset.square, startX:e.clientX, startY:e.clientY,
+      piece, sourcePiece:piece, oldVisibility:piece.style.visibility, dragging:false, ghost:null};
+  }
+  function onPointerMove(e) {
+    if (!gesture || e.pointerId !== gesture.id) return;
+    if (!gesture.dragging) {
+      if (Math.hypot(e.clientX-gesture.startX,e.clientY-gesture.startY) < threshold) return;
+      if (isDrawing()) { clean(); return; }
+      gesture.dragging = true;
+      const boardRect = board.getBoundingClientRect(), rect=gesture.piece.getBoundingClientRect();
+      const ghost = gesture.piece.cloneNode(true);
+      ghost.setAttribute('aria-hidden','true');
+      Object.assign(ghost.style, {position:'absolute',left:`${rect.left-boardRect.left}px`,top:`${rect.top-boardRect.top}px`,
+        width:`${rect.width}px`,height:`${rect.height}px`,zIndex:'6',pointerEvents:'none',willChange:'transform',visibility:'visible'});
+      host.appendChild(ghost);gesture.ghost=ghost;gesture.sourcePiece.style.visibility='hidden';
+      try { board.setPointerCapture(e.pointerId); } catch (_) { /* Optional on older browsers. */ }
+    }
+    e.preventDefault();
+    gesture.ghost.style.transform=`translate(${e.clientX-gesture.startX}px, ${e.clientY-gesture.startY}px)`;
+  }
+  function onPointerUp(e) {
+    if (!gesture || e.pointerId !== gesture.id) return;
+    if (!gesture.dragging) { clean(); return; }
+    const from=gesture.from, to=squareAt(e.clientX,e.clientY);
+    e.preventDefault(); e.stopPropagation();
+    // The native click is dispatched after pointerup. Swallow it so it cannot
+    // select a square again after the drag has already moved a piece.
+    suppressClick=true;
+    clearTimeout(clearClickTimer);
+    clearClickTimer=setTimeout(()=>{suppressClick=false},0);
+    clean();
+    if (to && to !== from && !isDrawing()) onMove(from,to);
+  }
+  function onPointerCancel(e) { if (gesture && e.pointerId===gesture.id) clean(); }
+  function onClick(e) { if (suppressClick) { suppressClick=false; e.preventDefault(); e.stopImmediatePropagation(); } }
+  board.addEventListener('pointerdown',onPointerDown);
+  window.addEventListener('pointermove',onPointerMove);
+  window.addEventListener('pointerup',onPointerUp);
+  window.addEventListener('pointercancel',onPointerCancel);
+  board.addEventListener('click',onClick,true);
+  return { cancel:clean, destroy(){clean();clearTimeout(clearClickTimer);board.removeEventListener('pointerdown',onPointerDown);window.removeEventListener('pointermove',onPointerMove);window.removeEventListener('pointerup',onPointerUp);window.removeEventListener('pointercancel',onPointerCancel);board.removeEventListener('click',onClick,true)} };
+}
+
+/**
+ * Revision-aware synchronization for a private hosted study.
+ *
+ * The server returns GET {revision, data}; revision 0 with null data means an
+ * empty account. PUT accepts {revision, data}, returns {revision}, and responds
+ * 409 when the supplied revision is stale. The revision must be checked by the
+ * server atomically; this client never resolves a conflict by itself.
+ *
+ * createSyncController({ getSnapshot, applySnapshot, hasLocalData, onStatus })
+ * - start(): check cloud; never upload on first connect.
+ * - markChanged(): debounce a change after initial sync is enabled.
+ * - syncNow(): check for remote edits and flush safe local edits.
+ * - useCloud(): explicitly replace local data with the last checked cloud data.
+ * - useLocal(): explicitly upload the current local data against the last
+ *   checked revision. A concurrent change becomes a conflict, never an overwrite.
+ * - stop(): stop polling and timers. getStatus() returns the latest status.
+ *
+ * hasLocalData() should report genuine user data, not untouched demo seed data.
+ * applySnapshot() must synchronously replace the complete local snapshot.
+ */
+function stableSyncValue(value) {
+  if (Array.isArray(value)) return value.map(stableSyncValue);
+  if (value && typeof value === 'object') {
+    return Object.fromEntries(Object.keys(value).sort().map(key => [key, stableSyncValue(value[key])]));
+  }
+  return value;
+}
+function syncFingerprint(value) { return JSON.stringify(stableSyncValue(value)); }
+function syncClone(value) { return JSON.parse(JSON.stringify(value)); }
+
+function createSyncController({getSnapshot, applySnapshot, hasLocalData = () => true, onStatus = () => {}, fetchImpl = globalThis.fetch?.bind(globalThis), url = '/api/sync', debounceMs = 800, pollMs = 30000, isFile = globalThis.location?.protocol === 'file:'} = {}) {
+  if (typeof getSnapshot !== 'function' || typeof applySnapshot !== 'function') throw new Error('Sync requires snapshot callbacks.');
+  let status = {kind:'local-only', message:'Saved on this device.'};
+  let revision = null, observedRevision = null, remoteData = null, baseline = null;
+  let enabled = false, needsResolution = false, started = false, stopped = false, timer = null, poll = null;
+  let queue = Promise.resolve();
+  const publish = (kind, message) => {if(kind==='conflict')needsResolution=true;status={kind,message,revision:observedRevision}; onStatus({...status});};
+  const serial = fn => {const operation=queue.then(()=>stopped ? false : fn()); queue=operation.catch(()=>{}); return operation;};
+  const dirty = () => baseline !== syncFingerprint(getSnapshot());
+  const clearTimer = () => {if(timer!==null){clearTimeout(timer);timer=null;}};
+  function schedule() {
+    if(!enabled || stopped || needsResolution) return;
+    clearTimer();timer=setTimeout(()=>{timer=null;void syncNow();},debounceMs);
+  }
+  async function request(method, body) {
+    if (typeof fetchImpl !== 'function') throw new Error('Sync is unavailable.');
+    const response=await fetchImpl(url,{method,headers:{'Accept':'application/json',...(body ? {'Content-Type':'application/json'} : {})},...(body ? {body:JSON.stringify(body)} : {}),cache:'no-store',credentials:'same-origin'});
+    if(response.status===409) return {conflict:true};
+    if(!response.ok) throw new Error(`Sync is unavailable (${response.status}).`);
+    const json=await response.json();
+    if(!json || !Number.isInteger(json.revision) || json.revision<0 || (method==='GET' && !('data' in json))) throw new Error('Invalid sync response.');
+    return json;
+  }
+  function adoptCloud() {
+    applySnapshot(syncClone(remoteData));
+    revision=observedRevision;baseline=syncFingerprint(getSnapshot());enabled=true;needsResolution=false;
+    publish('synced','Saved and synchronized.');
+  }
+  async function refresh() {
+    if(isFile){publish('local-only','Saved on this device. Open the hosted site to synchronize.');return false;}
+    try {
+      const result=await request('GET');
+      observedRevision=result.revision;remoteData=result.data;
+      const here=syncFingerprint(getSnapshot());
+      if(needsResolution){publish('conflict','The cloud study changed. Choose which copy to keep.');return true;}
+      if(!enabled) {
+        if(remoteData===null) {publish('setup','Cloud is empty. Choose to upload your local study.');return true;}
+        if(!hasLocalData()) {adoptCloud();return true;}
+        if(here===syncFingerprint(remoteData)) {revision=observedRevision;baseline=here;enabled=true;publish('synced','Saved and synchronized.');return true;}
+        publish('conflict','Local and cloud studies differ. Choose which copy to keep.');return true;
+      }
+      if(observedRevision===revision) {
+        if(dirty()) publish('pending','Changes saved on this device, waiting to sync.');
+        else publish('synced','Saved and synchronized.');
+        return true;
+      }
+      if(remoteData!==null && here===syncFingerprint(remoteData)) {revision=observedRevision;baseline=here;publish('synced','Saved and synchronized.');return true;}
+      if(!dirty() && remoteData!==null) {adoptCloud();return true;}
+      publish('conflict','The cloud study changed on another device. Choose which copy to keep.');return true;
+    } catch(error) {publish('offline','Saved on this device. Cloud sync is unavailable.');return false;}
+  }
+  async function upload(expectedRevision) {
+    const snapshot=syncClone(getSnapshot()), sentHash=syncFingerprint(snapshot);
+    publish('syncing','Saving to cloud…');
+    try {
+      const result=await request('PUT',{revision:expectedRevision,data:snapshot});
+      if(result.conflict) {
+        // The cloud changed after our read. Fetch its latest copy without
+        // adopting it: the current local edits must survive the conflict.
+        const fresh=await request('GET');observedRevision=fresh.revision;remoteData=fresh.data;
+        if(remoteData!==null && syncFingerprint(remoteData)===sentHash && syncFingerprint(getSnapshot())===sentHash){revision=observedRevision;baseline=sentHash;enabled=true;needsResolution=false;publish('synced','Saved and synchronized.');return true;}
+        publish('conflict','The cloud study changed. Choose which copy to keep.');return false;
+      }
+      revision=result.revision;observedRevision=result.revision;remoteData=snapshot;baseline=sentHash;enabled=true;needsResolution=false;
+      if(dirty()){publish('pending','Changes saved on this device, waiting to sync.');schedule();}
+      else publish('synced','Saved and synchronized.');
+      return true;
+    } catch(error) {publish('offline','Saved on this device. Cloud sync is unavailable.');return false;}
+  }
+  async function start() {
+    if(started)return false;started=true;stopped=false;
+    if(!isFile && pollMs>0)poll=setInterval(()=>{void syncNow();},pollMs);
+    return serial(async()=>{publish('checking','Checking cloud sync…');const ok=await refresh();if(ok && enabled && dirty() && status.kind!=='conflict')schedule();return ok;});
+  }
+  function markChanged() {
+    if(!started || stopped)return;
+    if(enabled && !needsResolution){publish('pending','Changes saved on this device, waiting to sync.');schedule();}
+  }
+  function syncNow() {
+    clearTimer();
+    return serial(async()=>{const ok=await refresh();if(ok && enabled && !needsResolution && dirty())return upload(revision);return ok;});
+  }
+  function useCloud() {
+    clearTimer();
+    return serial(async()=>{
+      if(isFile)return false;
+      try {const fresh=await request('GET');observedRevision=fresh.revision;remoteData=fresh.data;
+        if(remoteData===null){publish('setup','Cloud is empty. Choose to upload your local study.');return false;}
+        adoptCloud();return true;
+      } catch(error) {publish('offline','Saved on this device. Cloud sync is unavailable.');return false;}
+    });
+  }
+  function useLocal() {
+    clearTimer();
+    return serial(async()=>{if(isFile || observedRevision===null)return false;return upload(observedRevision);});
+  }
+  function stop() {stopped=true;clearTimer();if(poll!==null)clearInterval(poll);poll=null;}
+  return {start,markChanged,syncNow,useCloud,useLocal,stop,getStatus:()=>({...status})};
+}
+
+const PIECES = {"bN": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><path fill=\"#000\" d=\"M22 10c10.5 1 16.5 8 16 29H15c0-9 10-6.5 8-21\"/><path fill=\"#000\" d=\"M24 18c.38 2.91-5.55 7.37-8 9-3 2-2.82 4.34-5 4-1.04-.94 1.41-3.04 0-3-1 0 .19 1.23-1 2-1 0-4 1-4-4 0-2 6-12 6-12s1.89-1.9 2-3.5c-.73-1-.5-2-.5-3 1-1 3 2.5 3 2.5h2s.78-2 2.5-3c1 0 1 3 1 3\"/><path fill=\"#ececec\" stroke=\"#ececec\" d=\"M9.5 25.5a.5.5 0 1 1-1 0 .5.5 0 1 1 1 0m5.43-9.75a.5 1.5 30 1 1-.86-.5.5 1.5 30 1 1 .86.5\"/><path fill=\"#ececec\" stroke=\"none\" d=\"m24.55 10.4-.45 1.45.5.15c3.15 1 5.65 2.49 7.9 6.75S35.75 29.06 35.25 39l-.05.5h2.25l.05-.5c.5-10.06-.88-16.85-3.25-21.34s-5.79-6.64-9.19-7.16z\"/></g></svg>", "wN": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><path fill=\"#fff\" d=\"M22 10c10.5 1 16.5 8 16 29H15c0-9 10-6.5 8-21\"/><path fill=\"#fff\" d=\"M24 18c.38 2.91-5.55 7.37-8 9-3 2-2.82 4.34-5 4-1.042-.94 1.41-3.04 0-3-1 0 .19 1.23-1 2-1 0-4.003 1-4-4 0-2 6-12 6-12s1.89-1.9 2-3.5c-.73-.994-.5-2-.5-3 1-1 3 2.5 3 2.5h2s.78-1.992 2.5-3c1 0 1 3 1 3\"/><path fill=\"#000\" d=\"M9.5 25.5a.5.5 0 1 1-1 0 .5.5 0 1 1 1 0m5.433-9.75a.5 1.5 30 1 1-.866-.5.5 1.5 30 1 1 .866.5\"/></g></svg>", "bK": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" viewBox=\"0 0 45 45\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><path stroke-linejoin=\"miter\" d=\"M22.5 11.6V6\"/><path fill=\"#000\" stroke-linecap=\"butt\" stroke-linejoin=\"miter\" d=\"M22.5 25s4.5-7.5 3-10.5c0 0-1-2.5-3-2.5s-3 2.5-3 2.5c-1.5 3 3 10.5 3 10.5\"/><path fill=\"#000\" d=\"M11.5 37a22.3 22.3 0 0 0 21 0v-7s9-4.5 6-10.5c-4-6.5-13.5-3.5-16 4V27v-3.5c-3.5-7.5-13-10.5-16-4-3 6 5 10 5 10z\"/><path stroke-linejoin=\"miter\" d=\"M20 8h5\"/><path stroke=\"#ececec\" d=\"M32 29.5s8.5-4 6-9.7C34.1 14 25 18 22.5 24.6v2.1-2.1C20 18 9.9 14 7 19.9c-2.5 5.6 4.8 9 4.8 9\"/><path stroke=\"#ececec\" d=\"M11.5 30c5.5-3 15.5-3 21 0m-21 3.5c5.5-3 15.5-3 21 0m-21 3.5c5.5-3 15.5-3 21 0\"/></g></svg>", "wK": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" viewBox=\"0 0 45 45\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><path stroke-linejoin=\"miter\" d=\"M22.5 11.63V6M20 8h5\"/><path fill=\"#fff\" stroke-linecap=\"butt\" stroke-linejoin=\"miter\" d=\"M22.5 25s4.5-7.5 3-10.5c0 0-1-2.5-3-2.5s-3 2.5-3 2.5c-1.5 3 3 10.5 3 10.5\"/><path fill=\"#fff\" d=\"M11.5 37c5.5 3.5 15.5 3.5 21 0v-7s9-4.5 6-10.5c-4-6.5-13.5-3.5-16 4V27v-3.5c-3.5-7.5-13-10.5-16-4-3 6 5 10 5 10z\"/><path d=\"M11.5 30c5.5-3 15.5-3 21 0m-21 3.5c5.5-3 15.5-3 21 0m-21 3.5c5.5-3 15.5-3 21 0\"/></g></svg>", "bP": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><path stroke=\"#000\" stroke-linecap=\"round\" stroke-width=\"1.5\" d=\"M22.5 9a4 4 0 0 0-3.22 6.38 6.48 6.48 0 0 0-.87 10.65c-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47a6.46 6.46 0 0 0-.87-10.65A4.01 4.01 0 0 0 22.5 9z\"/></svg>", "wQ": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><g fill=\"#fff\" fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><path d=\"M8 12a2 2 0 1 1-4 0 2 2 0 1 1 4 0m16.5-4.5a2 2 0 1 1-4 0 2 2 0 1 1 4 0M41 12a2 2 0 1 1-4 0 2 2 0 1 1 4 0M16 8.5a2 2 0 1 1-4 0 2 2 0 1 1 4 0M33 9a2 2 0 1 1-4 0 2 2 0 1 1 4 0\"/><path stroke-linecap=\"butt\" d=\"M9 26c8.5-1.5 21-1.5 27 0l2-12-7 11V11l-5.5 13.5-3-15-3 15-5.5-14V25L7 14z\"/><path stroke-linecap=\"butt\" d=\"M9 26c0 2 1.5 2 2.5 4 1 1.5 1 1 .5 3.5-1.5 1-1.5 2.5-1.5 2.5-1.5 1.5.5 2.5.5 2.5 6.5 1 16.5 1 23 0 0 0 1.5-1 0-2.5 0 0 .5-1.5-1-2.5-.5-2.5-.5-2 .5-3.5 1-2 2.5-2 2.5-4-8.5-1.5-18.5-1.5-27 0z\"/><path fill=\"none\" d=\"M11.5 30c3.5-1 18.5-1 22 0M12 33.5c6-1 15-1 21 0\"/></g></svg>", "wP": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><path fill=\"#fff\" stroke=\"#000\" stroke-linecap=\"round\" stroke-width=\"1.5\" d=\"M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z\"/></svg>", "bQ": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><g fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><g stroke=\"none\"><circle cx=\"6\" cy=\"12\" r=\"2.75\"/><circle cx=\"14\" cy=\"9\" r=\"2.75\"/><circle cx=\"22.5\" cy=\"8\" r=\"2.75\"/><circle cx=\"31\" cy=\"9\" r=\"2.75\"/><circle cx=\"39\" cy=\"12\" r=\"2.75\"/></g><path stroke-linecap=\"butt\" d=\"M9 26c8.5-1.5 21-1.5 27 0l2.5-12.5L31 25l-.3-14.1-5.2 13.6-3-14.5-3 14.5-5.2-13.6L14 25 6.5 13.5z\"/><path stroke-linecap=\"butt\" d=\"M9 26c0 2 1.5 2 2.5 4 1 1.5 1 1 .5 3.5-1.5 1-1.5 2.5-1.5 2.5-1.5 1.5.5 2.5.5 2.5 6.5 1 16.5 1 23 0 0 0 1.5-1 0-2.5 0 0 .5-1.5-1-2.5-.5-2.5-.5-2 .5-3.5 1-2 2.5-2 2.5-4-8.5-1.5-18.5-1.5-27 0z\"/><path fill=\"none\" stroke-linecap=\"butt\" d=\"M11 38.5a35 35 1 0 0 23 0\"/><path fill=\"none\" stroke=\"#ececec\" d=\"M11 29a35 35 1 0 1 23 0m-21.5 2.5h20m-21 3a35 35 1 0 0 22 0m-23 3a35 35 1 0 0 24 0\"/></g></svg>", "wR": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><g fill=\"#fff\" fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><path stroke-linecap=\"butt\" d=\"M9 39h27v-3H9zm3-3v-4h21v4zm-1-22V9h4v2h5V9h5v2h5V9h4v5\"/><path d=\"m34 14-3 3H14l-3-3\"/><path stroke-linecap=\"butt\" stroke-linejoin=\"miter\" d=\"M31 17v12.5H14V17\"/><path d=\"m31 29.5 1.5 2.5h-20l1.5-2.5\"/><path fill=\"none\" stroke-linejoin=\"miter\" d=\"M11 14h23\"/></g></svg>", "bR": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><g fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><path stroke-linecap=\"butt\" d=\"M9 39h27v-3H9zm3.5-7 1.5-2.5h17l1.5 2.5zm-.5 4v-4h21v4z\"/><path stroke-linecap=\"butt\" stroke-linejoin=\"miter\" d=\"M14 29.5v-13h17v13z\"/><path stroke-linecap=\"butt\" d=\"M14 16.5 11 14h23l-3 2.5zM11 14V9h4v2h5V9h5v2h5V9h4v5z\"/><path fill=\"none\" stroke=\"#ececec\" stroke-linejoin=\"miter\" stroke-width=\"1\" d=\"M12 35.5h21m-20-4h19m-18-2h17m-17-13h17M11 14h23\"/></g></svg>", "bB": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><g fill=\"#000\" stroke-linecap=\"butt\"><path d=\"M9 36c3.4-1 10.1.4 13.5-2 3.4 2.4 10.1 1 13.5 2 0 0 1.6.5 3 2-.7 1-1.6 1-3 .5-3.4-1-10.1.5-13.5-1-3.4 1.5-10.1 0-13.5 1-1.4.5-2.3.5-3-.5 1.4-2 3-2 3-2z\"/><path d=\"M15 32c2.5 2.5 12.5 2.5 15 0 .5-1.5 0-2 0-2 0-2.5-2.5-4-2.5-4 5.5-1.5 6-11.5-5-15.5-11 4-10.5 14-5 15.5 0 0-2.5 1.5-2.5 4 0 0-.5.5 0 2z\"/><path d=\"M25 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 1 1 5 0z\"/></g><path stroke=\"#ececec\" stroke-linejoin=\"miter\" d=\"M17.5 26h10M15 30h15m-7.5-14.5v5M20 18h5\"/></g></svg>", "wB": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><g fill=\"#fff\" stroke-linecap=\"butt\"><path d=\"M9 36c3.39-.97 10.11.43 13.5-2 3.39 2.43 10.11 1.03 13.5 2 0 0 1.65.54 3 2-.68.97-1.65.99-3 .5-3.39-.97-10.11.46-13.5-1-3.39 1.46-10.11.03-13.5 1-1.35.49-2.32.47-3-.5 1.35-1.94 3-2 3-2z\"/><path d=\"M15 32c2.5 2.5 12.5 2.5 15 0 .5-1.5 0-2 0-2 0-2.5-2.5-4-2.5-4 5.5-1.5 6-11.5-5-15.5-11 4-10.5 14-5 15.5 0 0-2.5 1.5-2.5 4 0 0-.5.5 0 2z\"/><path d=\"M25 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 1 1 5 0z\"/></g><path stroke-linejoin=\"miter\" d=\"M17.5 26h10M15 30h15m-7.5-14.5v5M20 18h5\"/></g></svg>"};
+
+
+
+const escapeText = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const labelForPly = (moves, index) => index ? `${Math.ceil(index / 2)}${index % 2 ? '.' : '...'} ${moves[index-1]}` : 'Starting position';
+const samePrefix = (prefix, moves) => Array.isArray(prefix) && prefix.length <= moves.length && prefix.every((move, i) => move === moves[i]);
+const getWarnings = folder => Array.isArray(folder.blunders) ? folder.blunders : [];
+const makeId = () => globalThis.crypto?.randomUUID?.() || `warning-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+
+/** Read-first notes that follow the opening path and selected game. */
+function createStudyNotes({container, onChange = () => {}, onJump = () => {}, getSaveStatus = () => null}) {
+  if (!container) throw new Error('A study notes container is required.');
+  let storedVisibility={};try { storedVisibility=JSON.parse(localStorage.getItem('opening-notebook-note-visibility-v1'))||{}; } catch {}
+  const visible = new Map(Object.entries(storedVisibility));
+  const editing = new Set();
+  let context = {folders:[], folder:null, game:null, moves:[], index:0};
+  let path = [];
+
+  function editable({key, value, label, placeholder, attributes, warning=false}) {
+    const safeValue=escapeText(value || ''), open=editing.has(key);
+    return `<div class="study-note-section ${warning?'is-warning':''}"><div class="study-note-label-row"><span class="study-field-label">${escapeText(label)}</span><button type="button" class="study-edit" data-edit-key="${escapeText(key)}">${open?'Done':value?'Edit':'Add note'}</button></div>${open?`<textarea class="study-editor ${warning?'study-warning-input':''}" data-editor-key="${escapeText(key)}" ${attributes} aria-label="${escapeText(label)}" placeholder="${escapeText(placeholder)}">${safeValue}</textarea>`:`<div class="study-note-text ${value?'':'is-empty'}">${value?safeValue:'No note yet.'}</div>`}</div>`;
+  }
+  function warningRows(folder) {
+    const warnings=getWarnings(folder);
+    if (!warnings.length) return '<p class="study-empty">No blunders marked for this line.</p>';
+    return warnings.map((item,i) => {
+      const w=item && typeof item==='object'?item:{};
+      const recordedMoves=Array.isArray(w.moves)?w.moves:[];
+      const jumpable=recordedMoves.length>0 && samePrefix(recordedMoves,context.moves);
+      const moveLabel=w.moveLabel || (recordedMoves.length?labelForPly(recordedMoves,recordedMoves.length):'Position');
+      const key=`warning:${folder.id}:${w.id||i}`;
+      const field=editable({key,value:w.text,label:'Why is this a mistake?',placeholder:'Explain what went wrong and what to play instead…',attributes:`data-warning-text="${i}" data-folder="${escapeText(folder.id)}"`,warning:true});
+      return `<article class="study-blunder" data-warning-row="${i}"><div class="study-blunder-heading"><span class="study-blunder-badge">?? &nbsp; BLUNDER</span><span class="study-blunder-move">${escapeText(moveLabel)}</span></div>${field}<div class="study-warning-actions"><button type="button" class="study-link" data-jump="${escapeText(folder.id)}" data-warning-index="${i}" ${jumpable?'':'disabled'}>${jumpable?'Show move':'Not in this line'}</button><button type="button" class="study-link study-remove" data-remove-warning="${escapeText(folder.id)}" data-warning-index="${i}">Remove</button></div></article>`;
+    }).join('');
+  }
+  function folderCard(folder,i) {
+    const field=editable({key:`idea:${folder.id}`,value:folder.note,label:'Ideas and plans',placeholder:'Write the key ideas and plans for this line…',attributes:`data-idea="${escapeText(folder.id)}"`});
+    return `<article class="study-opening-card"><div class="study-card-heading"><div><span class="study-level">${i===0?'OPENING':`BRANCH ${i}`}</span><h3>${escapeText(folder.name)}</h3></div><span class="study-card-current">${folder.id===context.folder?.id?'CURRENT':'PARENT'}</span></div>${field}<div class="study-blunders-header"><h4>Blunders &amp; traps</h4><button type="button" class="study-add-warning" data-add-warning="${escapeText(folder.id)}">＋ Mark this position</button></div>${warningRows(folder)}</article>`;
+  }
+  function gameCard() {
+    const game=context.game;if(!game)return '';
+    const line=context.moves.slice(0,context.index),key=line.join(' '),original=new ChessGame(game.pgn||'').moves;
+    const legacy=samePrefix(line,original)?game.notes?.[context.index]:undefined;
+    const positionNote=game.notes?.[key]??legacy??'',summary=game.gameNote??game.takeaway??'';
+    const gameField=editable({key:`game:${game.id}:summary`,value:summary,label:'Game reflection',placeholder:'What did you learn from this game?',attributes:'data-game-summary'});
+    const positionField=editable({key:`game:${game.id}:position:${key}`,value:positionNote,label:`Note at ${labelForPly(context.moves,context.index)}`,placeholder:'Write what you noticed at this position…',attributes:'data-position-note'});
+    return `<article class="study-game-card"><div class="study-card-heading"><div><span class="study-level">GAME</span><h3>${escapeText(game.name)}</h3></div><span class="study-card-current">${escapeText(labelForPly(context.moves,context.index))}</span></div>${gameField}${positionField}</article>`;
+  }
+  function draw() {
+    path=context.folder?folderPath(context.folders,context.folder.id):[];
+    for(const folder of path)if(!visible.has(folder.id))visible.set(folder.id,true);
+    const toggles=path.map(folder=>`<button type="button" class="study-path-toggle ${visible.get(folder.id)?'is-on':''}" aria-pressed="${visible.get(folder.id)?'true':'false'}" data-toggle-opening="${escapeText(folder.id)}">${escapeText(folder.name)}</button>`).join('');
+    const cards=path.filter(folder=>visible.get(folder.id)).map(folder=>folderCard(folder,path.indexOf(folder))).join('');
+    container.innerHTML=`<div class="study-notes-bar"><span>STUDY NOTES</span><span class="study-autosave">${getSaveStatus()?'Changes not saved':'Saved as you type'}</span></div>${path.length?`<div class="study-path-area"><span class="study-field-label">Visible lines</span><div class="study-path-toggles">${toggles}</div></div><div class="study-cards">${cards||'<p class="study-empty">Choose a line above to show its notes.</p>'}</div>`:'<p class="study-empty study-no-opening">Choose an opening to add notes.</p>'}${context.game?`<div class="study-game-section">${gameCard()}</div>`:''}`;
+  }
+  function change(event) {
+    const el=event.target;if(!(el instanceof HTMLTextAreaElement))return;
+    if(el.hasAttribute('data-idea')){const folder=context.folders.find(f=>f.id===el.dataset.idea);if(!folder)return;folder.note=el.value;onChange();}
+    else if(el.hasAttribute('data-warning-text')){const folder=context.folders.find(f=>f.id===el.dataset.folder);const item=folder && getWarnings(folder)[Number(el.dataset.warningText)];if(!item||typeof item!=='object')return;item.text=el.value;onChange();}
+    else if(el.hasAttribute('data-game-summary')&&context.game){context.game.gameNote=el.value;onChange();}
+    else if(el.hasAttribute('data-position-note')&&context.game){context.game.notes ||= {};context.game.notes[context.moves.slice(0,context.index).join(' ')]=el.value;onChange();}
+  }
+  function focusEditor(key) {
+    for(const el of container.querySelectorAll('[data-editor-key]'))if(el.dataset.editorKey===key){el.focus();break;}
+  }
+  function click(event) {
+    const button=event.target.closest('button');if(!button||!container.contains(button))return;
+    if(button.dataset.toggleOpening){const id=button.dataset.toggleOpening;visible.set(id,!visible.get(id));try{localStorage.setItem('opening-notebook-note-visibility-v1',JSON.stringify(Object.fromEntries(visible)))}catch{}draw();return;}
+    if(button.dataset.editKey){const key=button.dataset.editKey,wasOpen=editing.has(key);if(wasOpen)editing.delete(key);else editing.add(key);draw();if(!wasOpen)focusEditor(key);return;}
+    if(button.dataset.addWarning){const folder=context.folders.find(f=>f.id===button.dataset.addWarning);if(!folder)return;if(!Array.isArray(folder.blunders))folder.blunders=[];const line=context.moves.slice(0,context.index),id=makeId();folder.blunders.push({id,moveLabel:labelForPly(context.moves,context.index),moves:line,text:''});const key=`warning:${folder.id}:${id}`;editing.add(key);onChange();draw();focusEditor(key);return;}
+    if(button.dataset.removeWarning){const folder=context.folders.find(f=>f.id===button.dataset.removeWarning),index=Number(button.dataset.warningIndex);if(!folder||!getWarnings(folder)[index])return;const row=button.closest('[data-warning-row]');if(button.dataset.confirm!=='yes'){button.dataset.confirm='yes';button.textContent='Confirm removal';row?.classList.add('confirming');return;}const w=folder.blunders[index];editing.delete(`warning:${folder.id}:${w.id||index}`);folder.blunders.splice(index,1);onChange();draw();return;}
+    if(button.dataset.jump){const folder=context.folders.find(f=>f.id===button.dataset.jump),item=folder&&getWarnings(folder)[Number(button.dataset.warningIndex)];if(item&&Array.isArray(item.moves)&&samePrefix(item.moves,context.moves))onJump(item.moves.length);}
+  }
+  container.addEventListener('input',change);container.addEventListener('click',click);
+  return {render(next){const current=globalThis.document?.activeElement;const same=next.folder?.id===context.folder?.id&&next.game?.id===context.game?.id&&Number(next.index||0)===context.index&&JSON.stringify(next.moves||[])===JSON.stringify(context.moves);context={folders:next.folders||[],folder:next.folder||null,game:next.game||null,moves:Array.isArray(next.moves)?next.moves:[],index:Number(next.index)||0};if(same&&current&&container.contains(current)&&current instanceof HTMLTextAreaElement)return;draw()},destroy(){container.removeEventListener('input',change);container.removeEventListener('click',click);container.innerHTML='';}};
+}
+
+const escapeMoveTreeText = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
+
+/**
+ * Render the saved opening tree and active game below the board.
+ * createMoveTreeView({container, onNavigate})
+ * render(root) accepts the output of buildMoveTree. Clicking a move calls
+ * onNavigate({moves, folders, ply, san}), leaving navigation to the app.
+ */
+function createMoveTreeView({container, onNavigate = () => {}}) {
+  if (!container) throw new Error('A move tree container is required.');
+  let root = null, navigable = new Map();
+  const collapsed = new Set();
+  const keyOf = node => (node.moves || []).join(' ');
+  const sortChildren = children => (children || []).slice().sort((a,b) => Number(!!b.isCurrent)-Number(!!a.isCurrent) || Number(!!b.onLine)-Number(!!a.onLine) || Number(!!b.onGameLine)-Number(!!a.onGameLine));
+
+  function moveMarkup(node, first, lookupId) {
+    const ply=Number(node.ply)||0;
+    const number=ply%2===1 ? `${Math.ceil(ply/2)}.` : first ? `${Math.ceil(ply/2)}...` : '';
+    const warnings=Array.isArray(node.blunders) ? node.blunders : [];
+    const explanation=warnings.map(w => [w.folderName,w.text].filter(Boolean).join(': ')).filter(Boolean).join(' | ');
+    const label=`${number ? number+' ' : ''}${node.san || ''}${warnings.length ? ', marked blunder' : ''}${explanation ? ': '+explanation : ''}`;
+    navigable.set(lookupId,node);
+    const tag=(node.folders || []).map(folder => `<span class="move-tree-folder" title="Saved opening">${escapeMoveTreeText(folder.name)}</span>`).join('');
+    return `<span class="move-tree-token">${number?`<span class="move-tree-number">${number}</span>`:''}<button type="button" class="move-tree-move ${node.isCurrent?'is-current':''} ${node.onGameLine?'is-game':''}" data-tree-node="${lookupId}" aria-label="${escapeMoveTreeText(label)}" ${node.isCurrent?'aria-current="step"':''} title="${escapeMoveTreeText(explanation || 'Show this position')}">${escapeMoveTreeText(node.san || '')}${warnings.length?'<span class="move-tree-blunder" aria-hidden="true">??</span>':''}</button>${tag}</span>`;
+  }
+
+  function draw() {
+    navigable=new Map();let counter=0;
+    if (!root) {
+      container.innerHTML='<div class="move-tree-heading"><div><span class="move-tree-overline">OPENING EXPLORER</span><h2>Moves &amp; continuations</h2></div></div><p class="move-tree-empty">Your moves and saved variations will appear here as you build your repertoire.</p>';
+      return;
+    }
+    navigable.set('0',root);
+    const rootWarnings=Array.isArray(root.blunders)?root.blunders:[];
+    const rootDescription=rootWarnings.map(w=>[w.folderName,w.text].filter(Boolean).join(': ')).filter(Boolean).join(' | ');
+    const startLabel=`Starting position${rootWarnings.length?', marked blunder':''}${rootDescription?': '+rootDescription:''}`;
+    const start=`<div class="move-tree-start-row"><button type="button" class="move-tree-move move-tree-start ${root.isCurrent?'is-current':''}" data-tree-node="0" aria-label="${escapeMoveTreeText(startLabel)}" ${root.isCurrent?'aria-current="step"':''} title="${escapeMoveTreeText(rootDescription || 'Show the starting position')}">Start${rootWarnings.length?'<span class="move-tree-blunder" aria-hidden="true">??</span>':''}</button></div>`;
+    const rows=[];
+    function appendLine(start, depth, isBranch) {
+      const path=[];let node=start;
+      while(node) {
+        path.push(node);
+        const children=sortChildren(node.children);
+        if(children.length!==1)break;
+        node=children[0];
+      }
+      const key=keyOf(start), isCollapsed=isBranch && collapsed.has(key), shown=isCollapsed?path.slice(0,1):path;
+      const canCollapse=isBranch && (path.length>1 || (path.at(-1)?.children||[]).length>0);
+      const toggle=canCollapse?`<button type="button" class="move-tree-disclosure" aria-expanded="${!isCollapsed}" data-tree-toggle="${escapeMoveTreeText(key)}" aria-label="${isCollapsed?'Expand':'Collapse'} variation starting ${escapeMoveTreeText(start.san)}">${isCollapsed?'▸':'▾'}</button>`:(isBranch?'<span class="move-tree-branch-mark" aria-hidden="true">↳</span>':'');
+      const rowMarkup=shown.map((item,i)=>moveMarkup(item,i===0,String(++counter))).join('');
+      rows.push(`<div class="move-tree-line ${isBranch?'is-variation':''}" style="--branch-depth:${Math.min(depth,3)}">${toggle}<div class="move-tree-sequence">${rowMarkup}</div></div>`);
+      if(isCollapsed)return;
+      for(const child of sortChildren(path.at(-1)?.children || [])) appendLine(child,depth+1,true);
+    }
+    const starts=sortChildren(root.children);
+    starts.forEach((child,index)=>appendLine(child,index?1:0,!!index));
+    container.innerHTML=`<div class="move-tree-heading"><div><span class="move-tree-overline">OPENING EXPLORER</span><h2>Moves &amp; continuations</h2><p>Explore your saved lines and the current game.</p></div><span class="move-tree-legend"><span>??</span> Your blunder marks</span></div><div class="move-tree-content" aria-label="Saved moves and continuations">${start}${rows.length ? rows.join('') : '<p class="move-tree-empty">Make a move or add an opening to start your tree.</p>'}</div>`;
+  }
+  function click(event) {
+    const button=event.target.closest('button');if(!button || !container.contains(button))return;
+    if(button.hasAttribute('data-tree-toggle')) {
+      const key=button.dataset.treeToggle;
+      if(collapsed.has(key))collapsed.delete(key);else collapsed.add(key);
+      draw();const next=Array.from(container.querySelectorAll('[data-tree-toggle]')).find(el=>el.dataset.treeToggle===key);next?.focus();return;
+    }
+    if(button.hasAttribute('data-tree-node')) {
+      const node=navigable.get(button.dataset.treeNode);if(!node)return;
+      const position=keyOf(node);
+      onNavigate({moves:(node.moves||[]).slice(),folders:(node.folders||[]).slice(),ply:node.ply,san:node.san});
+      const found=Array.from(navigable.entries()).find(([,value])=>keyOf(value)===position);
+      if(found)container.querySelector(`[data-tree-node="${found[0]}"]`)?.focus({preventScroll:true});
+    }
+  }
+  container.addEventListener('click',click);
+  return {render(next){root=next;draw()},destroy(){container.removeEventListener('click',click);container.innerHTML=''}};
+}
+
+
+
+
+
+
+
+
+
+
+
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const seed = [
+ {id:'ruy',side:'white',name:'Ruy López',line:'1. e4 e5 2. Nf3 Nc6 3. Bb5',idea:'Put pressure on the knight that defends e5. Develop naturally, castle early, and keep an eye on the center.',plan:'Build a strong center with c3 and d4. The bishop on b5 creates a useful long-term pin and can retreat to a4 or b3.',games:[{id:'g1',name:'A lesson in development',date:'Sample game',pgn:'1. e4 e5 2. Nf3 Nc6 3. Bb5 a6 4. Ba4 Nf6 5. O-O Be7 6. Re1 b5 7. Bb3 d6 8. c3 O-O 9. h3',notes:{6:'The bishop can retreat and keep pressure on the center.',12:'Develop first; the central break can wait until the pieces are ready.'},takeaway:'Bring all the pieces into the game before committing to a central break.'}]},
+ {id:'italian',side:'white',name:'Italian Game',line:'1. e4 e5 2. Nf3 Nc6 3. Bc4',idea:'Develop the bishop actively and aim at the sensitive f7 square.',plan:'Castle, support the center with c3 and d3, and look for the right moment to play d4.',games:[]},
+ {id:'alapin',side:'black',name:'Sicilian · Alapin',line:'1. e4 c5 2. c3',idea:'White prepares d4 and aims to build a broad pawn center.',plan:'Challenge the center early. Consider ...Nf6 or ...d5 and develop with purpose.',games:[{id:'g2',name:'Meeting the Alapin',date:'Sample game',pgn:'1. e4 c5 2. c3 Nf6 3. e5 Nd5 4. d4 cxd4 5. cxd4 Nc6',notes:{4:'Attacking e4 asks White to make a decision in the center.'},takeaway:'Challenge the center before it becomes too comfortable.'}]},
+ {id:'caro',side:'black',name:'Caro–Kann',line:'1. e4 c6 2. d4 d5',idea:'Build a resilient pawn structure and challenge White’s center with ...d5.',plan:'Develop the light-squared bishop before closing it in when the position allows.',games:[]}
+];seed.push({id:'ruy-morphy',parentId:'ruy',side:'white',name:'Morphy Defense',line:'1. e4 e5 2. Nf3 Nc6 3. Bb5 a6',idea:'Black asks the bishop to decide where it belongs.',plan:'Retreat to a4 and continue development.',games:[]});
+const storage={getItem:key=>globalThis.localStorage.getItem(key),setItem:(key,value)=>globalThis.localStorage.setItem(key,value),removeItem:key=>globalThis.localStorage.removeItem(key)};
+let storageFailure=null, storageBlocked=false, originalRaw=null;
+function showStorageFailure(message){storageFailure=message;const banner=$('#storageWarning');if(banner){banner.hidden=false;$('#storageWarningText').textContent=message}const label=document.querySelector('.study-autosave');if(label)label.textContent='Changes not saved'}
+function getStored(key){try{return storage.getItem(key)}catch{return null}}
+function setStored(key,value){try{storage.setItem(key,value);return true}catch{showStorageFailure('Browser storage is unavailable or full. Changes may not be saved; export a backup.');return false}}
+const existingLibrary=!!(getStored('opening-notebook-v1') || getStored('opening-notebook-v2'));
+let hasUserData=!!getStored('opening-notebook-user-data-v1') || (existingLibrary && getStored('opening-notebook-seed-only-v1')!=='1');
+if(!existingLibrary)setStored('opening-notebook-seed-only-v1','1');
+let syncController=null;
+const libraryRead=readLibrary(storage,seed);
+let {folders,migrated}=libraryRead;storageBlocked=libraryRead.writeBlocked;originalRaw=libraryRead.raw;
+if(libraryRead.storageError)showStorageFailure(libraryRead.storageError.message);
+if(originalRaw!==null)$('#downloadOriginal').hidden=false;
+function migrateNotes(list){let changed=false;for(const folder of list){if(Object.hasOwn(folder,'note'))continue;const parts=[];if(folder.idea)parts.push(folder.idea);if(folder.plan)parts.push(folder.plan);for(const g of folder.games||[]){const entries=[];if(g.gameNote)entries.push(g.gameNote);if(g.takeaway && g.takeaway!==g.gameNote)entries.push(g.takeaway);for(const [key,value] of Object.entries(g.notes||{})){if(value)entries.push(`Position ${key||'start'}: ${value}`)}if(entries.length)parts.push(`${g.name}:\n${entries.join('\n')}`)}folder.note=parts.join('\n\n');changed=true}return changed}
+if((migrateNotes(folders)||migrated)&&!storageBlocked){const result=saveLibrary(storage,folders);if(!result.ok)showStorageFailure(result.error.message)}
+let side='white', folderId=folders.find(f=>f.side===side)?.id||null, gameId=null, gameOwnerId=null, matched=null, flipped=false, selected=null, engine=new ChessGame();
+function validMarkings(value){return !!value&&typeof value==='object'&&!Array.isArray(value)&&Object.values(value).every(mark=>mark&&typeof mark==='object'&&!Array.isArray(mark)&&(!('squares' in mark)||(mark.squares&&typeof mark.squares==='object'&&!Array.isArray(mark.squares)))&&(!('arrows' in mark)||Array.isArray(mark.arrows)))}
+let annotations={},marksBlocked=false,originalMarksRaw=getStored('opening-notebook-marks-v1');
+if(originalMarksRaw!==null){try{const parsed=JSON.parse(originalMarksRaw);if(!validMarkings(parsed))throw new Error();annotations=parsed}catch{marksBlocked=true;showStorageFailure('Saved board markings could not be read. The original markings have not been changed.');$('#downloadOriginalMarks').hidden=false;}}
+// Keep game markings tied to the game and position, even when the matched folder changes.
+function migrateGameMarkings(){let legacySaved=false;const gameIds=new Set(folders.flatMap(f=>f.games.map(g=>g.id)));let changed=false;for(const [key,value] of Object.entries(annotations)){const parts=key.split(':');if(parts.length<4||!gameIds.has(parts[2]))continue;if(!legacySaved){if(!setStored('opening-notebook-legacy-marks-backup',JSON.stringify(annotations)))return;legacySaved=true}const stable=`game:${parts[2]}:${parts.slice(3).join(':')}`;const previous=annotations[stable]||{squares:{},arrows:[]};const arrows=[...(previous.arrows||[])];for(const a of value.arrows||[])if(!arrows.some(b=>b.from===a.from&&b.to===a.to&&b.color===a.color))arrows.push(a);annotations[stable]={squares:{...(value.squares||{}),...(previous.squares||{})},arrows};delete annotations[key];changed=true}if(changed)setStored('opening-notebook-marks-v1',JSON.stringify(annotations))}
+migrateGameMarkings();
+const currentFolder=()=>folders.find(f=>f.id===folderId&&f.side===side)||null;
+const gameOwner=()=>folders.find(f=>f.id===gameOwnerId&&f.side===side)||null;
+const currentGame=()=>gameOwner()?.games.find(g=>g.id===gameId)||null;
+const save=()=>{const result=saveLibrary(storage,folders);if(!result.ok){showStorageFailure(result.error.message);return false}hasUserData=true;if(!setStored('opening-notebook-user-data-v1','1'))return false;syncController?.markChanged();return true};
+const moveView=createMoveTreeView({container:$('#moveTree'),onNavigate:navigateTreeMove});
+const studyNotes=createStudyNotes({container:$('#studyNotes'),onChange:()=>{save();renderMoveExplorer()},onJump:go,getSaveStatus:()=>storageFailure});
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.remove('show'),3200)}
+function setPosition(text,end=true){const next=new ChessGame();if(!next.load(text||'')){toast(next.error);return false} engine=next;if(end)engine.go(engine.moves.length);selected=null;return true;}
+function switchSide(value){side=value;flipped=value==='black';folderId=folders.find(f=>f.side===side)?.id||null;gameId=null;gameOwnerId=null;setPosition(currentFolder()?.line||'');updateMatch();render()}
+function selectFolder(id){folderId=id;gameId=null;gameOwnerId=null;setPosition(currentFolder()?.line||'');updateMatch();render()}
+function selectGame(id){gameOwnerId=folderId;gameId=id;setPosition(currentGame()?.pgn||'',false);updateMatch();render()}
+function updateMatch(){matched=matchOpening(folders,side,engine.moves.slice(0,engine.index),{preferredId:folderId});if(matched.folder)folderId=matched.folder.id;else if(currentGame()&&gameOwner())folderId=gameOwner().id;}
+function renderTree(){$('#addRoot').disabled=storageBlocked;let out='';function walk(parent,depth){for(const f of folderChildren(folders,side,parent)){const children=folderChildren(folders,side,f.id);out+=`<div class="tree-row" style="--depth:${depth}"><button class="tree-item ${f.id===folderId?'active':''}" data-folder="${esc(f.id)}"><span class="folder-icon">${children.length?'▾':'·'}</span><span class="folder-name">${esc(f.name)}</span><span class="tree-count">${f.games.length||''}</span></button></div>`;walk(f.id,depth+1)}}walk(null,0);$('#tree').innerHTML=out||'<p class="empty-tree">No openings yet. Add your first line.</p>';document.querySelectorAll('[data-folder]').forEach(b=>b.onclick=()=>selectFolder(b.dataset.folder));$('#libraryTitle').textContent=`${side==='white'?'White':'Black'} openings`;$('#sideWhite').setAttribute('aria-pressed',side==='white');$('#sideBlack').setAttribute('aria-pressed',side==='black');$('#addChild').disabled=$('#editFolder').disabled=$('#deleteFolder').disabled=!currentFolder();}
+const marks=createBoardAnnotations({board:$('#board'),getFlipped:()=>flipped,getKey:()=>gameId?`game:${gameId}:${engine.fen()}`:`${side}:${folderId||'root'}:opening:${engine.fen()}`,read:key=>annotations[key],write:(key,value)=>{if(marksBlocked){showStorageFailure('Saved board markings could not be read. The original markings have not been changed.');return}annotations[key]=value;if(!setStored('opening-notebook-marks-v1',JSON.stringify(annotations)))return;hasUserData=true;setStored('opening-notebook-user-data-v1','1');syncController?.markChanged()},onModeChange:on=>{$('#drawMode').setAttribute('aria-pressed',String(on));$('#drawMode').classList.toggle('active',on)}});
+let activeMotions=[];
+function cancelMotions(){for(const item of activeMotions){item.animation.cancel();item.target.style.visibility='';item.ghost.remove()}activeMotions=[];}
+function prepareMotion(from,to){
+ cancelMotions();
+ const pieceAt=sq=>engine.board[8-Number(sq[1])]['abcdefgh'.indexOf(sq[0])];
+ const moving=pieceAt(from);if(!moving)return [];
+ const moves=[{from,to,piece:moving}];
+ const a='abcdefgh'.indexOf(from[0]),b='abcdefgh'.indexOf(to[0]);
+ if(moving[1]==='K' && Math.abs(a-b)===2){
+  const rank=from[1];let rookFrom,rookTo;
+  if(a===4){rookFrom=(b===6?'h':'a')+rank;rookTo=(b===6?'f':'d')+rank}
+  else {rookFrom=(a===6?'f':'d')+rank;rookTo=(a===6?'h':'a')+rank}
+  const rook=pieceAt(rookFrom);if(rook)moves.push({from:rookFrom,to:rookTo,piece:rook});
+ }
+ return moves;
+}
+function animateMotion(moves){
+ if(!moves?.length || matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ const board=$('#board'),host=board.parentElement;
+ const point=sq=>{const x='abcdefgh'.indexOf(sq[0]),y=8-Number(sq[1]);return flipped?[7-x,7-y]:[x,y]};
+ for(const move of moves){
+  const target=board.querySelector(`[data-square="${move.to}"] .piece`);if(!target)continue;
+  const [x,y]=point(move.from),[tx,ty]=point(move.to);
+  const ghost=document.createElement('span');ghost.className='moving-piece';ghost.setAttribute('aria-hidden','true');
+  ghost.style.left=`${x*12.5}%`;ghost.style.top=`${y*12.5}%`;ghost.innerHTML=`<span class="piece">${PIECES[move.piece]}</span>`;
+  host.appendChild(ghost);target.style.visibility='hidden';
+  const animation=ghost.animate([{transform:'translate(0,0)'},{transform:`translate(${(tx-x)*100}%, ${(ty-y)*100}%)`}],{duration:190,easing:'cubic-bezier(.2,.7,.2,1)',fill:'forwards'});
+  const item={animation,target,ghost};activeMotions.push(item);
+  animation.onfinish=()=>{target.style.visibility='';ghost.remove();activeMotions=activeMotions.filter(a=>a!==item)};
+ }
+}
+function renderBoard(motion=[]){cancelMotions();let html='';const last=engine.lastMove,legal=selected?engine.legalMoves().filter(m=>m.from===selected):[];for(let vr=0;vr<8;vr++)for(let vc=0;vc<8;vc++){let r=flipped?7-vr:vr,c=flipped?7-vc:vc,sq='abcdefgh'[c]+(8-r),p=engine.board[r][c];html+=`<button class="square ${(r+c)%2?'dark':'light'} ${last&&(last.from===sq||last.to===sq)?'last-move':''} ${selected===sq?'selected':''} ${legal.some(m=>m.to===sq)?'legal':''}" data-square="${sq}" aria-label="${sq}${p?' '+p:''}">${vc===0?`<span class="coord rank">${8-r}</span>`:''}${vr===7?`<span class="coord file">${'abcdefgh'[c]}</span>`:''}${p?`<span class="piece" aria-hidden="true">${PIECES[p]}</span>`:''}</button>`}$('#board').innerHTML=html;animateMotion(motion);document.querySelectorAll('[data-square]').forEach(b=>b.onclick=()=>squareClick(b.dataset.square));marks.refresh();$('#positionLabel').textContent=engine.index===0?'Starting position':`${Math.ceil(engine.index/2)}${engine.index%2?'.':'...'} ${engine.moves[engine.index-1]}`;$('#positionSub').textContent=`${engine.turn==='w'?'White':'Black'} to move`;$('#prev').disabled=$('#first').disabled=engine.index===0;$('#next').disabled=$('#last').disabled=engine.index===engine.moves.length;}
+
+function playMove(from,to,animate=true){if(!engine.legalMoves().some(m=>m.from===from&&m.to===to))return false;const motion=animate?prepareMotion(from,to):[];engine.move(from,to);selected=null;updateMatch();renderBoard(motion);renderContext();return true}
+function squareClick(sq){let r=8-Number(sq[1]),c='abcdefgh'.indexOf(sq[0]),p=engine.board[r][c];if(selected&&playMove(selected,sq))return;selected=p&&p[0]===engine.turn?sq:null;renderBoard();renderMoveExplorer()}
+createBoardDrag({board:$('#board'),isDrawing:()=>marks.getMode(),canStart:sq=>engine.legalMoves().some(m=>m.from===sq),onMove:(from,to)=>playMove(from,to,false)});
+function renderGames(){const f=currentGame()?gameOwner():currentFolder();$('#gamesHeading').textContent=f?`Games in ${f.name}`:'Games';$('#games').innerHTML=f?.games.length?f.games.map(g=>`<div class="game-entry ${g.id===gameId?'active':''}"><button class="game-item" data-game="${esc(g.id)}"><span class="game-piece">♟</span><span><strong>${esc(g.name)}</strong><small>${esc(g.date||'Your game')}</small></span><span class="chevron">›</span></button><div class="game-entry-actions"><button class="game-action" data-move-game="${esc(g.id)}" aria-label="Move ${esc(g.name)}">Move</button><button class="game-action danger" data-delete-game="${esc(g.id)}" aria-label="Delete ${esc(g.name)}">Delete</button></div></div>`).join(''):'<p class="empty-state">No games yet. Add a game to review it here.</p>';document.querySelectorAll('[data-game]').forEach(b=>b.onclick=()=>{folderId=f.id;selectGame(b.dataset.game)});document.querySelectorAll('[data-move-game]').forEach(b=>b.onclick=()=>transferGame(f.id,b.dataset.moveGame));document.querySelectorAll('[data-delete-game]').forEach(b=>b.onclick=()=>removeGame(f.id,b.dataset.deleteGame));$('#addGame').disabled=!currentFolder();$('#openingView').disabled=!gameId;}
+function renderContext(){const f=currentFolder(),path=folderPath(folders,folderId);renderTree();$('#breadcrumbs').innerHTML=`<span>${side==='white'?'White':'Black'}</span>${path.map(p=>`<span class="crumb-sep">/</span><span>${esc(p.name)}</span>`).join('')}${currentGame()?`<span class="crumb-sep">/</span><span>${esc(currentGame().name)}</span>`:''}`;$('#boardTitle').textContent=currentGame()?.name||f?.name||`${side==='white'?'White':'Black'} repertoire`;$('#openingStatus').textContent=(matched?.folder?`Matched: ${matched.folder.name}${matched.ambiguous?' (multiple saved lines match)':''}`:'No saved opening matched at this position')+(currentGame()&&gameOwner()?.id!==f?.id?` · Game filed in ${gameOwner().name}`:'');studyNotes.render({folders,folder:f,game:currentGame(),moves:engine.moves,index:engine.index});if(storageFailure){const label=document.querySelector('.study-autosave');if(label)label.textContent='Changes not saved'}$('#saveLine').disabled=$('#addBranch').disabled=!f;renderGames();renderMoveExplorer()}
+const gameMoveCache=new WeakMap();
+let currentMoveTree=null;
+function originalGameMoves(){const g=currentGame();if(!g)return [];const cached=gameMoveCache.get(g);if(cached?.pgn===g.pgn)return cached.moves;const parsed=parseLine(g.pgn||'');const result=parsed.ok?parsed.moves:[];gameMoveCache.set(g,{pgn:g.pgn,moves:result});return result}
+const startsWithMoves=(line,prefix)=>prefix.length<=line.length&&prefix.every((move,i)=>line[i]===move);
+function treeNodeFor(prefix){let node=currentMoveTree;for(const move of prefix){node=node?.children?.find(child=>child.san===move);if(!node)return null}return node}
+function renderMoveExplorer(){const gameMoves=originalGameMoves();currentMoveTree=buildMoveTree({folders,side,folderId,moves:engine.moves,index:engine.index,gameMoves});moveView.render(currentMoveTree);const current=treeNodeFor(engine.moves.slice(0,engine.index));$('#next').disabled=engine.index>=engine.moves.length&&!current?.children?.length;$('#returnGame').hidden=!currentGame()||(gameMoves.length===engine.moves.length&&startsWithMoves(gameMoves,engine.moves));}
+function stepNext(){if(engine.index<engine.moves.length){go(engine.index+1);return}const node=treeNodeFor(engine.moves.slice(0,engine.index)),child=node?.children?.[0];if(child)navigateTreeMove(child)}
+function navigateTreeMove(node){const prefix=node.moves||[];if(startsWithMoves(engine.moves,prefix)){go(prefix.length);return}const gameMoves=originalGameMoves();let line=startsWithMoves(gameMoves,prefix)?gameMoves:null;if(!line){const candidates=folders.filter(f=>f.side===side).map(f=>({f,parsed:parseLine(f.line||'')})).filter(c=>c.parsed.ok&&startsWithMoves(c.parsed.moves,prefix));const preferred=candidates.find(c=>c.f.id===folderId&&c.parsed.moves.length>prefix.length);line=(preferred||candidates.sort((a,b)=>b.parsed.moves.length-a.parsed.moves.length)[0])?.parsed.moves||null;}if(!line)line=prefix;const next=new ChessGame();if(!next.load(formatLine(line))){toast(next.error);return}engine=next;engine.go(prefix.length);selected=null;updateMatch();renderBoard();renderContext()}
+$('#returnGame').onclick=()=>{const moves=originalGameMoves();let common=0;while(common<engine.index&&common<moves.length&&engine.moves[common]===moves[common])common++;const next=new ChessGame();if(!next.load(formatLine(moves))){toast(next.error);return}engine=next;engine.go(common);selected=null;updateMatch();renderBoard();renderContext()};
+function render(){renderBoard();renderContext()}
+function modal(title,body,submit){$('#modalTitle').textContent=title;$('#modalForm').innerHTML=body;$('#modalForm').onsubmit=e=>{e.preventDefault();submit(new FormData(e.target))};$('#modal').showModal();$('.cancel').onclick=()=>$('#modal').close()}
+function addFolder(parentId=null){const parent=folders.find(f=>f.id===parentId);const parsed=parent?parseLine(parent.line):null;let continuation='';if(parent&&parsed?.ok&&parsed.moves.every((m,i)=>engine.moves[i]===m)&&engine.index>=parsed.moves.length)continuation=engine.moves.slice(parsed.moves.length,engine.index).join(' ');modal(parent?'Add a subfolder':'Add an opening',`<p class="form-copy">${parent?`Continuing from <strong>${esc(parent.name)}</strong> · ${esc(parent.line||'starting position')}`:`Add a line to your ${side} repertoire.`}</p><label>Folder name<input name="name" required placeholder="e.g. Morphy Defense"></label><label>${parent?'Continuation moves':'Opening moves'} <span>Optional</span><textarea name="line" placeholder="${parent?'e.g. a6 Ba4':'e.g. 1. e4 e5 2. Nf3'}">${esc(continuation)}</textarea></label><p class="form-hint">${parent?'Enter only the moves after the parent position.':'Enter moves from the starting position.'} Leave blank to save the same position.</p><div class="form-actions"><button type="button" class="button secondary cancel">Cancel</button><button class="button primary">Create folder</button></div>`,d=>{let name=String(d.get('name')).trim();if(!name){toast('Enter a folder name');return}let result=makeContinuation(folders,parentId,side,String(d.get('line')).trim());if(!result.ok){toast(result.error);return}const f={id:crypto.randomUUID(),parentId,side,name,line:result.line,idea:'',plan:'',games:[]};folders.push(f);const saved=save();$('#modal').close();selectFolder(f.id);toast(saved?'Folder added':'Folder not saved; export a backup')})}
+function editFolder(){const f=currentFolder();if(!f)return;modal('Edit opening',`<label>Folder name<input name="name" required value="${esc(f.name)}"></label><label>Full opening line <span>from the starting position</span><textarea name="line">${esc(f.line)}</textarea></label><p class="form-hint">The line must include its parent’s moves and remain compatible with its subfolders.</p><div class="form-actions"><button type="button" class="button secondary cancel">Cancel</button><button class="button primary">Save changes</button></div>`,d=>{const name=String(d.get('name')).trim();if(!name){toast('Enter a folder name');return}const result=validateFolderLine(folders,f.id,String(d.get('line')).trim());if(!result.ok){toast(result.error);return}f.name=name;f.line=result.line;const saved=save();$('#modal').close();selectFolder(f.id);toast(saved?'Opening updated':'Changes not saved; export a backup')})}
+function folderOptions(selectedId){return folders.map(f=>{const path=folderPath(folders,f.id).map(x=>x.name).join(' / ');return `<option value="${esc(f.id)}" ${f.id===selectedId?'selected':''}>${f.side==='white'?'White':'Black'} / ${esc(path)}</option>`}).join('')}
+function saveCheckpoint(){if(!setStored('opening-notebook-before-import',JSON.stringify(snapshot())))return false;$('#restoreData').hidden=false;return true}
+function persistActions(){if(marksBlocked){showStorageFailure('Saved board markings could not be read. The original markings have not been changed.');return false}return setStored('opening-notebook-marks-v1',JSON.stringify(annotations))&&save()}
+function removeFolder(){const f=currentFolder();if(!f)return;const info=inspectFolderDeletion(folders,f.id);if(!info.ok){toast(info.error);return}const description=`Delete “${f.name}”, ${info.childCount} subfolder${info.childCount===1?'':'s'} and ${info.gameCount} game${info.gameCount===1?'':'s'}? Their notes and markings will also be removed. You can restore the previous copy from Library Storage.`;confirmAction('Delete opening',description,'Delete opening',()=>{if(!saveCheckpoint())return;const affectedGame=info.ids.includes(gameOwnerId);deleteFolder(folders,f.id,annotations);folderId=(folders.find(x=>x.id===f.parentId)?.id)||folders.find(x=>x.side===side)?.id||null;if(affectedGame){gameId=null;gameOwnerId=null}if(!gameId)setPosition(currentFolder()?.line||'');const saved=persistActions();updateMatch();render();toast(saved?'Opening deleted':'Changes not saved; export a backup')})}
+function removeGame(ownerId,id){const f=folders.find(x=>x.id===ownerId),g=f?.games.find(x=>x.id===id);if(!g)return;confirmAction('Delete game',`Delete “${g.name}” and its game notes and markings? You can restore the previous copy from Library Storage.`,'Delete game',()=>{if(!saveCheckpoint())return;const result=deleteGame(folders,ownerId,id,annotations);if(!result.ok){toast(result.error);return}if(gameId===id){gameId=null;gameOwnerId=null;setPosition(currentFolder()?.line||'')}const saved=persistActions();updateMatch();render();toast(saved?'Game deleted':'Changes not saved; export a backup')})}
+function transferGame(ownerId,id){const f=folders.find(x=>x.id===ownerId),g=f?.games.find(x=>x.id===id);if(!g)return;modal('Move game',`<p class="form-copy">Choose where to keep <strong>${esc(g.name)}</strong>. Its moves, notes and markings will travel with it.</p><label>Destination opening<select name="destination">${folderOptions(ownerId)}</select></label><div class="form-actions"><button type="button" class="button secondary cancel">Cancel</button><button class="button primary">Move game</button></div>`,d=>{const result=moveGame(folders,ownerId,id,String(d.get('destination')),annotations);if(!result.ok){toast(result.error);return}$('#modal').close();if(result.unchanged){toast('Game is already in that folder');return}const wasOpen=gameId===id;side=result.to.side;flipped=side==='black';folderId=result.to.id;gameOwnerId=result.to.id;gameId=id;if(!wasOpen)setPosition(g.pgn,false);const saved=persistActions();updateMatch();render();toast(saved?'Game moved':'Changes not saved; export a backup')})}
+function addGame(){const f=currentFolder();if(!f)return;modal('Paste a game',`<p class="form-copy">Paste a complete game. We’ll suggest the deepest matching line in your ${side} repertoire.</p><label>Game name <span>Optional</span><input name="name" placeholder="e.g. A lesson in development"></label><label>Moves <span>Standard notation or PGN</span><textarea name="pgn" required rows="6" placeholder="1. e4 e5 2. Nf3 Nc6 3. Bb5"></textarea></label><p class="form-hint">Use a game starting from the standard chess position. Comments and variations stay in the pasted text but are not shown as notes.</p><div class="form-actions"><button type="button" class="button secondary cancel">Cancel</button><button class="button primary">Find opening</button></div>`,d=>{const pgn=String(d.get('pgn')).trim(),found=matchGameFolder(folders,side,pgn,f.id);if(!found.ok){toast(found.error);return}const white=pgn.match(/\[White\s+"([^"]+)"\]/i)?.[1],black=pgn.match(/\[Black\s+"([^"]+)"\]/i)?.[1];const name=String(d.get('name')).trim()||((white&&black)?`${white} vs ${black}`:'Imported game');const target=found.folder||f;const reason=found.folder?(found.ambiguous?'Several saved lines match. Choose where to file this game.':`Matched your saved line: ${target.name}.`):'No saved opening matched. Choose a folder or use the current one.';$('#modal').close();modal('Choose a game folder',`<p class="form-copy">${esc(reason)}</p><label>Destination opening<select name="destination">${folderOptions(target.id)}</select></label><p class="form-hint">You can move the game later. Only your saved opening lines are used.</p><div class="form-actions"><button type="button" class="button secondary cancel">Cancel</button><button class="button primary">Add game</button></div>`,choice=>{const destination=folders.find(x=>x.id===String(choice.get('destination')));if(!destination){toast('Choose an opening');return}const g={id:crypto.randomUUID(),name,date:'Your game',pgn,notes:{},gameNote:''};destination.games.push(g);const saved=save();$('#modal').close();side=destination.side;flipped=side==='black';folderId=destination.id;selectGame(g.id);toast(saved?'Game added':'Game not saved; export a backup')})})}
+$('#editFolder').onclick=()=>editFolder();$('#deleteFolder').onclick=()=>removeFolder();
+$('#sideWhite').onclick=()=>switchSide('white');$('#sideBlack').onclick=()=>switchSide('black');$('#addRoot').onclick=()=>addFolder();$('#addChild').onclick=()=>addFolder(folderId);$('#addBranch').onclick=()=>addFolder(folderId);$('#addGame').onclick=addGame;$('#closeModal').onclick=()=>$('#modal').close();$('#openingView').onclick=()=>{gameId=null;gameOwnerId=null;setPosition(currentFolder()?.line||'');updateMatch();render()};$('#flip').onclick=()=>{flipped=!flipped;renderBoard();renderMoveExplorer()};$('#drawMode').onclick=()=>marks.setMode(!marks.getMode());$('#clearMarks').onclick=()=>marks.clear();
+function go(index){const target=Math.max(0,Math.min(engine.moves.length,index));let motion=[];if(target===engine.index+1){const move=engine.history[engine.index];motion=prepareMotion(move.from,move.to)}else if(target===engine.index-1){const move=engine.history[target];motion=prepareMotion(move.to,move.from)}engine.go(target);selected=null;updateMatch();renderBoard(motion);renderContext()}
+$('#first').onclick=()=>go(0);$('#prev').onclick=()=>go(engine.index-1);$('#next').onclick=stepNext;$('#last').onclick=()=>go(engine.moves.length);$('#saveLine').onclick=()=>{if(!currentFolder())return;const result=validateFolderLine(folders,folderId,formatLine(engine.moves.slice(0,engine.index)));if(!result.ok){toast(result.error);return}currentFolder().line=result.line;const saved=save();updateMatch();renderContext();toast(saved?'Folder position saved':'Changes not saved; export a backup')};document.addEventListener('keydown',e=>{if(e.target.matches('input, textarea, select')||$('#modal').open)return;if(e.key==='ArrowLeft')$('#prev').click();if(e.key==='ArrowRight')$('#next').click()});setPosition(currentFolder()?.line||'');updateMatch();render();
+
+function snapshot(){return {version:1,folders,annotations}}
+function validSnapshot(data){return data && typeof data==='object' && validStoredLibrary(data.folders) && (!('annotations' in data) || validMarkings(data.annotations))}
+function applySnapshot(data){
+ const wasBlocked=storageBlocked||marksBlocked;
+ if(!validSnapshot(data))throw new Error('Invalid library data');
+ if(!storageBlocked&&!saveCheckpoint())throw new Error('The current library could not be backed up');
+ const replacement=migrateLibrary(data.folders,[]);migrateNotes(replacement);
+ const nextMarks=data.annotations||{};let oldMarks=null,marksWritten=false;
+ try{
+  oldMarks=storage.getItem('opening-notebook-marks-v1');
+  if(oldMarks!==null){let key=`opening-notebook-marks-recovery-${Date.now()}`,n=0;while(storage.getItem(key)!==null)key=`opening-notebook-marks-recovery-${Date.now()}-${++n}`;storage.setItem(key,oldMarks);if(storage.getItem(key)!==oldMarks)throw new Error('The current markings could not be backed up')}
+  storage.setItem('opening-notebook-marks-v1',JSON.stringify(nextMarks));marksWritten=true;
+  const result=storageBlocked?restoreLibrary(storage,replacement):saveLibrary(storage,replacement);
+  if(!result.ok)throw new Error(result.error.message);
+ }catch(error){
+  if(marksWritten){try{if(oldMarks===null)storage.removeItem('opening-notebook-marks-v1');else storage.setItem('opening-notebook-marks-v1',oldMarks)}catch{}}
+  showStorageFailure(error.message||'The library could not be imported. The previous copy was kept.');throw error;
+ }
+ folders=replacement;annotations=nextMarks;storageBlocked=false;marksBlocked=false;originalRaw=null;originalMarksRaw=null;migrateGameMarkings();
+ if(!setStored('opening-notebook-user-data-v1','1'))throw new Error('The imported library was saved, but the browser could not update its status');
+ storageFailure=null;$('#storageWarning').hidden=true;$('#downloadOriginal').hidden=true;$('#downloadOriginalMarks').hidden=true;$('#exportData').disabled=false;$('#syncNow').hidden=false;hasUserData=true;if(wasBlocked)syncController?.start();side='white';flipped=false;folderId=folders.find(f=>f.side===side)?.id||null;gameId=null;gameOwnerId=null;setPosition(currentFolder()?.line||'');updateMatch();render();
+}
+function confirmAction(title,description,label,action){modal(title,`<p class="form-copy">${esc(description)}</p><div class="form-actions"><button type="button" class="button secondary cancel">Cancel</button><button class="button primary">${esc(label)}</button></div>`,()=>{$('#modal').close();action()})}
+$('#exportData').onclick=()=>{const blob=new Blob([JSON.stringify(snapshot(),null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='chess-study-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Backup download started. Check your Downloads.')};
+$('#importData').onclick=()=>$('#importFile').click();
+$('#downloadOriginalMarks').onclick=()=>{if(originalMarksRaw===null)return;const blob=new Blob([originalMarksRaw],{type:'text/plain'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='chess-original-markings.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Original markings download started. Check your Downloads.')};
+$('#downloadOriginal').onclick=()=>{if(originalRaw===null)return;const blob=new Blob([originalRaw],{type:'text/plain'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='chess-original-library.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);toast('Original data download started. Check your Downloads.')};
+$('#restoreData').hidden=!getStored('opening-notebook-before-import');
+$('#restoreData').onclick=()=>{let previous;try{previous=JSON.parse(getStored('opening-notebook-before-import'));if(!validSnapshot(previous))throw new Error()}catch{toast('No previous copy is available');return}confirmAction('Restore previous copy','This replaces the current library on this device with the copy saved before the last import.','Restore copy',()=>{try{applySnapshot(previous);syncController?.markChanged();toast('Previous copy restored')}catch(error){toast(error.message||'Could not restore the previous copy')}})};
+$('#importFile').onchange=async e=>{const file=e.target.files[0];e.target.value='';if(!file)return;let data;try{if(file.size>1024*1024)throw new Error();data=JSON.parse(await file.text());if(!validSnapshot(data))throw new Error()}catch{toast('This is not a valid study backup');return}confirmAction('Import backup','This replaces the library on this device. The current copy will be kept in browser storage as a backup.','Import backup',()=>{try{applySnapshot(data);syncController?.markChanged();toast('Backup imported')}catch(error){toast(error.message||'Could not import the backup')}})};
+syncController=createSyncController({getSnapshot:snapshot,applySnapshot,hasLocalData:()=>hasUserData,onStatus:status=>{$('#syncStatus').textContent=status.message;$('#syncNow').disabled=status.kind==='checking'||status.kind==='syncing';$('#useCloud').hidden=status.kind!=='conflict';$('#useLocal').hidden=!['setup','conflict'].includes(status.kind)}});
+$('#syncNow').onclick=()=>{if(location.protocol==='file:'||['offline','local-only'].includes(syncController.getStatus().kind)){
+ modal('Synchronize with a backup',`<p class="form-copy">Cloud synchronization is not connected. To move your study between devices, export a backup, save it somewhere both devices can access, then import it on the other device.</p><div class="form-actions sync-modal-actions"><button type="button" class="button secondary cancel">Close</button><button type="button" id="syncImport" class="button secondary">Import backup</button><button type="button" id="syncExport" class="button primary">Export backup</button></div>`,()=>{});
+ $('#syncExport').onclick=()=>{$('#modal').close();$('#exportData').click()};$('#syncImport').onclick=()=>{$('#modal').close();$('#importFile').click()};
+ }else syncController.syncNow()};$('#useCloud').onclick=()=>confirmAction('Use cloud copy','This replaces this device’s library with your cloud copy. A local backup will be retained.','Use cloud copy',()=>syncController.useCloud());$('#useLocal').onclick=()=>confirmAction('Upload this device','This saves this device’s library to your account, replacing the current cloud copy if there is one.','Upload library',()=>syncController.useLocal());
+if(!storageBlocked&&!marksBlocked)syncController.start();else{$('#syncStatus').textContent='Synchronization is paused to protect the saved data.';$('#syncNow').hidden=true;$('#exportData').disabled=originalRaw!==null;}
+
+</script></body></html>
