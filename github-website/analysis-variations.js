@@ -1,3 +1,5 @@
+import { ChessGame } from './chess.js';
+
 /** Saved game analysis paths. Paths use full SAN move sequences from the start,
  * so they can share prefixes and game position notes remain tied to their line.
  * Existing fields on the game and on variation records are never rewritten.
@@ -18,6 +20,12 @@ export function saveAnalysisVariation(game, moves) {
   const existing = game.analysisVariations || [];
   if (existing.some(entry => entry && typeof entry === 'object' && !Array.isArray(entry) && validMoves(entry.moves) && entry.moves.length === moves.length && isMovePrefix(entry.moves, moves))) return {ok:true, changed:false};
   if (!game.analysisVariations) game.analysisVariations = [];
+  // A plain prefix is represented by the longer path; retain records carrying
+  // extra fields so information from other versions is never discarded.
+  for (let i=game.analysisVariations.length-1;i>=0;i--) {
+    const entry=game.analysisVariations[i];
+    if (entry && typeof entry==='object' && !Array.isArray(entry) && Object.keys(entry).length===1 && validMoves(entry.moves) && entry.moves.length<moves.length && isMovePrefix(entry.moves,moves)) game.analysisVariations.splice(i,1);
+  }
   game.analysisVariations.push({moves:moves.slice()});
   return {ok:true, changed:true};
 }
@@ -33,6 +41,13 @@ export function deleteAnalysisVariation(game, prefix) {
     if (entry && typeof entry === 'object' && !Array.isArray(entry) && validMoves(entry.moves) && isMovePrefix(prefix, entry.moves)) {
       game.analysisVariations.splice(i, 1); changed = true;
     }
+  }
+  if (changed && prefix.length>1) {
+    const parent=prefix.slice(0,-1), parsed=new ChessGame();
+    const readable=parsed.load(game.pgn||'');
+    // Keep a newly exposed analysis position, unless a surviving path already
+    // contains it. Invalid games are left untouched rather than guessed at.
+    if (readable && !isMovePrefix(parent,parsed.moves) && !getAnalysisVariations(game).some(moves=>isMovePrefix(parent,moves))) game.analysisVariations.push({moves:parent});
   }
   return {ok:true, changed};
 }

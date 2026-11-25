@@ -34,7 +34,7 @@ export function createStudyNotes({container, onChange = () => {}, onJump = () =>
     }).join('');
   }
   function folderCard(folder,i) {
-    const field=editable({key:`idea:${folder.id}`,value:folder.note,label:'Ideas and plans',placeholder:'Write the key ideas and plans for this line…',attributes:`data-idea="${escapeText(folder.id)}"`});
+    const field=editable({key:`idea:${folder.id}`,value:folder.note??[folder.idea,folder.plan].filter(Boolean).join('\n\n'),label:'Ideas and plans',placeholder:'Write the key ideas and plans for this line…',attributes:`data-idea="${escapeText(folder.id)}"`});
     return `<article class="study-opening-card"><div class="study-card-heading"><div><span class="study-level">${i===0?'OPENING':`BRANCH ${i}`}</span><h3>${escapeText(folder.name)}</h3></div><span class="study-card-current">${folder.id===context.folder?.id?'CURRENT':'PARENT'}</span></div>${field}<div class="study-blunders-header"><h4>Blunders &amp; traps</h4><button type="button" class="study-add-warning" data-add-warning="${escapeText(folder.id)}">＋ Mark this position</button></div>${warningRows(folder)}</article>`;
   }
   function gameCard() {

@@ -25,8 +25,30 @@ export function migrateLibrary(input, seed = []) {
 // Keep the guard tied to the particular storage object, without storing data
 // outside the browser or mutating the original value.
 const blockedStores = new WeakMap();
+// Each app instance remembers exactly what it read. A stale tab must not
+// silently replace changes saved by another tab.
+const libraryBaselines = new WeakMap();
 const isStore = value => (typeof value === 'object' && value !== null) || typeof value === 'function';
 const blockStore = (storage, error) => { if (isStore(storage)) blockedStores.set(storage, error); };
+const rememberLibrary = (storage, v2, v1) => { if (isStore(storage)) libraryBaselines.set(storage, {v2, v1}); };
+const forgetLibrary = storage => { if (isStore(storage)) libraryBaselines.delete(storage); };
+
+/** Check for stale local state before a write, without changing stored data. */
+export function checkLibraryCurrent(storage) {
+  if (isStore(storage) && blockedStores.has(storage)) return {ok:false,error:{kind:'blocked',message:'Saving is paused to protect the unreadable library. Download the original data before recovering it.'}};
+  const baseline = isStore(storage) ? libraryBaselines.get(storage) : null;
+  if (!baseline) return {ok:false,error:{kind:'blocked',message:'The saved library has not been safely read. Reload before saving.'}};
+  try {
+    const v2 = storage.getItem(LIBRARY_KEY);
+    const v1 = v2 === null ? storage.getItem(LEGACY_LIBRARY_KEY) : null;
+    if (v2 !== baseline.v2 || (v2 === null && v1 !== baseline.v1)) {
+      return {ok:false,error:{kind:'conflict',message:'The library changed in another tab. Your changes are not saved; export a backup, then reload and review the saved library.'}};
+    }
+    return {ok:true};
+  } catch (_) {
+    return {ok:false,error:{kind:'unavailable',message:'Browser storage is unavailable. Changes could not be saved; export a backup.'}};
+  }
+}
 export const validStoredLibrary = value => Array.isArray(value) && value.every(folder => {
   if (!folder || typeof folder !== 'object' || Array.isArray(folder) || typeof folder.id !== 'string' || typeof folder.name !== 'string') return false;
   if ('side' in folder && folder.side !== 'white' && folder.side !== 'black') return false;
@@ -48,6 +70,7 @@ export function readLibrary(storage, seed = []) {
     // fall back to v1 and accidentally overwrite that value with older content.
     legacy = saved === null ? storage.getItem(LEGACY_LIBRARY_KEY) : null;
   } catch (_) {
+    forgetLibrary(storage);
     const error = {kind:'unavailable', key:null, message:'Browser storage is unavailable. Your library has not been replaced.'};
     blockStore(storage, {error, key:null, raw:null});
     return {folders:[], migrated:false, storageError:error, raw:null, writeBlocked:true};
@@ -58,26 +81,29 @@ export function readLibrary(storage, seed = []) {
     let parsed;
     try { parsed = JSON.parse(raw); } catch (_) { parsed = null; }
     if (!validStoredLibrary(parsed)) {
+      forgetLibrary(storage);
       const error = {kind:'corrupt', key, message:'The saved library could not be read. The original data is still preserved; download it before attempting recovery.'};
       blockStore(storage, {error, key, raw});
       return {folders:[], migrated:false, storageError:error, raw, writeBlocked:true};
     }
     if (isStore(storage)) blockedStores.delete(storage);
+    rememberLibrary(storage, saved, legacy);
     return {folders:migrateLibrary(parsed,seed), migrated:key===LEGACY_LIBRARY_KEY, storageError:null, raw:null, writeBlocked:false};
   }
   if (isStore(storage)) blockedStores.delete(storage);
+  rememberLibrary(storage, saved, legacy);
   return {folders:migrateLibrary(seed,seed), migrated:false, storageError:null, raw:null, writeBlocked:false};
 }
 
 /** Save only after a safe read, reporting failures to the caller. */
 export function saveLibrary(storage, folders) {
-  if (isStore(storage) && blockedStores.has(storage)) {
-    return {ok:false, error:{kind:'blocked', message:'Saving is paused to protect the unreadable library. Download the original data before recovering it.'}};
-  }
+  const current = checkLibraryCurrent(storage);
+  if (!current.ok) return current;
   if (!validStoredLibrary(folders)) return {ok:false,error:{kind:'invalid',message:'This library could not be saved because its data is invalid.'}};
   try {
     const serialized = JSON.stringify(folders);
     storage.setItem(LIBRARY_KEY, serialized);
+    rememberLibrary(storage, serialized, null);
     return {ok:true};
   } catch (error) {
     const quota = error && (error.name === 'QuotaExceededError' || error.name === 'NS_ERROR_DOM_QUOTA_REACHED');
@@ -93,6 +119,10 @@ export function saveLibrary(storage, folders) {
 export function restoreLibrary(storage, folders) {
   if (!validStoredLibrary(folders)) return {ok:false,error:{kind:'invalid',message:'The replacement library is invalid; nothing was changed.'}};
   const blocked = isStore(storage) ? blockedStores.get(storage) : null;
+  if (!blocked) {
+    const current = checkLibraryCurrent(storage);
+    if (!current.ok) return current;
+  }
   let sourceKey = null, sourceRaw = null, backupKey = null;
   try {
     const v2 = storage.getItem(LIBRARY_KEY);
@@ -113,7 +143,9 @@ export function restoreLibrary(storage, folders) {
         return {ok:false,error:{kind:'backup',message:'Could not verify the recovery copy; nothing was changed.'}};
       }
     }
-    storage.setItem(LIBRARY_KEY,JSON.stringify(folders));
+    const serialized = JSON.stringify(folders);
+    storage.setItem(LIBRARY_KEY,serialized);
+    rememberLibrary(storage, serialized, null);
     if (isStore(storage)) blockedStores.delete(storage);
     return {ok:true,backupKey};
   } catch (error) {

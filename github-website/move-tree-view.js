@@ -25,6 +25,20 @@ export function createMoveTreeView({container, onNavigate = () => {}, onDeleteAn
   }
 
   function draw() {
+    const previousPosition = [...navigable.values()].find(node=>node.isCurrent);
+    const previousKey = previousPosition ? keyOf(previousPosition) : null;
+    const scrollPositions = new Map();
+    for (const area of container.querySelectorAll('[data-move-scroll]')) scrollPositions.set(area.dataset.moveScroll, area.scrollTop);
+    function restoreScroll() {
+      for (const area of container.querySelectorAll('[data-move-scroll]')) if (scrollPositions.has(area.dataset.moveScroll)) area.scrollTop=scrollPositions.get(area.dataset.moveScroll);
+      const current=[...navigable.values()].find(node=>node.isCurrent);
+      if (previousKey===null || !current || previousKey===keyOf(current)) return;
+      const button=container.querySelector('[aria-current="step"]'), area=button?.closest('[data-move-scroll]');
+      if (!area) return;
+      const bounds=area.getBoundingClientRect(), target=button.getBoundingClientRect();
+      if (target.top<bounds.top) area.scrollTop+=target.top-bounds.top;
+      else if (target.bottom>bounds.bottom) area.scrollTop+=target.bottom-bounds.bottom;
+    }
     closeMenu();
     navigable=new Map();let counter=0;
     if (!root) {
@@ -36,6 +50,26 @@ export function createMoveTreeView({container, onNavigate = () => {}, onDeleteAn
     const rootDescription=rootWarnings.map(w=>[w.folderName,w.text].filter(Boolean).join(': ')).filter(Boolean).join(' | ');
     const startLabel=`Starting position${rootWarnings.length?', marked blunder':''}${rootDescription?': '+rootDescription:''}`;
     const start=`<div class="move-tree-start-row"><button type="button" class="move-tree-move move-tree-start ${root.isCurrent?'is-current':''}" data-tree-node="0" aria-label="${escapeMoveTreeText(startLabel)}" ${root.isCurrent?'aria-current="step"':''} title="${escapeMoveTreeText(rootDescription || 'Show the starting position')}">Start${rootWarnings.length?'<span class="move-tree-blunder" aria-hidden="true">??</span>':''}</button></div>`;
+    if (root.gameMode) {
+      // Keep the actual game in one uninterrupted sequence. Each analysis branch
+      // names its parent position, including branches nested inside analysis.
+      const recorded=[]; let node=root;
+      while (node) { const next=(node.children || []).find(child=>child.onGameLine); if(!next)break; recorded.push(next); node=next; }
+      const gameRows=recorded.map((item,i)=>moveMarkup(item,i===0,String(++counter))).join('');
+      const analysisRows=[];
+      const describePath=moves=>moves.length ? moves.map((san,i)=>(i%2===0?`${Math.floor(i/2)+1}. `:'')+san).join(' ') : 'starting position';
+      function appendVariation(start) {
+        const path=[];let current=start;
+        while(current) { path.push(current); const children=current.children || []; if(children.length!==1)break; current=children[0]; }
+        const parentMoves=(start.moves || []).slice(0,-1);
+        const row=path.map((item,i)=>moveMarkup(item,i===0,String(++counter))).join('');
+        analysisRows.push(`<div class="move-tree-line is-variation"><div class="move-tree-sequence"><span class="move-tree-number" style="white-space:normal;overflow-wrap:anywhere">After ${escapeMoveTreeText(describePath(parentMoves))}:</span>${row}</div></div>`);
+        for(const child of sortChildren(path.at(-1)?.children || [])) appendVariation(child);
+      }
+      for(const parent of [root,...recorded]) for(const child of sortChildren(parent.children || [])) if(!child.onGameLine) appendVariation(child);
+      container.innerHTML=`<div class="move-tree-heading"><div><span class="move-tree-overline">GAME ANALYSIS</span><h2>Game and analysis moves</h2><p>Choose an analysis move to follow it. Right-click an analysis move to delete it and its continuations.</p></div></div><div class="move-tree-content" style="max-height:none;overflow:visible"><div class="move-tree-overline">PLAYED GAME</div><div data-move-scroll="game" style="max-height:130px;overflow:auto" aria-label="Moves played in this game">${start}<div class="move-tree-sequence">${gameRows || '<span class="move-tree-empty">No moves recorded in this game.</span>'}</div></div><div class="move-tree-overline" style="margin-top:12px">ANALYSIS VARIATIONS</div><div data-move-scroll="analysis" style="max-height:200px;overflow:auto" aria-label="Saved analysis variations">${analysisRows.join('') || '<p class="move-tree-empty">Play an alternative move to add a variation.</p>'}</div></div>`;
+      restoreScroll();return;
+    }
     const rows=[];
     function appendLine(start, depth, isBranch, pauseAfterFirst = false) {
       const path=[];let node=start;
@@ -66,7 +100,8 @@ export function createMoveTreeView({container, onNavigate = () => {}, onDeleteAn
     }
     appendChildren(root,0,true);
     const gameMode=!!root.gameMode;
-    container.innerHTML=`<div class="move-tree-heading"><div><span class="move-tree-overline">${gameMode?'GAME ANALYSIS':'OPENING EXPLORER'}</span><h2>${gameMode?'Moves you played':'Moves &amp; continuations'}</h2><p>${gameMode?'Right-click an analysis move to delete it and its continuations.':'Explore saved opening lines and continuations.'}</p></div>${gameMode?'':'<span class="move-tree-legend"><span>??</span> Your blunder marks</span>'}</div><div class="move-tree-content" aria-label="${gameMode?'Moves played in this game':'Saved moves and continuations'}">${start}${rows.length ? rows.join('') : '<p class="move-tree-empty">No moves recorded in this game.</p>'}</div>`;
+    container.innerHTML=`<div class="move-tree-heading"><div><span class="move-tree-overline">${gameMode?'GAME ANALYSIS':'OPENING EXPLORER'}</span><h2>${gameMode?'Moves you played':'Moves &amp; continuations'}</h2><p>${gameMode?'Right-click an analysis move to delete it and its continuations.':'Explore saved opening lines and continuations.'}</p></div>${gameMode?'':'<span class="move-tree-legend"><span>??</span> Your blunder marks</span>'}</div><div class="move-tree-content" data-move-scroll="opening" aria-label="${gameMode?'Moves played in this game':'Saved moves and continuations'}">${start}${rows.length ? rows.join('') : '<p class="move-tree-empty">No moves recorded in this game.</p>'}</div>`;
+    restoreScroll();
   }
   function click(event) {
     const button=event.target.closest('button');if(!button || !container.contains(button))return;

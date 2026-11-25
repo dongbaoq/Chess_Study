@@ -8,6 +8,7 @@ const ANNOTATION_COLORS = {
   yellow: '#d5a51e'
 };
 const VALID_SQUARE = /^[a-h][1-8]$/;
+const isKnownColor = color => typeof color === 'string' && Object.hasOwn(ANNOTATION_COLORS,color);
 const eventColor = event => event.shiftKey ? 'red' : event.altKey ? 'blue' : (event.ctrlKey || event.metaKey) ? 'yellow' : 'green';
 
 /**
@@ -19,10 +20,11 @@ const eventColor = event => event.shiftKey ? 'red' : event.altKey ? 'blue' : (ev
  * - getKey: returns the identity of the currently displayed position.
  * - read(key): returns { squares: { e4: 'green' }, arrows: [{from,to,color}] } or null.
  * - write(key, markings): persists a copy of those markings.
+ * - onError(message): reports an unreadable or unsupported marking without overwriting it.
  * Call refresh() after changing position or recreating squares, setMode(true) to
  * enable tap/drag drawing on touch screens, clear() to clear the current key.
  */
-export function createBoardAnnotations({ board, getFlipped = () => false, getKey = () => '', read = () => null, write = () => {}, onModeChange = () => {} }) {
+export function createBoardAnnotations({ board, getFlipped = () => false, getKey = () => '', read = () => null, write = () => {}, onModeChange = () => {}, onError = () => {} }) {
   const host = board.parentElement;
   if (getComputedStyle(host).position === 'static') host.style.position = 'relative';
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -37,9 +39,9 @@ export function createBoardAnnotations({ board, getFlipped = () => false, getKey
   function normalize(value) {
     const squares = {}, arrows = [];
     if (value && typeof value === 'object') {
-      for (const [square, color] of Object.entries(value.squares || {})) if (VALID_SQUARE.test(square) && ANNOTATION_COLORS[color]) squares[square] = color;
+      for (const [square, color] of Object.entries(value.squares || {})) if (VALID_SQUARE.test(square) && isKnownColor(color)) squares[square] = color;
       if (Array.isArray(value.arrows)) for (const item of value.arrows) {
-        if (item && VALID_SQUARE.test(item.from) && VALID_SQUARE.test(item.to) && item.from !== item.to && ANNOTATION_COLORS[item.color]) arrows.push({from: item.from, to: item.to, color: item.color});
+        if (item && VALID_SQUARE.test(item.from) && VALID_SQUARE.test(item.to) && item.from !== item.to && isKnownColor(item.color)) arrows.push({from: item.from, to: item.to, color: item.color});
       }
     }
     return { squares, arrows };
@@ -66,15 +68,63 @@ export function createBoardAnnotations({ board, getFlipped = () => false, getKey
     if (pending) { const [x,y] = point(pending.square); out += `<rect x="${x-.46}" y="${y-.46}" width=".92" height=".92" fill="none" stroke="${ANNOTATION_COLORS[pending.color]}" stroke-width=".08" />`; }
     svg.innerHTML = out;
   }
-  function toggle(from,to,color) {
-    const key = String(getKey() ?? ''), data = normalize(read(key));
-    if (from === to) {
-      if (data.squares[from] === color) delete data.squares[from]; else data.squares[from] = color;
-    } else {
-      const i = data.arrows.findIndex(a => a.from === from && a.to === to);
-      if (i >= 0) { const old = data.arrows.splice(i,1)[0]; if (old.color !== color) data.arrows.push({from,to,color}); }
-      else data.arrows.push({from,to,color});
+  // Edit the stored record itself, rather than the display-only normalized view.
+  // Fields and entries from newer versions must survive unrelated edits.
+  function editableRecord(value) {
+    if (value == null) return {};
+    if (typeof value !== 'object' || Array.isArray(value)) {
+      onError('This position’s markings could not be read. The original data was preserved.');
+      return null;
     }
+    return {...value};
+  }
+  function readableArrow(item) {
+    return !!item && typeof item === 'object' && VALID_SQUARE.test(item.from) && VALID_SQUARE.test(item.to) && item.from !== item.to && isKnownColor(item.color);
+  }
+  function toggle(from,to,color) {
+    const key = String(getKey() ?? ''), data = editableRecord(read(key));
+    if (!data) return;
+    if (from === to) {
+      if (data.squares != null && (typeof data.squares !== 'object' || Array.isArray(data.squares))) {
+        onError('This position’s square markings could not be read. The original data was preserved.');
+        return;
+      }
+      const squares = {...(data.squares || {})};
+      if (Object.hasOwn(squares,from) && !isKnownColor(squares[from])) {
+        onError('This square has an unsupported marking. The original data was preserved.');
+        return;
+      }
+      if (squares[from] === color) delete squares[from]; else squares[from] = color;
+      data.squares = squares;
+    } else {
+      if (data.arrows != null && !Array.isArray(data.arrows)) {
+        onError('This position’s arrows could not be read. The original data was preserved.');
+        return;
+      }
+      const arrows = (data.arrows || []).slice();
+      const i = arrows.findIndex(a => readableArrow(a) && a.from === from && a.to === to);
+      if (i >= 0) {
+        if (arrows[i].color === color) arrows.splice(i,1);
+        else arrows[i] = {...arrows[i], color};
+      } else arrows.push({from,to,color});
+      data.arrows = arrows;
+    }
+    write(key,data);
+    render();
+  }
+  function clearVisible() {
+    const key = String(getKey() ?? ''), data = editableRecord(read(key));
+    if (!data) return;
+    if (data.squares != null && (typeof data.squares !== 'object' || Array.isArray(data.squares)) || data.arrows != null && !Array.isArray(data.arrows)) {
+      onError('This position’s markings could not be read. The original data was preserved.');
+      return;
+    }
+    if (data.squares != null) {
+      const squares = {...data.squares};
+      for (const [square,color] of Object.entries(squares)) if (VALID_SQUARE.test(square) && isKnownColor(color)) delete squares[square];
+      data.squares = squares;
+    }
+    if (data.arrows != null) data.arrows = data.arrows.filter(item => !readableArrow(item));
     write(key,data);
     render();
   }
@@ -115,7 +165,7 @@ export function createBoardAnnotations({ board, getFlipped = () => false, getKey
     refresh: render,
     setMode(value) { mode = !!value; pending = null; board.style.touchAction = mode ? 'none' : ''; board.classList.toggle('drawing-mode',mode); render(); onModeChange(mode); },
     getMode() { return mode; },
-    clear() { const key=String(getKey() ?? ''); pending=null; write(key,{squares:{},arrows:[]}); render(); },
+    clear() { pending=null; clearVisible(); },
     destroy() { board.removeEventListener('pointerdown',pointerDown,true); board.removeEventListener('pointerup',pointerUp,true); board.removeEventListener('pointercancel',pointerCancel,true); board.removeEventListener('contextmenu',contextMenu); board.removeEventListener('click',swallowClick,true); board.style.touchAction=''; board.classList.remove('drawing-mode'); svg.remove(); }
   };
 }
