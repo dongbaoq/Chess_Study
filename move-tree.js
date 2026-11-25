@@ -58,6 +58,7 @@ export function buildMoveTree({folders = [], side = 'white', folderId = null, mo
   // Insertion from the current board/game first makes it the main line.
   if (gameMode) {
     add(originalGame);
+    add(line);
   } else {
     add(line);
     add(originalGame);
@@ -77,10 +78,11 @@ export function buildMoveTree({folders = [], side = 'white', folderId = null, mo
   function mark(node) {
     node.onLine = node.moves.length <= line.length && node.moves.every((move,i) => move === line[i]);
     node.onGameLine = node.moves.length <= originalGame.length && node.moves.every((move,i) => move === originalGame[i]);
+    node.isAnalysis = gameMode && !node.onGameLine && node.moves.length > 0;
     node.isCurrent = node.onLine && node.ply === position;
     node.isPlayed = node.onLine && node.ply <= position;
     for (const child of node.children) mark(child);
-    node.children.sort((a,b) => Number(b.onLine)-Number(a.onLine));
+    node.children.sort((a,b) => gameMode ? Number(b.onGameLine)-Number(a.onGameLine) || Number(b.onLine)-Number(a.onLine) : Number(b.onLine)-Number(a.onLine));
   }
   mark(root);
   return root;

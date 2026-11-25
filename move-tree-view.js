@@ -11,7 +11,7 @@ export function createMoveTreeView({container, onNavigate = () => {}}) {
   let root = null, navigable = new Map();
   const collapsed = new Set();
   const keyOf = node => (node.moves || []).join(' ');
-  const sortChildren = children => (children || []).slice().sort((a,b) => Number(!!b.isCurrent)-Number(!!a.isCurrent) || Number(!!b.onLine)-Number(!!a.onLine) || Number(!!b.onGameLine)-Number(!!a.onGameLine));
+  const sortChildren = children => (children || []).slice().sort((a,b) => Number(!!b.isCurrent)-Number(!!a.isCurrent) || Number(!!b.onGameLine)-Number(!!a.onGameLine) || Number(!!b.onLine)-Number(!!a.onLine));
 
   function moveMarkup(node, first, lookupId) {
     const ply=Number(node.ply)||0;
@@ -21,7 +21,7 @@ export function createMoveTreeView({container, onNavigate = () => {}}) {
     const label=`${number ? number+' ' : ''}${node.san || ''}${warnings.length ? ', marked blunder' : ''}${explanation ? ': '+explanation : ''}`;
     navigable.set(lookupId,node);
     const tag=(node.folders || []).map(folder => `<span class="move-tree-folder" title="Saved opening">${escapeMoveTreeText(folder.name)}</span>`).join('');
-    return `<span class="move-tree-token">${number?`<span class="move-tree-number">${number}</span>`:''}<button type="button" class="move-tree-move ${node.isCurrent?'is-current':''} ${node.onGameLine?'is-game':''}" data-tree-node="${lookupId}" aria-label="${escapeMoveTreeText(label)}" ${node.isCurrent?'aria-current="step"':''} title="${escapeMoveTreeText(explanation || 'Show this position')}">${escapeMoveTreeText(node.san || '')}${warnings.length?'<span class="move-tree-blunder" aria-hidden="true">??</span>':''}</button>${tag}</span>`;
+    return `<span class="move-tree-token">${number?`<span class="move-tree-number">${number}</span>`:''}<button type="button" class="move-tree-move ${node.isCurrent?'is-current':''} ${node.onGameLine?'is-game':''} ${node.isAnalysis?'is-analysis':''}" data-tree-node="${lookupId}" aria-label="${escapeMoveTreeText(label)}" ${node.isCurrent?'aria-current="step"':''} title="${escapeMoveTreeText(explanation || 'Show this position')}">${escapeMoveTreeText(node.san || '')}${warnings.length?'<span class="move-tree-blunder" aria-hidden="true">??</span>':''}</button>${tag}</span>`;
   }
 
   function draw() {
@@ -55,7 +55,7 @@ export function createMoveTreeView({container, onNavigate = () => {}}) {
     const starts=sortChildren(root.children);
     starts.forEach((child,index)=>appendLine(child,index?1:0,!!index));
     const gameMode=!!root.gameMode;
-    container.innerHTML=`<div class="move-tree-heading"><div><span class="move-tree-overline">${gameMode?'GAME ANALYSIS':'OPENING EXPLORER'}</span><h2>${gameMode?'Moves you played':'Moves &amp; continuations'}</h2><p>${gameMode?'This line shows only the moves recorded in this game.':'Explore saved opening lines and continuations.'}</p></div>${gameMode?'':'<span class="move-tree-legend"><span>??</span> Your blunder marks</span>'}</div><div class="move-tree-content" aria-label="${gameMode?'Moves played in this game':'Saved moves and continuations'}">${start}${rows.length ? rows.join('') : '<p class="move-tree-empty">No moves recorded in this game.</p>'}</div>`;
+    container.innerHTML=`<div class="move-tree-heading"><div><span class="move-tree-overline">${gameMode?'GAME ANALYSIS':'OPENING EXPLORER'}</span><h2>${gameMode?'Moves you played':'Moves &amp; continuations'}</h2><p>${gameMode?'Played moves are shown normally; your analysis moves are dimmed.':'Explore saved opening lines and continuations.'}</p></div>${gameMode?'':'<span class="move-tree-legend"><span>??</span> Your blunder marks</span>'}</div><div class="move-tree-content" aria-label="${gameMode?'Moves played in this game':'Saved moves and continuations'}">${start}${rows.length ? rows.join('') : '<p class="move-tree-empty">No moves recorded in this game.</p>'}</div>`;
   }
   function click(event) {
     const button=event.target.closest('button');if(!button || !container.contains(button))return;

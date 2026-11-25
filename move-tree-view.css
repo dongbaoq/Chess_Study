@@ -18,3 +18,4 @@
 .move-tree-empty{color:#a5b3a7;font-size:13px;line-height:1.5;margin:0;padding:17px 19px}
 @media(max-width:500px){.move-tree-heading{padding:15px;gap:8px}.move-tree-heading h2{font-size:19px}.move-tree-legend{font-size:10px;white-space:normal;text-align:right;max-width:85px}.move-tree-content{padding:10px 8px 13px}.move-tree-line{padding-left:calc(var(--branch-depth,0) * 8px)}.move-tree-folder{max-width:105px}}
 .move-tree-start-row{margin:0 0 4px}.move-tree-start{font-size:12px;color:#a9b9ac}
+.move-tree-move.is-analysis{opacity:.48}
