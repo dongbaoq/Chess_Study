@@ -12,8 +12,8 @@ dialog select{display:block;width:100%;margin-top:7px;background:#202923;color:#
 .move-explorer .move-tree{margin:0;border:0;border-radius:0;box-shadow:none}
 .storage-warning{margin-top:12px;max-width:700px;background:#422c28;color:#ffd7cb;border:1px solid #96635b;border-radius:6px;padding:10px 12px;font-size:13px;line-height:1.5}.storage-warning[hidden]{display:none}.storage-warning .text-button{color:#ffe2ca;margin-left:6px}
 
-.board.is-analysis .square.light{background:#f1f0e7}
-.board.is-analysis .square.dark{background:#b1c4b4}
-.board.is-analysis .square.light.last-move{background:#e3e8c8}
-.board.is-analysis .square.dark.last-move{background:#ccd6b4}
+.board.is-analysis .square.light{background:#f6f7f4}
+.board.is-analysis .square.dark{background:#c9ddce}
+.board.is-analysis .square.light.last-move{background:#e5f1de}
+.board.is-analysis .square.dark.last-move{background:#bcd9bb}
 .board.is-analysis .square.dark .coord{color:#405b46}

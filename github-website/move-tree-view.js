@@ -6,12 +6,12 @@ const escapeMoveTreeText = value => String(value ?? '').replace(/[&<>"']/g, char
  * render(root) accepts the output of buildMoveTree. Clicking a move calls
  * onNavigate({moves, folders, ply, san}), leaving navigation to the app.
  */
-export function createMoveTreeView({container, onNavigate = () => {}}) {
+export function createMoveTreeView({container, onNavigate = () => {}, onDeleteAnalysis = () => {}}) {
   if (!container) throw new Error('A move tree container is required.');
   let root = null, navigable = new Map();
   const collapsed = new Set();
   const keyOf = node => (node.moves || []).join(' ');
-  const sortChildren = children => (children || []).slice().sort((a,b) => Number(!!b.isCurrent)-Number(!!a.isCurrent) || Number(!!b.onGameLine)-Number(!!a.onGameLine) || Number(!!b.onLine)-Number(!!a.onLine));
+  const sortChildren = children => (children || []).slice().sort((a,b) => (root?.gameMode ? Number(!!b.onGameLine)-Number(!!a.onGameLine) : 0) || Number(!!b.isCurrent)-Number(!!a.isCurrent) || Number(!!b.onLine)-Number(!!a.onLine));
 
   function moveMarkup(node, first, lookupId) {
     const ply=Number(node.ply)||0;
@@ -21,10 +21,11 @@ export function createMoveTreeView({container, onNavigate = () => {}}) {
     const label=`${number ? number+' ' : ''}${node.san || ''}${warnings.length ? ', marked blunder' : ''}${explanation ? ': '+explanation : ''}`;
     navigable.set(lookupId,node);
     const tag=(node.folders || []).map(folder => `<span class="move-tree-folder" title="Saved opening">${escapeMoveTreeText(folder.name)}</span>`).join('');
-    return `<span class="move-tree-token">${number?`<span class="move-tree-number">${number}</span>`:''}<button type="button" class="move-tree-move ${node.isCurrent?'is-current':''} ${node.onGameLine?'is-game':''} ${node.isAnalysis?'is-analysis':''}" data-tree-node="${lookupId}" aria-label="${escapeMoveTreeText(label)}" ${node.isCurrent?'aria-current="step"':''} title="${escapeMoveTreeText(explanation || 'Show this position')}">${escapeMoveTreeText(node.san || '')}${warnings.length?'<span class="move-tree-blunder" aria-hidden="true">??</span>':''}</button>${tag}</span>`;
+    return `<span class="move-tree-token">${number?`<span class="move-tree-number">${number}</span>`:''}<button type="button" class="move-tree-move ${node.isCurrent?'is-current':''} ${node.onGameLine?'is-game':''} ${node.isAnalysis?'is-analysis':''}" data-tree-node="${lookupId}" aria-label="${escapeMoveTreeText(label)}" ${node.isCurrent?'aria-current="step"':''} title="${escapeMoveTreeText(explanation || (node.isAnalysis ? 'Show this position. Right-click to delete analysis moves.' : 'Show this position'))}">${escapeMoveTreeText(node.san || '')}${warnings.length?'<span class="move-tree-blunder" aria-hidden="true">??</span>':''}</button>${tag}</span>`;
   }
 
   function draw() {
+    closeMenu();
     navigable=new Map();let counter=0;
     if (!root) {
       container.innerHTML='<div class="move-tree-heading"><div><span class="move-tree-overline">OPENING EXPLORER</span><h2>Moves &amp; continuations</h2></div></div><p class="move-tree-empty">Your moves and saved variations will appear here as you build your repertoire.</p>';
@@ -55,7 +56,7 @@ export function createMoveTreeView({container, onNavigate = () => {}}) {
     const starts=sortChildren(root.children);
     starts.forEach((child,index)=>appendLine(child,index?1:0,!!index));
     const gameMode=!!root.gameMode;
-    container.innerHTML=`<div class="move-tree-heading"><div><span class="move-tree-overline">${gameMode?'GAME ANALYSIS':'OPENING EXPLORER'}</span><h2>${gameMode?'Moves you played':'Moves &amp; continuations'}</h2><p>${gameMode?'Played moves are shown normally; your analysis moves are dimmed.':'Explore saved opening lines and continuations.'}</p></div>${gameMode?'':'<span class="move-tree-legend"><span>??</span> Your blunder marks</span>'}</div><div class="move-tree-content" aria-label="${gameMode?'Moves played in this game':'Saved moves and continuations'}">${start}${rows.length ? rows.join('') : '<p class="move-tree-empty">No moves recorded in this game.</p>'}</div>`;
+    container.innerHTML=`<div class="move-tree-heading"><div><span class="move-tree-overline">${gameMode?'GAME ANALYSIS':'OPENING EXPLORER'}</span><h2>${gameMode?'Moves you played':'Moves &amp; continuations'}</h2><p>${gameMode?'Right-click an analysis move to delete it and its continuations.':'Explore saved opening lines and continuations.'}</p></div>${gameMode?'':'<span class="move-tree-legend"><span>??</span> Your blunder marks</span>'}</div><div class="move-tree-content" aria-label="${gameMode?'Moves played in this game':'Saved moves and continuations'}">${start}${rows.length ? rows.join('') : '<p class="move-tree-empty">No moves recorded in this game.</p>'}</div>`;
   }
   function click(event) {
     const button=event.target.closest('button');if(!button || !container.contains(button))return;
@@ -72,6 +73,41 @@ export function createMoveTreeView({container, onNavigate = () => {}}) {
       if(found)container.querySelector(`[data-tree-node="${found[0]}"]`)?.focus({preventScroll:true});
     }
   }
+  let menu = null, menuTrigger = null;
+  function closeMenu(restoreFocus = false) {
+    const trigger = menuTrigger;
+    if (menu) menu.remove();
+    menu = null; menuTrigger = null;
+    if (restoreFocus && trigger?.isConnected) trigger.focus();
+  }
+  function contextMenu(event) {
+    const button=event.target.closest('[data-tree-node]');
+    if (!button || !container.contains(button)) return;
+    const node=navigable.get(button.dataset.treeNode);
+    if (!root?.gameMode || !node?.isAnalysis || node.onGameLine) return;
+    event.preventDefault();closeMenu();
+    menuTrigger=button;
+    menu=document.createElement('button');
+    menu.type='button';
+    menu.textContent='Delete analysis from this move';
+    menu.setAttribute('aria-label',`Delete analysis from ${node.san} and its continuations`);
+    menu.style.cssText='background:#332b2b;color:#ffe3dd;border:1px solid #ad756c;border-radius:4px;padding:6px 9px;font-size:12px;';
+    const moves=(node.moves||[]).slice();
+    menu.addEventListener('click',event=>{
+      event.stopPropagation();
+      if (globalThis.confirm('Delete this analysis move and all its continuations? Notes and board markings will be kept.')) {
+        closeMenu();onDeleteAnalysis(moves);
+      } else closeMenu(true);
+    });
+    button.after(menu);menu.focus();
+  }
+  function dismiss(event) {
+    if (event.key==='Escape' && menu) {event.preventDefault();closeMenu(true);}
+  }
+  function outsideClick(event) { if (menu && event.target!==menu && event.target!==menuTrigger) closeMenu(); }
   container.addEventListener('click',click);
-  return {render(next){root=next;draw()},destroy(){container.removeEventListener('click',click);container.innerHTML=''}};
+  container.addEventListener('contextmenu',contextMenu);
+  container.addEventListener('keydown',dismiss);
+  document.addEventListener('click',outsideClick);
+  return {render(next){root=next;draw()},destroy(){closeMenu();container.removeEventListener('click',click);container.removeEventListener('contextmenu',contextMenu);container.removeEventListener('keydown',dismiss);document.removeEventListener('click',outsideClick);container.innerHTML=''}};
 }
