@@ -16,12 +16,12 @@ function parsedFolderLine(folder) {
  * callers can use it to navigate the board. Folder endpoints and user-marked
  * blunders retain their original folder IDs, even for identical move lines.
  */
-export function buildMoveTree({folders = [], side = 'white', folderId = null, moves = [], gameMoves = [], index = 0} = {}) {
+export function buildMoveTree({folders = [], side = 'white', folderId = null, moves = [], gameMoves = [], index = 0, gameMode = false} = {}) {
   const library = Array.isArray(folders) ? folders.filter(f => f && f.side === side) : [];
   const line = Array.isArray(moves) ? moves.filter(m => typeof m === 'string' && m.length > 0) : [];
   const originalGame = Array.isArray(gameMoves) ? gameMoves.filter(m => typeof m === 'string' && m.length > 0) : [];
   const position = Math.min(line.length, Math.max(0, Number.isFinite(Number(index)) ? Math.trunc(Number(index)) : 0));
-  const path = folderPath(library, folderId);
+  const path = gameMode ? [] : folderPath(library, folderId);
   const origin = path[0] || null;
   const family = [];
   if (origin) {
@@ -42,7 +42,7 @@ export function buildMoveTree({folders = [], side = 'white', folderId = null, mo
       }
     }
   }
-  const root = {san:null, ply:0, moves:[], children:[], folders:[], blunders:[]};
+  const root = {san:null, ply:0, moves:[], children:[], folders:[], blunders:[], gameMode};
   function add(sequence) {
     let current = root;
     for (const san of sequence) {
@@ -56,9 +56,13 @@ export function buildMoveTree({folders = [], side = 'white', folderId = null, mo
     return current;
   }
   // Insertion from the current board/game first makes it the main line.
-  add(line);
-  add(originalGame);
-  for (const folder of family) {
+  if (gameMode) {
+    add(originalGame);
+  } else {
+    add(line);
+    add(originalGame);
+  }
+  for (const folder of gameMode ? [] : family) {
     const parsed = parsedFolderLine(folder);
     if (!parsed.ok) continue;
     const endpoint = add(parsed.moves);

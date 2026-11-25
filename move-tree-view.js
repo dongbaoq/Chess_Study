@@ -54,7 +54,8 @@ export function createMoveTreeView({container, onNavigate = () => {}}) {
     }
     const starts=sortChildren(root.children);
     starts.forEach((child,index)=>appendLine(child,index?1:0,!!index));
-    container.innerHTML=`<div class="move-tree-heading"><div><span class="move-tree-overline">OPENING EXPLORER</span><h2>Moves &amp; continuations</h2><p>Explore your saved lines and the current game.</p></div><span class="move-tree-legend"><span>??</span> Your blunder marks</span></div><div class="move-tree-content" aria-label="Saved moves and continuations">${start}${rows.length ? rows.join('') : '<p class="move-tree-empty">Make a move or add an opening to start your tree.</p>'}</div>`;
+    const gameMode=!!root.gameMode;
+    container.innerHTML=`<div class="move-tree-heading"><div><span class="move-tree-overline">${gameMode?'GAME ANALYSIS':'OPENING EXPLORER'}</span><h2>${gameMode?'Moves you played':'Moves &amp; continuations'}</h2><p>${gameMode?'This line shows only the moves recorded in this game.':'Explore saved opening lines and continuations.'}</p></div>${gameMode?'':'<span class="move-tree-legend"><span>??</span> Your blunder marks</span>'}</div><div class="move-tree-content" aria-label="${gameMode?'Moves played in this game':'Saved moves and continuations'}">${start}${rows.length ? rows.join('') : '<p class="move-tree-empty">No moves recorded in this game.</p>'}</div>`;
   }
   function click(event) {
     const button=event.target.closest('button');if(!button || !container.contains(button))return;
