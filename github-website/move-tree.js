@@ -16,7 +16,7 @@ function parsedFolderLine(folder) {
  * callers can use it to navigate the board. Folder endpoints and user-marked
  * blunders retain their original folder IDs, even for identical move lines.
  */
-export function buildMoveTree({folders = [], side = 'white', folderId = null, moves = [], gameMoves = [], variations = [], index = 0, gameMode = false} = {}) {
+export function buildMoveTree({folders = [], side = 'white', folderId = null, moves = [], gameMoves = [], variations = [], moveSymbols = {}, index = 0, gameMode = false} = {}) {
   const library = Array.isArray(folders) ? folders.filter(f => f && f.side === side) : [];
   const line = Array.isArray(moves) ? moves.filter(m => typeof m === 'string' && m.length > 0) : [];
   const originalGame = Array.isArray(gameMoves) ? gameMoves.filter(m => typeof m === 'string' && m.length > 0) : [];
@@ -77,6 +77,9 @@ export function buildMoveTree({folders = [], side = 'white', folderId = null, mo
     }
   }
   function mark(node) {
+    const key = node.moves.join(' ');
+    const value = node.ply && moveSymbols && typeof moveSymbols === 'object' && !Array.isArray(moveSymbols) && Object.hasOwn(moveSymbols,key) ? moveSymbols[key] : null;
+    node.moveSymbol = ['?', '!', '□', '!!', '??'].includes(value) ? (value === '□' ? '!' : value) : null;
     node.onLine = node.moves.length <= line.length && node.moves.every((move,i) => move === line[i]);
     node.onGameLine = node.moves.length <= originalGame.length && node.moves.every((move,i) => move === originalGame[i]);
     node.isAnalysis = gameMode && !node.onGameLine && node.moves.length > 0;

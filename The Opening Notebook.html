@@ -77,13 +77,17 @@ dialog select{display:block;width:100%;margin-top:7px;background:#202923;color:#
 .board.is-analysis .square.dark .coord{color:#405b46}
 
 .move-tree-move.is-analysis{opacity:.48}
+
+.move-symbol-control{display:flex;align-items:center;gap:10px;margin-top:14px;color:#d1ddd2;font-size:13px;font-weight:600}.move-symbol-control select{max-width:100%;background:#303b34;color:#e8f0e8;border:1px solid #607366;border-radius:5px;padding:7px 9px;font:inherit}.move-symbol-control select:disabled{opacity:.55}.move-symbol-control select:focus-visible{outline:3px solid #b6d4a9;outline-offset:2px}
+.move-tree-symbol{font-weight:800;margin-left:3px}.move-tree-symbol.symbol-question{color:#f4b56b}.move-tree-symbol.symbol-only{color:#76cfee}.move-tree-symbol.symbol-brilliant{color:#7fe2d7}.move-tree-symbol.symbol-blunder{color:#ff9490}
+.move-tree-symbol{font-weight:800;margin-left:3px}.move-tree-symbol.symbol-question{color:#f4b56b}.move-tree-symbol.symbol-only{color:#76cfee}.move-tree-symbol.symbol-brilliant{color:#7fe2d7}.move-tree-symbol.symbol-blunder{color:#ff9490}
 </style></head>
 <body><header class="site-header"><div class="brand"><span class="brand-mark">♞</span><div><strong>The Opening Notebook</strong><small>YOUR CHESS STUDY</small></div></div><div class="header-side"><span>REPERTOIRE</span><div class="side-toggle" aria-label="Choose repertoire"><button id="sideWhite" aria-pressed="true"><span class="side-disc white"></span> White</button><button id="sideBlack" aria-pressed="false"><span class="side-disc black"></span> Black</button></div></div></header>
 <main class="app-layout">
-<section class="study-main"><div class="study-heading"><div><div class="eyebrow">STUDY BOARD</div><div id="breadcrumbs" class="breadcrumbs"></div><h1 id="boardTitle"></h1><p id="openingStatus" class="opening-status"></p><div id="storageWarning" class="storage-warning" role="alert" hidden><span id="storageWarningText"></span> <button id="downloadOriginal" type="button" class="text-button" hidden>Download original library</button> <button id="downloadOriginalMarks" type="button" class="text-button" hidden>Download original markings</button></div></div><button id="flip" class="text-button" title="Flip board without changing repertoire">⇅ &nbsp; Flip board</button></div><div class="study-grid"><div class="board-column"><div class="board-wrap"><div id="board" class="board" aria-label="Chess board"></div></div><div class="board-bottom"><div><strong id="positionLabel"></strong><span id="positionSub"></span></div><div class="board-actions"><button id="drawMode" class="tool-button" aria-pressed="false">✎ <span>Draw</span></button><button id="clearMarks" class="tool-button">Clear marks</button></div></div><p class="board-hint">Drag a piece to move it. Right-click a square or drag an arrow to annotate; on touchscreens, use Draw.</p><section class="move-explorer" aria-label="Moves and variations"><div id="moveTree" class="move-tree"></div><div class="control-buttons"><button id="first" aria-label="First move">|‹</button><button id="prev" aria-label="Previous move">‹</button><button id="next" aria-label="Next move">›</button><button id="last" aria-label="Last move">›|</button></div><button id="returnGame" class="text-button return-game" hidden>Return to game</button></section></div>
+<section class="study-main"><div class="study-heading"><div><div class="eyebrow">STUDY BOARD</div><div id="breadcrumbs" class="breadcrumbs"></div><h1 id="boardTitle"></h1><p id="openingStatus" class="opening-status"></p><div id="storageWarning" class="storage-warning" role="alert" hidden><span id="storageWarningText"></span> <button id="downloadOriginal" type="button" class="text-button" hidden>Download original library</button> <button id="downloadOriginalMarks" type="button" class="text-button" hidden>Download original markings</button></div></div><button id="flip" class="text-button" title="Flip board without changing repertoire">⇅ &nbsp; Flip board</button></div><div class="study-grid"><div class="board-column"><div class="board-wrap"><div id="board" class="board" aria-label="Chess board"></div></div><div class="board-bottom"><div><strong id="positionLabel"></strong><span id="positionSub"></span></div><div class="board-actions"><button id="drawMode" class="tool-button" aria-pressed="false">✎ <span>Draw</span></button><button id="clearMarks" class="tool-button">Clear marks</button></div></div><p class="board-hint">Drag a piece to move it. Right-click a square or drag an arrow to annotate; on touchscreens, use Draw.</p><section class="move-explorer" aria-label="Moves and variations"><div class="move-symbol-control"><label for="moveSymbol">Mark this move</label><select id="moveSymbol" disabled><option value="">No symbol</option><option value="?">? — Mistake</option><option value="!">! — Only move</option><option value="!!">!! — Brilliant</option><option value="??">?? — Blunder</option></select></div><div id="moveTree" class="move-tree"></div><div class="control-buttons"><button id="first" aria-label="First move">|‹</button><button id="prev" aria-label="Previous move">‹</button><button id="next" aria-label="Next move">›</button><button id="last" aria-label="Last move">›|</button></div><button id="returnGame" class="text-button return-game" hidden>Return to game</button></section></div>
 <div id="studyNotes" class="study-notes"></div>
 <section class="library-area" aria-label="Library and games"><aside class="sidebar"><div class="sidebar-top"><div><div class="eyebrow">YOUR REPERTOIRE</div><h2 id="libraryTitle">White openings</h2></div><button id="addRoot" class="icon-button" aria-label="Add top-level opening" title="Add top-level opening">＋</button></div><p class="sidebar-description">Choose a line to explore its position.</p><div id="tree" class="tree"></div><div class="folder-actions"><button id="editFolder" class="edit-folder">Edit opening</button><button id="deleteFolder" class="edit-folder danger-link">Delete opening</button></div><button id="addChild" class="add-folder">＋ &nbsp; Add subfolder</button><div class="sidebar-help">Folders follow the moves of their parent. Your White and Black repertoires are separate.</div></aside>
-<aside class="analysis-panel"><div class="panel-top"><div><div class="eyebrow">YOUR LIBRARY</div><strong>Study tools</strong></div><button id="addGame" class="small-button">＋ Game</button></div><div class="line-tools"><button id="saveLine" class="text-button">Save position to this folder</button><button id="addBranch" class="text-button">＋ Save as subfolder</button></div><div class="games-section"><div class="section-header"><div><div class="eyebrow">GAME JOURNAL</div><h3 id="gamesHeading">Games in this folder</h3></div><button id="openingView" class="text-button">Opening view</button></div><div id="games" class="game-list"></div></div><section class="sync-section"><div class="eyebrow">LIBRARY STORAGE</div><p id="syncStatus" class="sync-status">Saved on this device</p><div class="sync-actions"><button id="syncNow" class="text-button">Synchronize</button><button id="useCloud" class="text-button" hidden>Use cloud copy</button><button id="useLocal" class="text-button" hidden>Upload this device</button><button id="exportData" class="text-button">Export backup</button><button id="importData" class="text-button">Import backup</button><button id="restoreData" class="text-button" hidden>Restore previous copy</button><input id="importFile" type="file" accept="application/json,.json" hidden></div></section></aside></section></div><footer><span>Study a little. Remember a lot.</span><span>Chess pieces by Colin M. L. Burnett · <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a></span></footer></section></main>
+<aside class="analysis-panel"><div class="panel-top"><div><div class="eyebrow">YOUR LIBRARY</div><strong>Study tools</strong></div><button id="addGame" class="small-button">＋ Game</button></div><div class="line-tools"><button id="saveLine" class="text-button">Save position to this folder</button><button id="addBranch" class="text-button">＋ Save as subfolder</button></div><div class="games-section"><div class="section-header"><div><div class="eyebrow">GAME JOURNAL</div><h3 id="gamesHeading">Games in this folder</h3></div><button id="openingView" class="text-button">Opening view</button></div><div id="games" class="game-list"></div></div><section class="sync-section"><div class="eyebrow">LIBRARY STORAGE</div><p id="syncStatus" class="sync-status">Saved on this device</p><div class="sync-actions"><button id="syncNow" class="text-button">Synchronize</button><button id="useCloud" class="text-button" hidden>Use cloud copy</button><button id="useLocal" class="text-button" hidden>Upload this device</button><button id="exportData" class="text-button">Export backup</button><button id="importData" class="text-button">Import backup</button><button id="restoreData" class="text-button" hidden>Restore previous copy</button><input id="importFile" type="file" accept="application/json,.json" hidden></div></section></aside></section></div><footer><span>Chess pieces by Colin M. L. Burnett · <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a></span></footer></section></main>
 <dialog id="modal"><div class="modal-head"><div><div class="eyebrow">YOUR LIBRARY</div><h2 id="modalTitle"></h2></div><button id="closeModal" class="icon-button" aria-label="Close">×</button></div><form id="modalForm"></form></dialog><div id="toast" role="status"></div><script>
 const FILES = 'abcdefgh';
 const inBounds = (r, c) => r >= 0 && r < 8 && c >= 0 && c < 8;
@@ -506,6 +510,8 @@ function matchOpening(folders, side, moves, {preferredId = null} = {}) {
 
 
 
+
+
 const treeLineCache = new WeakMap();
 function parsedFolderLine(folder) {
   const text = typeof folder.line === 'string' ? folder.line : '';
@@ -522,7 +528,7 @@ function parsedFolderLine(folder) {
  * callers can use it to navigate the board. Folder endpoints and user-marked
  * blunders retain their original folder IDs, even for identical move lines.
  */
-function buildMoveTree({folders = [], side = 'white', folderId = null, moves = [], gameMoves = [], variations = [], index = 0, gameMode = false} = {}) {
+function buildMoveTree({folders = [], side = 'white', folderId = null, moves = [], gameMoves = [], variations = [], moveSymbols = {}, index = 0, gameMode = false} = {}) {
   const library = Array.isArray(folders) ? folders.filter(f => f && f.side === side) : [];
   const line = Array.isArray(moves) ? moves.filter(m => typeof m === 'string' && m.length > 0) : [];
   const originalGame = Array.isArray(gameMoves) ? gameMoves.filter(m => typeof m === 'string' && m.length > 0) : [];
@@ -583,6 +589,9 @@ function buildMoveTree({folders = [], side = 'white', folderId = null, moves = [
     }
   }
   function mark(node) {
+    const key = node.moves.join(' ');
+    const value = node.ply && moveSymbols && typeof moveSymbols === 'object' && !Array.isArray(moveSymbols) && Object.hasOwn(moveSymbols,key) ? moveSymbols[key] : null;
+    node.moveSymbol = ['?', '!', '□', '!!', '??'].includes(value) ? (value === '□' ? '!' : value) : null;
     node.onLine = node.moves.length <= line.length && node.moves.every((move,i) => move === line[i]);
     node.onGameLine = node.moves.length <= originalGame.length && node.moves.every((move,i) => move === originalGame[i]);
     node.isAnalysis = gameMode && !node.onGameLine && node.moves.length > 0;
@@ -1131,6 +1140,8 @@ function createStudyNotes({container, onChange = () => {}, onJump = () => {}, ge
 }
 
 
+const moveSymbolLabels = {'?':'Mistake', '!':'Only move', '!!':'Brilliant move', '??':'Blunder'};
+const moveSymbolClasses = {'?':'question', '!':'only', '!!':'brilliant', '??':'blunder'};
 const escapeMoveTreeText = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 
 /**
@@ -1151,10 +1162,11 @@ function createMoveTreeView({container, onNavigate = () => {}, onDeleteAnalysis 
     const number=ply%2===1 ? `${Math.ceil(ply/2)}.` : first ? `${Math.ceil(ply/2)}...` : '';
     const warnings=Array.isArray(node.blunders) ? node.blunders : [];
     const explanation=warnings.map(w => [w.folderName,w.text].filter(Boolean).join(': ')).filter(Boolean).join(' | ');
-    const label=`${number ? number+' ' : ''}${node.san || ''}${warnings.length ? ', marked blunder' : ''}${explanation ? ': '+explanation : ''}`;
+    const symbol = Object.hasOwn(moveSymbolLabels,node.moveSymbol) ? node.moveSymbol : null;
+    const label=`${number ? number+' ' : ''}${node.san || ''}${symbol ? ', '+moveSymbolLabels[symbol] : ''}${warnings.length ? ', marked blunder' : ''}${explanation ? ': '+explanation : ''}`;
     navigable.set(lookupId,node);
     const tag=(node.folders || []).map(folder => `<span class="move-tree-folder" title="Saved opening">${escapeMoveTreeText(folder.name)}</span>`).join('');
-    return `<span class="move-tree-token">${number?`<span class="move-tree-number">${number}</span>`:''}<button type="button" class="move-tree-move ${node.isCurrent?'is-current':''} ${node.onGameLine?'is-game':''} ${node.isAnalysis?'is-analysis':''}" data-tree-node="${lookupId}" aria-label="${escapeMoveTreeText(label)}" ${node.isCurrent?'aria-current="step"':''} title="${escapeMoveTreeText(explanation || (node.isAnalysis ? 'Show this position. Right-click to delete analysis moves.' : 'Show this position'))}">${escapeMoveTreeText(node.san || '')}${warnings.length?'<span class="move-tree-blunder" aria-hidden="true">??</span>':''}</button>${tag}</span>`;
+    return `<span class="move-tree-token">${number?`<span class="move-tree-number">${number}</span>`:''}<button type="button" class="move-tree-move ${node.isCurrent?'is-current':''} ${node.onGameLine?'is-game':''} ${node.isAnalysis?'is-analysis':''}" data-tree-node="${lookupId}" aria-label="${escapeMoveTreeText(label)}" ${node.isCurrent?'aria-current="step"':''} title="${escapeMoveTreeText(explanation || (node.isAnalysis ? 'Show this position. Right-click to delete analysis moves.' : 'Show this position'))}">${escapeMoveTreeText(node.san || '')}${symbol?`<span class="move-tree-symbol symbol-${moveSymbolClasses[symbol]}" aria-hidden="true">${escapeMoveTreeText(symbol)}</span>`:''}${warnings.length&&symbol!=='??'?'<span class="move-tree-blunder" aria-hidden="true">??</span>':''}</button>${tag}</span>`;
   }
 
   function draw() {
@@ -1345,6 +1357,50 @@ function deleteAnalysisVariation(game, prefix) {
 }
 
 
+/** Move symbols belong to a complete SAN path in one game or opening. */
+const MOVE_SYMBOL_LABELS = Object.freeze({
+  '?': 'Mistake',
+  '!': 'Only move',
+  '□': 'Only move', // Legacy symbol: retain stored data and display as !.
+  '!!': 'Brilliant move',
+  '??': 'Blunder'
+});
+
+const symbolIsKnown = symbol => typeof symbol === 'string' && Object.hasOwn(MOVE_SYMBOL_LABELS, symbol);
+const validPath = moves => Array.isArray(moves) && moves.length > 0 && moves.every(move => typeof move === 'string' && move.length > 0 && !/\s/.test(move));
+const readableMap = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+const invalidData = () => ({ok:false, error:'Saved move symbols could not be read. The original data was preserved.'});
+
+/** Read recognized symbols without changing unfamiliar fields or values. */
+function readMoveSymbols(entity) {
+  if (!entity || typeof entity !== 'object' || Array.isArray(entity)) return invalidData();
+  if (!Object.hasOwn(entity, 'moveSymbols')) return {ok:true, symbols:{}};
+  if (!readableMap(entity.moveSymbols)) return invalidData();
+  return {ok:true, symbols:Object.fromEntries(Object.entries(entity.moveSymbols).filter(([, symbol]) => symbolIsKnown(symbol)).map(([key,symbol]) => [key,symbol === '□' ? '!' : symbol]))};
+}
+
+/**
+ * Add, replace, or clear a symbol on exactly one path. An unfamiliar value at
+ * that path is protected; other unrecognized values and fields are retained.
+ */
+function setMoveSymbol(entity, moves, symbol) {
+  if (!validPath(moves)) return {ok:false, error:'Select a move before adding a symbol.'};
+  if (symbol !== '' && !symbolIsKnown(symbol)) return {ok:false, error:'Choose a valid move symbol.'};
+  const result = readMoveSymbols(entity);
+  if (!result.ok) return result;
+  const key = moves.join(' '), map = entity.moveSymbols;
+  if (map && Object.hasOwn(map, key) && !symbolIsKnown(map[key])) {
+    return {ok:false, error:'This move has an unrecognized saved symbol. The original data was preserved.'};
+  }
+  const previous = map && Object.hasOwn(map, key) ? map[key] : '';
+  if ((previous === '□' ? '!' : previous) === symbol) return {ok:true, changed:false};
+  if (!map) entity.moveSymbols = {};
+  if (symbol === '') delete entity.moveSymbols[key];
+  else entity.moveSymbols[key] = symbol;
+  return {ok:true, changed:true};
+}
+
+
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const seed = [
@@ -1461,7 +1517,13 @@ let currentMoveTree=null;
 function originalGameMoves(){const g=currentGame();if(!g)return [];const cached=gameMoveCache.get(g);if(cached?.pgn===g.pgn)return cached.moves;const parsed=parseLine(g.pgn||'');const result=parsed.ok?parsed.moves:[];gameMoveCache.set(g,{pgn:g.pgn,moves:result});return result}
 const startsWithMoves=(line,prefix)=>prefix.length<=line.length&&prefix.every((move,i)=>line[i]===move);
 function treeNodeFor(prefix){let node=currentMoveTree;for(const move of prefix){node=node?.children?.find(child=>child.san===move);if(!node)return null}return node}
-function renderMoveExplorer(){const gameMoves=originalGameMoves();currentMoveTree=buildMoveTree({folders,side,folderId,moves:engine.moves,index:engine.index,gameMoves,variations:getAnalysisVariations(currentGame()),gameMode:!!currentGame()});moveView.render(currentMoveTree);const current=treeNodeFor(engine.moves.slice(0,engine.index));$('#next').disabled=$('#last').disabled=engine.index>=engine.moves.length&&!current?.children?.length;$('#returnGame').hidden=!currentGame()||(gameMoves.length===engine.moves.length&&startsWithMoves(gameMoves,engine.moves));}
+function moveSymbolContext(){
+ const game=currentGame(),owners=game?[game]:folderPath(folders,folderId),symbols={},key=engine.moves.slice(0,engine.index).join(' ');let owner=owners.at(-1)||null,unknown=false;
+ for(const item of owners){const result=readMoveSymbols(item);if(!result.ok){showStorageFailure(result.error);return {owner:null,symbols:{},unknown:true}}Object.assign(symbols,result.symbols);const raw=item.moveSymbols;if(raw&&Object.hasOwn(raw,key)){if(Object.hasOwn(MOVE_SYMBOL_LABELS,raw[key]))owner=item;else unknown=true}}
+ if(unknown)showStorageFailure('This move has an unrecognized saved symbol. The original data was preserved.');
+ return {owner,symbols,unknown}
+}
+function renderMoveExplorer(){const gameMoves=originalGameMoves(),symbolContext=moveSymbolContext(),control=$('#moveSymbol');control.disabled=!symbolContext.owner||!engine.index||storageBlocked||symbolContext.unknown;control.value=symbolContext.symbols[engine.moves.slice(0,engine.index).join(' ')]||'';currentMoveTree=buildMoveTree({folders,side,folderId,moves:engine.moves,index:engine.index,gameMoves,variations:getAnalysisVariations(currentGame()),moveSymbols:symbolContext.symbols,gameMode:!!currentGame()});moveView.render(currentMoveTree);const current=treeNodeFor(engine.moves.slice(0,engine.index));$('#next').disabled=$('#last').disabled=engine.index>=engine.moves.length&&!current?.children?.length;$('#returnGame').hidden=!currentGame()||(gameMoves.length===engine.moves.length&&startsWithMoves(gameMoves,engine.moves));}
 function stepNext(){const current=engine.moves.slice(0,engine.index),game=currentGame(),recorded=game?originalGameMoves():[];if(game&&current.length<recorded.length&&startsWithMoves(recorded,current)){navigateTreeMove({moves:recorded.slice(0,current.length+1)});return}if(engine.index<engine.moves.length){go(engine.index+1);return}const children=treeNodeFor(current)?.children||[];if(game&&children.length>1){toast('Choose a variation in the move list.');return}if(children.length)navigateTreeMove(children[0])}
 function stepLast(){
  while(true){
@@ -1496,6 +1558,7 @@ function removeFolder(){const f=currentFolder();if(!f)return;const info=inspectF
 function removeGame(ownerId,id){const f=folders.find(x=>x.id===ownerId),g=f?.games.find(x=>x.id===id);if(!g)return;confirmAction('Delete game',`Delete “${g.name}” and its game notes and markings? You can restore the previous copy from Library Storage.`,'Delete game',()=>{if(!saveCheckpoint())return;const before=captureLibraryState();const result=deleteGame(folders,ownerId,id,annotations);if(!result.ok){toast(result.error);return}if(gameId===id){gameId=null;gameOwnerId=null;setPosition(currentFolder()?.line||'')}const saved=persistActions();if(!saved)restoreLibraryState(before);updateMatch();render();toast(saved?'Game deleted':'Changes not saved; export a backup')})}
 function transferGame(ownerId,id){const f=folders.find(x=>x.id===ownerId),g=f?.games.find(x=>x.id===id);if(!g)return;modal('Move game',`<p class="form-copy">Choose where to keep <strong>${esc(g.name)}</strong>. Its moves, notes and markings will travel with it.</p><label>Destination opening<select name="destination">${folderOptions(ownerId)}</select></label><div class="form-actions"><button type="button" class="button secondary cancel">Cancel</button><button class="button primary">Move game</button></div>`,d=>{const before=captureLibraryState();const result=moveGame(folders,ownerId,id,String(d.get('destination')),annotations);if(!result.ok){toast(result.error);return}$('#modal').close();if(result.unchanged){toast('Game is already in that folder');return}const wasOpen=gameId===id;side=result.to.side;flipped=side==='black';folderId=result.to.id;gameOwnerId=result.to.id;gameId=id;if(!wasOpen)setPosition(g.pgn,false);const saved=persistActions();if(!saved)restoreLibraryState(before);updateMatch();render();toast(saved?'Game moved':'Changes not saved; export a backup')})}
 function addGame(){const f=currentFolder();if(!f)return;modal('Paste a game',`<p class="form-copy">Paste a complete game. We’ll suggest the deepest matching line in your ${side} repertoire.</p><label>Game name <span>Optional</span><input name="name" placeholder="e.g. A lesson in development"></label><label>Moves <span>Standard notation or PGN</span><textarea name="pgn" required rows="6" placeholder="1. e4 e5 2. Nf3 Nc6 3. Bb5"></textarea></label><p class="form-hint">Use a game starting from the standard chess position. Comments and variations stay in the pasted text but are not shown as notes.</p><div class="form-actions"><button type="button" class="button secondary cancel">Cancel</button><button class="button primary">Find opening</button></div>`,d=>{const pgn=String(d.get('pgn')).trim(),found=matchGameFolder(folders,side,pgn,f.id);if(!found.ok){toast(found.error);return}const white=pgn.match(/\[White\s+"([^"]+)"\]/i)?.[1],black=pgn.match(/\[Black\s+"([^"]+)"\]/i)?.[1];const name=String(d.get('name')).trim()||((white&&black)?`${white} vs ${black}`:'Imported game');const target=found.folder||f;const reason=found.folder?(found.ambiguous?'Several saved lines match. Choose where to file this game.':`Matched your saved line: ${target.name}.`):'No saved opening matched. Choose a folder or use the current one.';$('#modal').close();modal('Choose a game folder',`<p class="form-copy">${esc(reason)}</p><label>Destination opening<select name="destination">${folderOptions(target.id)}</select></label><p class="form-hint">You can move the game later. Only your saved opening lines are used.</p><div class="form-actions"><button type="button" class="button secondary cancel">Cancel</button><button class="button primary">Add game</button></div>`,choice=>{const destination=folders.find(x=>x.id===String(choice.get('destination')));if(!destination){toast('Choose an opening');return}const g={id:crypto.randomUUID(),name,date:'Your game',pgn,notes:{},gameNote:''};destination.games.push(g);const saved=save();$('#modal').close();side=destination.side;flipped=side==='black';folderId=destination.id;selectGame(g.id);toast(saved?'Game added':'Game not saved; export a backup')})})}
+$('#moveSymbol').onchange=event=>{const {owner,unknown}=moveSymbolContext();if(!owner||unknown||!engine.index)return;const had=Object.hasOwn(owner,'moveSymbols'),previous=had?structuredClone(owner.moveSymbols):null;const result=setMoveSymbol(owner,engine.moves.slice(0,engine.index),event.target.value);if(!result.ok){showStorageFailure(result.error);renderMoveExplorer();return}if(result.changed&&!save()){if(had)owner.moveSymbols=previous;else delete owner.moveSymbols}renderMoveExplorer()};
 $('#editFolder').onclick=()=>editFolder();$('#deleteFolder').onclick=()=>removeFolder();
 $('#sideWhite').onclick=()=>switchSide('white');$('#sideBlack').onclick=()=>switchSide('black');$('#addRoot').onclick=()=>addFolder();$('#addChild').onclick=()=>addFolder(folderId);$('#addBranch').onclick=()=>addFolder(folderId);$('#addGame').onclick=addGame;$('#closeModal').onclick=()=>$('#modal').close();$('#openingView').onclick=()=>{gameId=null;gameOwnerId=null;setPosition(currentFolder()?.line||'');updateMatch();render()};$('#flip').onclick=()=>{flipped=!flipped;renderBoard();renderMoveExplorer()};$('#drawMode').onclick=()=>marks.setMode(!marks.getMode());$('#clearMarks').onclick=()=>marks.clear();
 function go(index){const target=Math.max(0,Math.min(engine.moves.length,index));let motion=[];if(target===engine.index+1){const move=engine.history[engine.index];motion=prepareMotion(move.from,move.to)}else if(target===engine.index-1){const move=engine.history[target];motion=prepareMotion(move.to,move.from)}engine.go(target);selected=null;updateMatch();renderBoard(motion);renderContext()}

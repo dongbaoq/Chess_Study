@@ -14,6 +14,8 @@ Extract the GitHub website ZIP. Create a GitHub repository, open its **Code** pa
 
 The GitHub Pages address uses a different browser storage location from a local file. Export the existing demo's backup first and import it after opening the GitHub Pages site. Moving the code to GitHub alone does not move your study data or synchronize devices.
 
+Select a move on the board or in the move list, then use **Mark this move** to add or remove a mistake (?), only move (!), brilliant move (!!), or blunder (??) symbol. Symbols are saved with the opening or game and follow each analysis variation.
+
 The move explorer shows saved continuations and game moves. Blunders are manually marked, not automatically evaluated. Pasted games must start from the standard chess position; PGN comments and variations remain in the pasted text but do not become displayed notes.
 
 Chess piece artwork attribution is in `ATTRIBUTION.md` and the site footer. `AGENTS.md` records how future development should protect existing saved libraries.

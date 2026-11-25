@@ -1,3 +1,5 @@
+const moveSymbolLabels = {'?':'Mistake', '!':'Only move', '!!':'Brilliant move', '??':'Blunder'};
+const moveSymbolClasses = {'?':'question', '!':'only', '!!':'brilliant', '??':'blunder'};
 const escapeMoveTreeText = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
 
 /**
@@ -18,10 +20,11 @@ export function createMoveTreeView({container, onNavigate = () => {}, onDeleteAn
     const number=ply%2===1 ? `${Math.ceil(ply/2)}.` : first ? `${Math.ceil(ply/2)}...` : '';
     const warnings=Array.isArray(node.blunders) ? node.blunders : [];
     const explanation=warnings.map(w => [w.folderName,w.text].filter(Boolean).join(': ')).filter(Boolean).join(' | ');
-    const label=`${number ? number+' ' : ''}${node.san || ''}${warnings.length ? ', marked blunder' : ''}${explanation ? ': '+explanation : ''}`;
+    const symbol = Object.hasOwn(moveSymbolLabels,node.moveSymbol) ? node.moveSymbol : null;
+    const label=`${number ? number+' ' : ''}${node.san || ''}${symbol ? ', '+moveSymbolLabels[symbol] : ''}${warnings.length ? ', marked blunder' : ''}${explanation ? ': '+explanation : ''}`;
     navigable.set(lookupId,node);
     const tag=(node.folders || []).map(folder => `<span class="move-tree-folder" title="Saved opening">${escapeMoveTreeText(folder.name)}</span>`).join('');
-    return `<span class="move-tree-token">${number?`<span class="move-tree-number">${number}</span>`:''}<button type="button" class="move-tree-move ${node.isCurrent?'is-current':''} ${node.onGameLine?'is-game':''} ${node.isAnalysis?'is-analysis':''}" data-tree-node="${lookupId}" aria-label="${escapeMoveTreeText(label)}" ${node.isCurrent?'aria-current="step"':''} title="${escapeMoveTreeText(explanation || (node.isAnalysis ? 'Show this position. Right-click to delete analysis moves.' : 'Show this position'))}">${escapeMoveTreeText(node.san || '')}${warnings.length?'<span class="move-tree-blunder" aria-hidden="true">??</span>':''}</button>${tag}</span>`;
+    return `<span class="move-tree-token">${number?`<span class="move-tree-number">${number}</span>`:''}<button type="button" class="move-tree-move ${node.isCurrent?'is-current':''} ${node.onGameLine?'is-game':''} ${node.isAnalysis?'is-analysis':''}" data-tree-node="${lookupId}" aria-label="${escapeMoveTreeText(label)}" ${node.isCurrent?'aria-current="step"':''} title="${escapeMoveTreeText(explanation || (node.isAnalysis ? 'Show this position. Right-click to delete analysis moves.' : 'Show this position'))}">${escapeMoveTreeText(node.san || '')}${symbol?`<span class="move-tree-symbol symbol-${moveSymbolClasses[symbol]}" aria-hidden="true">${escapeMoveTreeText(symbol)}</span>`:''}${warnings.length&&symbol!=='??'?'<span class="move-tree-blunder" aria-hidden="true">??</span>':''}</button>${tag}</span>`;
   }
 
   function draw() {

@@ -19,3 +19,5 @@
 @media(max-width:500px){.move-tree-heading{padding:15px;gap:8px}.move-tree-heading h2{font-size:19px}.move-tree-legend{font-size:10px;white-space:normal;text-align:right;max-width:85px}.move-tree-content{padding:10px 8px 13px}.move-tree-line{padding-left:calc(var(--branch-depth,0) * 8px)}.move-tree-folder{max-width:105px}}
 .move-tree-start-row{margin:0 0 4px}.move-tree-start{font-size:12px;color:#a9b9ac}
 .move-tree-move.is-analysis{opacity:.48}
+
+.move-tree-symbol{font-weight:800;margin-left:3px}.move-tree-symbol.symbol-question{color:#f4b56b}.move-tree-symbol.symbol-only{color:#76cfee}.move-tree-symbol.symbol-brilliant{color:#7fe2d7}.move-tree-symbol.symbol-blunder{color:#ff9490}

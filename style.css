@@ -17,3 +17,5 @@ dialog select{display:block;width:100%;margin-top:7px;background:#202923;color:#
 .board.is-analysis .square.light.last-move{background:#e5f1de}
 .board.is-analysis .square.dark.last-move{background:#bcd9bb}
 .board.is-analysis .square.dark .coord{color:#405b46}
+
+.move-symbol-control{display:flex;align-items:center;gap:10px;margin-top:14px;color:#d1ddd2;font-size:13px;font-weight:600}.move-symbol-control select{max-width:100%;background:#303b34;color:#e8f0e8;border:1px solid #607366;border-radius:5px;padding:7px 9px;font:inherit}.move-symbol-control select:disabled{opacity:.55}.move-symbol-control select:focus-visible{outline:3px solid #b6d4a9;outline-offset:2px}
