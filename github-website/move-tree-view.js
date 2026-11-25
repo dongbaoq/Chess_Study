@@ -37,24 +37,34 @@ export function createMoveTreeView({container, onNavigate = () => {}, onDeleteAn
     const startLabel=`Starting position${rootWarnings.length?', marked blunder':''}${rootDescription?': '+rootDescription:''}`;
     const start=`<div class="move-tree-start-row"><button type="button" class="move-tree-move move-tree-start ${root.isCurrent?'is-current':''}" data-tree-node="0" aria-label="${escapeMoveTreeText(startLabel)}" ${root.isCurrent?'aria-current="step"':''} title="${escapeMoveTreeText(rootDescription || 'Show the starting position')}">Start${rootWarnings.length?'<span class="move-tree-blunder" aria-hidden="true">??</span>':''}</button></div>`;
     const rows=[];
-    function appendLine(start, depth, isBranch) {
+    function appendLine(start, depth, isBranch, pauseAfterFirst = false) {
       const path=[];let node=start;
       while(node) {
         path.push(node);
         const children=sortChildren(node.children);
-        if(children.length!==1)break;
+        if(pauseAfterFirst || children.length!==1)break;
         node=children[0];
       }
       const key=keyOf(start), isCollapsed=isBranch && collapsed.has(key), shown=isCollapsed?path.slice(0,1):path;
-      const canCollapse=isBranch && (path.length>1 || (path.at(-1)?.children||[]).length>0);
+      const canCollapse=!pauseAfterFirst && isBranch && (path.length>1 || (path.at(-1)?.children||[]).length>0);
       const toggle=canCollapse?`<button type="button" class="move-tree-disclosure" aria-expanded="${!isCollapsed}" data-tree-toggle="${escapeMoveTreeText(key)}" aria-label="${isCollapsed?'Expand':'Collapse'} variation starting ${escapeMoveTreeText(start.san)}">${isCollapsed?'▸':'▾'}</button>`:(isBranch?'<span class="move-tree-branch-mark" aria-hidden="true">↳</span>':'');
       const rowMarkup=shown.map((item,i)=>moveMarkup(item,i===0,String(++counter))).join('');
       rows.push(`<div class="move-tree-line ${isBranch?'is-variation':''}" style="--branch-depth:${Math.min(depth,3)}">${toggle}<div class="move-tree-sequence">${rowMarkup}</div></div>`);
-      if(isCollapsed)return;
-      for(const child of sortChildren(path.at(-1)?.children || [])) appendLine(child,depth+1,true);
+      if(isCollapsed || pauseAfterFirst)return;
+      appendChildren(path.at(-1),depth+1);
     }
-    const starts=sortChildren(root.children);
-    starts.forEach((child,index)=>appendLine(child,index?1:0,!!index));
+    function appendChildren(parent, depth, isRoot = false) {
+      const children=sortChildren(parent?.children || []);
+      if(root.gameMode && children.length>1 && children[0].onGameLine) {
+        // Show the played move first, then its alternatives before the rest of a long game.
+        appendLine(children[0],isRoot?0:depth,!isRoot,true);
+        for(const child of children.slice(1)) appendLine(child,isRoot?1:depth,true);
+        appendChildren(children[0],isRoot?0:depth);
+      } else {
+        children.forEach((child,index)=>appendLine(child,isRoot?(index?1:0):depth,isRoot?!!index:true));
+      }
+    }
+    appendChildren(root,0,true);
     const gameMode=!!root.gameMode;
     container.innerHTML=`<div class="move-tree-heading"><div><span class="move-tree-overline">${gameMode?'GAME ANALYSIS':'OPENING EXPLORER'}</span><h2>${gameMode?'Moves you played':'Moves &amp; continuations'}</h2><p>${gameMode?'Right-click an analysis move to delete it and its continuations.':'Explore saved opening lines and continuations.'}</p></div>${gameMode?'':'<span class="move-tree-legend"><span>??</span> Your blunder marks</span>'}</div><div class="move-tree-content" aria-label="${gameMode?'Moves played in this game':'Saved moves and continuations'}">${start}${rows.length ? rows.join('') : '<p class="move-tree-empty">No moves recorded in this game.</p>'}</div>`;
   }
