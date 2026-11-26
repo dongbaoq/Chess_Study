@@ -2,9 +2,9 @@
 .app-layout{display:block;min-height:calc(100vh - 68px)}
 .study-main{max-width:1270px;margin:0 auto}
 .study-heading{max-width:1174px}
-.study-grid{max-width:1174px;grid-template-columns:minmax(0,650px) minmax(300px,500px);grid-template-areas:"board notes" "library notes";grid-template-rows:auto auto;gap:20px 24px;align-items:start}
+.study-grid{max-width:1174px;grid-template-columns:minmax(0,650px) minmax(300px,500px);grid-template-areas:"board notes" "board library";grid-template-rows:min-content 1fr;gap:12px 20px;align-items:start}
 .board-column{grid-area:board;min-width:0}
-#studyNotes.study-notes{grid-area:notes;width:100%;min-width:0;position:sticky;top:18px;max-height:calc(100vh - 36px);overflow-y:auto;overscroll-behavior:contain;scrollbar-color:#707a73 #272b29;scrollbar-width:thin}
+#studyNotes.study-notes{grid-area:notes;width:100%;min-width:0;max-height:calc(100vh - 36px);overflow-y:auto;overscroll-behavior:contain;scrollbar-color:#707a73 #272b29;scrollbar-width:thin}
 .library-area{grid-area:library;min-width:0;display:grid;grid-template-columns:minmax(190px,.82fr) minmax(0,1.18fr);align-items:start;gap:14px}
 .library-area .sidebar{min-width:0;background:#252d28;border:1px solid #414e44;border-radius:7px;padding:20px 13px}
 .library-area .sidebar-top{padding:0 5px}
@@ -13,5 +13,11 @@
 .library-area .analysis-panel{width:100%;min-width:0}
 .library-area .game-item strong{overflow-wrap:anywhere}
 .library-area .game-entry-actions{flex-wrap:wrap;justify-content:flex-end}
-@media(max-width:1100px){.study-grid{grid-template-columns:minmax(0,1.15fr) minmax(290px,.85fr);gap:18px}.library-area{grid-template-columns:minmax(170px,.8fr) minmax(0,1.2fr);gap:10px}}
-@media(max-width:830px){.study-grid{max-width:650px;grid-template-columns:minmax(0,1fr);grid-template-areas:"board" "notes" "library";gap:20px}.study-heading{max-width:650px}#studyNotes.study-notes{position:static;max-height:none;overflow:visible;overscroll-behavior:auto}.library-area{grid-template-columns:minmax(0,1fr);gap:14px}.library-area .sidebar{padding:16px 18px}.library-area .sidebar-description,.library-area .sidebar-help{display:none}.library-area .tree{display:flex;flex-direction:column;align-items:stretch;overflow:visible;margin:12px 0 0}.library-area .tree-row{padding-left:calc(var(--depth) * 14px)}.library-area .tree-item{width:100%;white-space:normal}.library-area .tree-row[style*="--depth:1"] .tree-item:before,.library-area .tree-row[style*="--depth:2"] .tree-item:before{content:none}.library-area .add-folder{align-self:stretch}}
+@media(max-width:1100px){.study-grid{grid-template-columns:minmax(0,1.15fr) minmax(290px,.85fr);gap:12px 16px}.library-area{grid-template-columns:minmax(0,1fr);gap:10px}}
+@media(max-width:830px){.study-grid{max-width:650px;grid-template-columns:minmax(0,1fr);grid-template-areas:"board" "notes" "library";grid-template-rows:auto;gap:14px}.study-heading{max-width:650px}#studyNotes.study-notes{position:static;max-height:none;overflow:visible;overscroll-behavior:auto}.library-area{grid-template-columns:minmax(0,1fr);gap:10px}.library-area .sidebar{padding:16px 18px}.library-area .sidebar-description,.library-area .sidebar-help{display:none}.library-area .tree{display:flex;flex-direction:column;align-items:stretch;overflow:visible;margin:12px 0 0}.library-area .tree-row{padding-left:calc(var(--depth) * 14px)}.library-area .tree-item{width:100%;white-space:normal}.library-area .tree-row[style*="--depth:1"] .tree-item:before,.library-area .tree-row[style*="--depth:2"] .tree-item:before{content:none}.library-area .add-folder{align-self:stretch}}
+/* Match the compact, flat workspace panels. */
+.app-layout{min-height:calc(100vh - 56px)}
+.library-area .sidebar{background:#292b28;border-color:#474a45;border-radius:3px;padding:12px}
+.library-area .sidebar-description{margin:7px 5px 10px}
+.library-area .sidebar-help{margin:14px 5px 0;padding-top:10px}
+@media(max-width:830px){.library-area .sidebar{padding:12px}}
