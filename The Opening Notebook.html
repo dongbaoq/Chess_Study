@@ -159,6 +159,11 @@ footer{border-color:#454543;color:#999}footer a{color:#a3c4d8}
 .move-symbol-control .mark-symbol:hover:not(:disabled){background:#50504e}
 .move-symbol-control .mark-symbol[aria-pressed=true]{background:#525f65;border-color:#a9bec9;box-shadow:inset 0 0 0 1px #a9bec9}
 .move-symbol-control .symbol-only{color:#76cfee}.move-symbol-control .symbol-brilliant{color:#7fe2d7}.move-symbol-control .symbol-question{color:#f4b56b}.move-symbol-control .symbol-blunder{color:#ff9490}
+/* Enlarge the artwork within each square and make coordinates easier to read. */
+.piece svg{transform:scale(1.13)}
+.coord{font-size:clamp(12px,1.1vw,15px)}
+.coord.rank{top:3px;left:3px}.coord.file{bottom:3px;right:3px}
+@media(max-width:500px){.coord{font-size:12px}.coord.rank{top:2px;left:2px}.coord.file{bottom:2px;right:2px}}
 </style></head>
 <body><header class="site-header"><div class="brand"><span class="brand-mark">♞</span><div><strong>The Opening Notebook</strong><small>YOUR CHESS STUDY</small></div></div><div class="header-side"><span>REPERTOIRE</span><div class="side-toggle" aria-label="Choose repertoire"><button id="sideWhite" aria-pressed="true"><span class="side-disc white"></span> White</button><button id="sideBlack" aria-pressed="false"><span class="side-disc black"></span> Black</button></div></div></header>
 <main class="app-layout">
