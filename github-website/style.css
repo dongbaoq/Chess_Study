@@ -22,7 +22,7 @@ dialog select{display:block;width:100%;margin-top:7px;background:#202923;color:#
 /* A quiet, compact workspace for studying. */
 :root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#dededb;background:#262725;--muted:#aaa;--panel:#30312f;--border:#494b47;--accent:#a5bb9b}
 .site-header{height:56px;padding:0 24px;background:#222320;border-color:#3d3f3b}
-.brand{gap:9px}.brand-mark{font-size:24px;color:#c5c9c1}.brand strong{font-size:15px}.brand small,.eyebrow,.header-side>span{display:none}
+.brand{gap:9px}.brand-mark{font-size:24px;color:#c5c9c1}.brand strong{font-size:15px}.brand small,.eyebrow,.header-side>span{display:none}.sync-section .eyebrow{display:block;font-size:12px;letter-spacing:0;color:#c4c9c5}
 .side-toggle{background:#292a28;border-color:#484b46;border-radius:3px;padding:2px}.side-toggle button{padding:6px 11px;border-radius:2px}.side-toggle button[aria-pressed=true]{background:#566450}
 .study-main{padding-top:18px}.study-heading{margin-bottom:14px;align-items:center}.study-heading h1{font-family:inherit;font-size:22px;font-weight:600;margin-top:2px;color:#eceeeb}.breadcrumbs{margin-top:0}.opening-status{margin-top:4px}
 .text-button,.edit-folder{color:#b6c9ad}.text-button:hover{color:#e1eadc}

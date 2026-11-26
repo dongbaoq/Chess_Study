@@ -21,3 +21,5 @@
 .library-area .sidebar-description{margin:7px 5px 10px}
 .library-area .sidebar-help{margin:14px 5px 0;padding-top:10px}
 @media(max-width:830px){.library-area .sidebar{padding:12px}}
+/* Keep notes and library in the page flow, without an inner scrolling panel. */
+#studyNotes.study-notes{max-height:none;overflow:visible;overscroll-behavior:auto;container-type:inline-size}

@@ -18,3 +18,16 @@
 .study-empty{font-size:12px;color:#949d96;line-height:1.45;margin:6px 0 0}.study-no-opening{padding:10px 12px}.study-game-section{padding:0 12px}.study-game-card{border-bottom:0}.study-game-card .study-note-section+.study-note-section{padding-top:9px;border-top:1px solid #3a403c}
 @media(max-width:500px){.study-notes-bar{padding:11px 12px}.study-path-area{padding:10px 12px}.study-cards,.study-game-section{padding-left:12px;padding-right:12px}.study-card-heading h3{font-size:14px}.study-note-text{font-size:14px}.study-blunders-header{align-items:start;flex-wrap:wrap}}
 .study-notes{background:#2c2e2b;border-color:#474a45;border-radius:3px}
+/* Empty game notes need only their label and Add note action. */
+.study-game-card .study-note-text.is-empty{display:none}
+.study-game-card .study-level{display:none}
+.study-game-card .study-card-heading h3{margin:0;overflow-wrap:anywhere}
+.study-game-card .study-card-current{white-space:normal;text-align:right}
+.study-game-card .study-note-label-row{margin:0}
+.study-game-card .study-note-text:not(.is-empty),.study-game-card .study-editor{margin-top:4px}
+@container (min-width: 390px){
+  .study-game-card{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 16px}
+  .study-game-card .study-card-heading{grid-column:1/-1;margin-bottom:0}
+  .study-game-card .study-note-section{min-width:0}
+  .study-game-card .study-note-section+.study-note-section{margin:0;padding:0 0 0 12px;border-top:0;border-left:1px solid #454745}
+}

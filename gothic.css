@@ -1,0 +1,25 @@
+/* Charcoal, stone, and a restrained wine accent. */
+:root{color:#e5e0df;background:#19181b;--muted:#b2a9aa;--panel:#28262a;--border:#4d484c;--accent:#d1b7b9}
+.site-header{background:#121114;border-color:#413b40}
+.brand-mark{color:#cbb9b8}.brand strong,.study-heading h1,.sidebar h2,.panel-top strong,.section-header h3{color:#f0eaea}
+.side-toggle{background:#211f22;border-color:#50494d}.side-toggle button{color:#c3babc}.side-toggle button[aria-pressed=true]{background:#64434b;color:#fff}.side-disc.white{background:#e8e1db}.side-disc.black{background:#242126;border-color:#b9afb0}
+.study-heading,.breadcrumbs,.opening-status{color:#bdb3b5}.crumb-sep{color:#82787b}
+.text-button,.edit-folder,.study-edit,.study-link{color:#d0b7ba}.text-button:hover,.study-edit:hover,.study-link:hover{color:#fff}
+button:focus-visible,textarea:focus-visible,input:focus-visible,select:focus-visible{outline-color:#d6b9a8}
+.board-wrap{box-shadow:none}.square.light,.board.is-analysis .square.light{background:#d7d0c9}.square.dark,.board.is-analysis .square.dark{background:#82797a}
+.square.light.last-move,.board.is-analysis .square.light.last-move{background:#d5c09d}.square.dark.last-move,.board.is-analysis .square.dark.last-move{background:#a18474}
+.square.selected{box-shadow:inset 0 0 0 4px #b16c77}.square.legal:after{background:#382a305c}
+.light .coord,.board.is-analysis .square.light .coord{color:#6a5e61}.dark .coord,.board.is-analysis .square.dark .coord{color:#f0e9e4}
+.board-bottom strong,.move-symbol-control{color:#e8e1e0}.board-bottom span,.board-hint{color:#b4abad}
+.tool-button,.small-button,.add-folder,.button,.move-symbol-control select{background:#343034;border-color:#61575c;color:#e7dddc}.small-button,.button.primary,.tool-button.active{background:#68434b;color:#fff}.tool-button:hover,.small-button:hover,.add-folder:hover{background:#504147}
+.analysis-panel,.move-explorer,.study-notes,.library-area .sidebar{background:#28262a;border-color:#4d484c}.panel-top,.line-tools,.games-section,.sync-section,.study-notes-bar,.study-path-area,.study-opening-card,.study-blunders-header,.study-game-card .study-note-section+.study-note-section{border-color:#4d484c}
+.sidebar-description,.sidebar-help,.empty-tree,.empty-state,.sync-status,.study-autosave,.study-empty,.study-level,.study-card-current{color:#b0a6a9}.sidebar-help{border-color:#4d484c}
+.tree-item{color:#d1c8c9}.tree-item:hover{background:#3c3539}.tree-item.active{background:#62434b;color:#fff}.folder-icon,.tree-count{color:#c9b5b8}
+.game-entry,.game-item{background:#332f33;border-color:#554b50;color:#e8e0df}.game-entry.active,.game-item.active{background:#5b4047;border-color:#92757a}.game-entry .game-item{background:transparent}.game-item small,.game-action{color:#c7b8ba}
+.move-tree{background:#211f22;color:#e8e0df}.move-tree-heading{border-color:#4d484c}.move-tree-overline,.move-tree-heading p,.move-tree-legend,.move-tree-number,.move-tree-start,.move-tree-empty{color:#b7aaad}.move-tree-heading h2,.move-tree-move{color:#e9e2e0}.move-tree-move:hover{background:#483b40}.move-tree-move.is-current{background:#76515b;color:#fff}.move-tree-line.is-variation{border-color:#685a60}.move-tree-disclosure,.move-tree-branch-mark{color:#c4b6b9}.move-tree-folder{background:#504047;color:#e2cdd0}
+.move-explorer .control-buttons{border-color:#4d484c}.control-buttons button{background:#353035;border-color:#554d51;color:#e8e0df}.control-buttons button:hover:not(:disabled){background:#504047}
+.study-notes-bar,.study-field-label,.sync-section .eyebrow{color:#d0c5c7}.study-path-toggle{background:#322e32;border-color:#5b5156;color:#d2c5c7}.study-path-toggle.is-on{background:#63454c;border-color:#8a6d73;color:#fff}.study-card-heading h3,.study-note-text{color:#eee6e5}.study-note-text.is-empty{color:#b3a8aa}
+.study-notes textarea.study-editor,dialog input,dialog textarea,dialog select{background:#1d1b1e;border-color:#6b5d62;color:#f0e9e7}.study-notes textarea.study-editor::placeholder{color:#aa9da1}
+.study-blunder{background:#35272b;border-color:#76515a;border-left-color:#c77d88}.study-add-warning{background:#39292e;border-color:#80545e;color:#f0c2c8}.study-blunders-header h4,.study-blunder-badge,.study-blunder-move{color:#e6aeb7}.study-warning-actions .study-link,.danger-link,.game-action.danger{color:#e9abb3}
+dialog{background:#29262a;border-color:#62555b;color:#eee6e5}.button.secondary{background:transparent;color:#e5dada}
+footer{border-color:#403a3e;color:#a79b9e}footer a{color:#c9b2b6}
