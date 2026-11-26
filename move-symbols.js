@@ -40,3 +40,36 @@ export function setMoveSymbol(entity, moves, symbol) {
   else entity.moveSymbols[key] = symbol;
   return {ok:true, changed:true};
 }
+
+/** Display the current move's saved symbol without changing board markings. */
+export function renderBoardMoveSymbol(board, lastMove, symbol, flipped = false) {
+  const host = board?.parentElement;
+  if (!host) return;
+  let badge = host.querySelector('.board-move-symbol');
+  for (const square of board.querySelectorAll('[data-symbol-base-label]')) {
+    square.setAttribute('aria-label', square.dataset.symbolBaseLabel);
+    delete square.dataset.symbolBaseLabel;
+  }
+  const kind = {'!':'only','!!':'brilliant','?':'question','??':'blunder'}[symbol];
+  const destination = lastMove?.to;
+  if (!kind || !/^[a-h][1-8]$/.test(destination || '')) {
+    badge?.remove();
+    return;
+  }
+  if (!badge) {
+    badge = board.ownerDocument.createElement('span');
+    badge.setAttribute('aria-hidden', 'true');
+    host.appendChild(badge);
+  }
+  let column = destination.charCodeAt(0) - 97, row = 8 - Number(destination[1]);
+  if (flipped) { column = 7 - column; row = 7 - row; }
+  badge.className = `board-move-symbol symbol-${kind}`;
+  badge.style.left = `${(column + 1) * 12.5}%`;
+  badge.style.top = `${row * 12.5}%`;
+  badge.textContent = symbol;
+  const square = board.querySelector(`[data-square="${destination}"]`);
+  if (square) {
+    square.dataset.symbolBaseLabel = square.getAttribute('aria-label') || destination;
+    square.setAttribute('aria-label', `${square.dataset.symbolBaseLabel}, ${MOVE_SYMBOL_LABELS[symbol]}`);
+  }
+}

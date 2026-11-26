@@ -21,3 +21,6 @@
 .move-tree-move.is-analysis{opacity:.48}
 
 .move-tree-symbol{font-weight:800;margin-left:3px}.move-tree-symbol.symbol-question{color:#f4b56b}.move-tree-symbol.symbol-only{color:#76cfee}.move-tree-symbol.symbol-brilliant{color:#7fe2d7}.move-tree-symbol.symbol-blunder{color:#ff9490}
+/* The badge sits above the drawing overlay and never intercepts board input. */
+.board-move-symbol{position:absolute;z-index:6;transform:translate(calc(-100% - 2px),2px);display:grid;place-items:center;min-width:clamp(18px,2.8vw,26px);height:clamp(18px,2.8vw,26px);padding:0 3px;border-radius:50%;font:700 clamp(11px,1.5vw,15px)/1 system-ui,sans-serif;color:#fff;box-shadow:0 1px 3px #0008;pointer-events:none}
+.board-move-symbol.symbol-only{background:#32718b}.board-move-symbol.symbol-brilliant{background:#237f78}.board-move-symbol.symbol-question{background:#ad6e24}.board-move-symbol.symbol-blunder{background:#ad4141}
