@@ -147,6 +147,33 @@ button:focus-visible,textarea:focus-visible,input:focus-visible,select:focus-vis
 .study-blunder{background:#35272b;border-color:#76515a;border-left-color:#c77d88}.study-add-warning{background:#39292e;border-color:#80545e;color:#f0c2c8}.study-blunders-header h4,.study-blunder-badge,.study-blunder-move{color:#e6aeb7}.study-warning-actions .study-link,.danger-link,.game-action.danger{color:#e9abb3}
 dialog{background:#29262a;border-color:#62555b;color:#eee6e5}.button.secondary{background:transparent;color:#e5dada}
 footer{border-color:#403a3e;color:#a79b9e}footer a{color:#c9b2b6}
+
+/* A distinct gothic palette: ink, parchment, oxblood, and antique gold. */
+:root{background:#100c10;color:#eee1d2;--muted:#c2aaa5;--panel:#25171c;--border:#68444b;--accent:#e4bd83}
+.site-header{background:#0b090b;border-bottom:3px double #80564c}
+.brand-mark{color:#c79d68}.brand strong,.study-heading h1,.sidebar h2,.panel-top strong,.section-header h3,.move-tree-heading h2,.study-card-heading h3,.modal-head h2{font-family:Georgia,"Times New Roman",serif;color:#f3e4d1}
+.brand strong{font-size:17px;letter-spacing:.02em}.study-heading h1{font-size:25px}.sidebar h2,.panel-top strong,.section-header h3{font-size:17px}
+.side-toggle{background:#180f13;border-color:#77545b}.side-toggle button[aria-pressed=true]{background:#772c3b;color:#fff}
+.study-heading,.breadcrumbs,.opening-status,.board-bottom span,.board-hint{color:#c7b2a7}.crumb-sep{color:#987b76}
+.text-button,.edit-folder,.study-edit,.study-link,footer a{color:#e4bd83}.text-button:hover,.study-edit:hover,.study-link:hover{color:#fff1d7}
+.board-wrap{border:3px solid #302126;outline:1px solid #8d6653}
+.square.light,.board.is-analysis .square.light{background:#e4d4bc}.square.dark,.board.is-analysis .square.dark{background:#a36b70}
+.square.light.last-move,.board.is-analysis .square.light.last-move{background:#ebc77f}.square.dark.last-move,.board.is-analysis .square.dark.last-move{background:#c28b65}
+.square.selected{box-shadow:inset 0 0 0 4px #7c1d31}.square.legal:after{background:#40121c70}
+.light .coord,.board.is-analysis .square.light .coord{color:#805050}.dark .coord,.board.is-analysis .square.dark .coord{color:#fff1da}
+.analysis-panel,.move-explorer,.study-notes,.library-area .sidebar{background:#25171c;border-color:#68444b}
+.study-notes-bar{background:#371d25;color:#f1d7c0;border-bottom:1px solid #805354}
+.panel-top,.line-tools,.games-section,.sync-section,.study-path-area,.study-opening-card,.study-blunders-header,.study-game-card .study-note-section+.study-note-section{border-color:#68444b}
+.tool-button,.small-button,.add-folder,.button,.move-symbol-control select{background:#3b242a;border-color:#80565b;color:#f2e2d2}.small-button,.button.primary,.tool-button.active{background:#842c3f;color:#fff}.tool-button:hover,.small-button:hover,.add-folder:hover{background:#743342}
+.tree-item{color:#e0cec5}.tree-item:hover{background:#49262f}.tree-item.active,.game-entry.active,.game-item.active{background:#742c3b;border-color:#b5726d;color:#fff}
+.folder-icon,.tree-count,.sidebar-description,.sidebar-help,.empty-tree,.empty-state,.sync-status,.study-autosave,.study-empty,.study-level,.study-card-current{color:#c8aea6}
+.game-entry,.game-item{background:#382329;border-color:#70464e;color:#f1e1d5}.game-entry .game-item{background:transparent}.game-item small,.game-action{color:#d6bcb3}
+.move-tree{background:#1b1116;color:#f1e1d5}.move-tree-heading,.move-explorer .control-buttons{border-color:#68444b}.move-tree-overline,.move-tree-heading p,.move-tree-legend,.move-tree-number,.move-tree-start,.move-tree-empty{color:#cbb3a9}.move-tree-move{color:#f1e1d5}.move-tree-move:hover{background:#4d2932}.move-tree-move.is-current{background:#8b3447;color:#fff}.move-tree-folder{background:#573039;color:#f1d5c0}
+.control-buttons button{background:#3b242a;border-color:#6d4850;color:#f6e5d5}.control-buttons button:hover:not(:disabled){background:#6a303e}
+.study-field-label,.sync-section .eyebrow{color:#dec4b5}.study-path-toggle{background:#352128;border-color:#77515a;color:#e2ccc0}.study-path-toggle.is-on{background:#762e3e;border-color:#ba817c;color:#fff}.study-note-text{color:#f0e4d9}.study-note-text.is-empty{color:#c1a8a0}
+.study-notes textarea.study-editor,dialog input,dialog textarea,dialog select{background:#160e12;border-color:#8c6362;color:#fff0e1}
+.study-game-card .study-card-current{display:none}
+dialog{background:#25171c;border-color:#81565b;color:#f1e1d5}footer{border-color:#624249;color:#bda49b}
 </style></head>
 <body><header class="site-header"><div class="brand"><span class="brand-mark">♞</span><div><strong>The Opening Notebook</strong><small>YOUR CHESS STUDY</small></div></div><div class="header-side"><span>REPERTOIRE</span><div class="side-toggle" aria-label="Choose repertoire"><button id="sideWhite" aria-pressed="true"><span class="side-disc white"></span> White</button><button id="sideBlack" aria-pressed="false"><span class="side-disc black"></span> Black</button></div></div></header>
 <main class="app-layout">
