@@ -9,7 +9,7 @@ import { inspectFolderDeletion, deleteFolder, deleteGame, moveGame, matchGameFol
 import { createStudyNotes } from './study-notes.js?v=theory-12';
 import { buildMoveTree } from './move-tree.js?v=opening-lines-11';
 import { createMoveTreeView } from './move-tree-view.js';
-import { MOVE_SYMBOL_LABELS, readMoveSymbols, setMoveSymbol, renderBoardMoveSymbol } from './move-symbols.js?v=theory-12';
+import { MOVE_SYMBOL_LABELS, readMoveSymbols, setMoveSymbol, renderBoardMoveSymbol } from './move-symbols.js?v=marks-13';
 import { getAnalysisVariations, saveAnalysisVariation, deleteAnalysisVariation } from './analysis-variations.js';
 const $ = s => document.querySelector(s);
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
