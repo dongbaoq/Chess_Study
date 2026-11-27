@@ -31,7 +31,7 @@ footer{border-color:#454543;color:#999}footer a{color:#a3c4d8}
 .move-symbol-control .mark-symbol{min-width:36px;height:34px;padding:2px 6px;border:1px solid #555552;border-radius:2px;background:#3b3b39;font-size:17px;font-weight:700;line-height:1}
 .move-symbol-control .mark-symbol:hover:not(:disabled){background:#50504e}
 .move-symbol-control .mark-symbol[aria-pressed=true]{background:#525f65;border-color:#a9bec9;box-shadow:inset 0 0 0 1px #a9bec9}
-.move-symbol-control .symbol-only{color:#76cfee}.move-symbol-control .symbol-brilliant{color:#7fe2d7}.move-symbol-control .symbol-question{color:#f4b56b}.move-symbol-control .symbol-blunder{color:#ff9490}
+.move-symbol-control .symbol-only{color:#76cfee}.move-symbol-control .symbol-brilliant{color:#45d0c6}.move-symbol-control .symbol-question{color:#f4b56b}.move-symbol-control .symbol-blunder{color:#ff7770}
 /* Enlarge the artwork within each square and make coordinates easier to read. */
 .piece svg{transform:scale(1.06)}
 .coord{font-size:clamp(12px,1.1vw,15px)}
@@ -39,3 +39,5 @@ footer{border-color:#454543;color:#999}footer a{color:#a3c4d8}
 @media(max-width:500px){.coord{font-size:12px}.coord.rank{top:2px;left:2px}.coord.file{bottom:2px;right:2px}}
 
 .move-explorer-tools{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.move-explorer-tools .move-symbol-control{flex:1;min-width:0}.save-opening-line{margin:4px 10px 4px auto;border:1px solid #555552;border-radius:2px;background:#3b3b39;color:#e1e1e1;padding:6px 9px;font-size:13px;font-weight:600}.save-opening-line:hover:not(:disabled){background:#50504e}.save-opening-line[hidden]{display:none}
+
+.move-symbol-control .mark-symbol svg{display:block;width:22px;height:22px;margin:auto}

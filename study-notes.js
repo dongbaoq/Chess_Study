@@ -34,8 +34,10 @@ export function createStudyNotes({container, onChange = () => {}, onJump = () =>
     }).join('');
   }
   function folderCard(folder,i) {
-    const field=editable({key:`idea:${folder.id}`,value:folder.note??[folder.idea,folder.plan].filter(Boolean).join('\n\n'),label:'Ideas and plans',placeholder:'Write the key ideas and plans for this line…',attributes:`data-idea="${escapeText(folder.id)}"`});
-    return `<article class="study-opening-card"><div class="study-card-heading"><div><span class="study-level">${i===0?'OPENING':`BRANCH ${i}`}</span><h3>${escapeText(folder.name)}</h3></div><span class="study-card-current">${folder.id===context.folder?.id?'CURRENT':'PARENT'}</span></div>${field}<div class="study-blunders-header"><h4>Blunders &amp; traps</h4><button type="button" class="study-add-warning" data-add-warning="${escapeText(folder.id)}">＋ Mark this position</button></div>${warningRows(folder)}</article>`;
+    const key=`idea:${folder.id}`, value=folder.note??[folder.idea,folder.plan].filter(Boolean).join('\n\n'), open=editing.has(key);
+    const name=escapeText(folder.name), label=`Ideas and plans for ${folder.name}`;
+    const field=open?`<textarea class="study-editor" data-editor-key="${escapeText(key)}" data-idea="${escapeText(folder.id)}" aria-label="${escapeText(label)}" placeholder="Write the key ideas and plans for this line…">${escapeText(value)}</textarea>`:`<div class="study-note-text ${value?'':'is-empty'}">${value?escapeText(value):'No note yet.'}</div>`;
+    return `<article class="study-opening-card"><div class="study-opening-info"><span class="study-level">${i===0?'OPENING':`BRANCH ${i}`}</span><h3>${name}</h3><span class="study-field-label">Ideas and plans</span></div><div class="study-opening-note"><button type="button" class="study-edit" data-edit-key="${escapeText(key)}" aria-label="${open?'Done editing':value?'Edit':'Add'} ${escapeText(label)}">${open?'Done':value?'Edit':'Add note'}</button>${field}</div></article>`;
   }
   function gameCard() {
     const game=context.game;if(!game)return '';
@@ -49,8 +51,8 @@ export function createStudyNotes({container, onChange = () => {}, onJump = () =>
   function draw() {
     path=context.folder?folderPath(context.folders,context.folder.id):[];
     for(const folder of path)if(!visible.has(folder.id))visible.set(folder.id,true);
-    const toggles=path.map(folder=>`<button type="button" class="study-path-toggle ${visible.get(folder.id)?'is-on':''}" aria-pressed="${visible.get(folder.id)?'true':'false'}" data-toggle-opening="${escapeText(folder.id)}">${escapeText(folder.name)}</button>`).join('');
-    const cards=path.filter(folder=>visible.get(folder.id)).map(folder=>folderCard(folder,path.indexOf(folder))).join('');
+    const toggles=[...path].reverse().map(folder=>`<button type="button" class="study-path-toggle ${visible.get(folder.id)?'is-on':''}" aria-pressed="${visible.get(folder.id)?'true':'false'}" data-toggle-opening="${escapeText(folder.id)}">${escapeText(folder.name)}</button>`).join('');
+    const cards=[...path].reverse().filter(folder=>visible.get(folder.id)).map(folder=>folderCard(folder,path.indexOf(folder))).join('');
     container.innerHTML=`<div class="study-notes-bar"><span>${context.game?'GAME ANALYSIS':'OPENING THEORY'}</span><span class="study-autosave">${getSaveStatus()?'Changes not saved':'Saved as you type'}</span></div>${context.game?`<div class="study-game-section">${gameCard()}</div>`:path.length?`<div class="study-path-area"><span class="study-field-label">Opening path</span><div class="study-path-toggles">${toggles}</div></div><div class="study-cards">${cards||'<p class="study-empty">Choose a line above to show its notes.</p>'}</div>`:'<p class="study-empty study-no-opening">Choose an opening to add notes.</p>'}`;
   }
   function change(event) {

@@ -13,26 +13,28 @@
 .move-tree-number{font-size:12px;line-height:1;color:#91a395;margin:0 2px 0 5px;white-space:nowrap}
 .move-tree-move{border:0;border-radius:4px;background:transparent;color:#e2e9de;font-size:14px;font-weight:600;line-height:1.3;padding:4px 5px;white-space:nowrap}
 .move-tree-move:hover{background:#44594a}.move-tree-move.is-current{background:#769371;color:#fff}.move-tree-move:focus-visible,.move-tree-disclosure:focus-visible{outline:3px solid #b6d4a9;outline-offset:2px}
-.move-tree-blunder{font-size:12px;margin-left:3px;color:#ff9490}.move-tree-folder{display:inline-block;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:#415649;color:#c6dbc7;border-radius:3px;padding:2px 5px;font-size:10px;font-weight:700;line-height:1.4;margin:0 3px}
+.move-tree-blunder{font-size:12px;margin-left:3px;color:#ff7770}.move-tree-folder{display:inline-block;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:#415649;color:#c6dbc7;border-radius:3px;padding:2px 5px;font-size:10px;font-weight:700;line-height:1.4;margin:0 3px}
 .move-tree-disclosure{flex:none;border:0;background:transparent;color:#b7c7b9;width:20px;height:27px;line-height:1;padding:0;font-size:14px}.move-tree-branch-mark{flex:none;width:20px;text-align:center;color:#83998a;font-size:13px;line-height:27px}
 .move-tree-empty{color:#a5b3a7;font-size:13px;line-height:1.4;margin:0;padding:8px 12px}.move-tree-content .move-tree-empty{padding:4px 0}
 @media(max-width:500px){.move-tree-heading{padding:10px 12px;gap:8px}.move-tree-heading h2{font-size:15px}.move-tree-legend{font-size:10px;white-space:normal;text-align:right;max-width:85px}.move-tree-content{padding:8px 10px}.move-tree-line{padding-left:calc(var(--branch-depth,0) * 8px)}.move-tree-folder{max-width:105px}}
 .move-tree-start-row{margin:0 0 4px}.move-tree-start{font-size:12px;color:#a9b9ac}
 .move-tree-move.is-analysis{opacity:.48}
 
-.move-tree-symbol{font-weight:800;margin-left:3px}.move-tree-symbol.symbol-question{color:#f4b56b}.move-tree-symbol.symbol-only{color:#76cfee}.move-tree-symbol.symbol-brilliant{color:#7fe2d7}.move-tree-symbol.symbol-blunder{color:#ff9490}
+.move-tree-symbol{font-weight:800;margin-left:3px}.move-tree-symbol.symbol-question{color:#f4b56b}.move-tree-symbol.symbol-only{color:#76cfee}.move-tree-symbol.symbol-brilliant{color:#45d0c6}.move-tree-symbol.symbol-blunder{color:#ff7770}
 /* The badge sits above the drawing overlay and never intercepts board input. */
 .board-move-symbol{position:absolute;z-index:6;transform:translate(-70%,-25%);display:grid;place-items:center;width:clamp(24px,3.4vw,34px);height:clamp(24px,3.4vw,34px);padding:0;border-radius:50%;font:700 clamp(14px,1.8vw,18px)/1 system-ui,sans-serif;color:#182022;border:2px solid #eee;box-shadow:0 1px 3px #0008;pointer-events:none}
 .board-move-symbol[data-edge-right="true"]{transform:translate(-100%,-25%)}
 .board-move-symbol[data-edge-top="true"]{transform:translate(-70%,0)}
 .board-move-symbol[data-edge-right="true"][data-edge-top="true"]{transform:translate(-100%,0)}
-.board-move-symbol.symbol-only{background:#7ac2e7}.board-move-symbol.symbol-brilliant{background:#69d5c8}.board-move-symbol.symbol-question{background:#f5b45b}.board-move-symbol.symbol-blunder{background:#f17b72}
+.board-move-symbol.symbol-only{background:#7ac2e7}.board-move-symbol.symbol-brilliant{background:#1baca6;color:#fff}.board-move-symbol.symbol-question{background:#f5b45b}.board-move-symbol.symbol-blunder{background:#c83d37;color:#fff}
 
 /* A display-only tint sits below pieces and coordinates, independent of drawn marks. */
 .square[data-move-symbol-tone]::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none}
 .square[data-move-symbol-tone="only"]::before{background:rgba(110,196,239,.48)}
-.square[data-move-symbol-tone="brilliant"]::before{background:rgba(85,213,196,.48)}
+.square[data-move-symbol-tone="brilliant"]::before{background:rgba(27,172,166,.42)}
 .square[data-move-symbol-tone="question"]::before{background:rgba(255,190,96,.48)}
-.square[data-move-symbol-tone="blunder"]::before{background:rgba(250,123,112,.48)}
+.square[data-move-symbol-tone="blunder"]::before{background:rgba(200,61,55,.42)}
 
-.board-move-symbol svg{display:block;width:90%;height:90%;overflow:visible}
+.board-move-symbol svg{display:block;width:90%;height:90%;overflow:visible}.board-move-symbol.symbol-brilliant svg,.board-move-symbol.symbol-blunder svg{filter:drop-shadow(0 1px 1px #0008)}
+
+.move-tree-symbol{font-family:Georgia,serif}

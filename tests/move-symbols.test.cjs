@@ -103,7 +103,7 @@ test('board badge follows the current move, flips with the board, and clears cle
   assert.equal(squares.get('e4').label,'e4 pawn, Brilliant move');
   assert.equal(squares.get('e4').dataset.moveSymbolTone,'brilliant');
   renderBoardMoveSymbol(board,{to:'d5'},'?',true);
-  assert.match(badge.innerHTML, /<path /); assert.equal((badge.innerHTML.match(/<circle /g)||[]).length,1); assert.equal(badge.style.left,'62.5%'); assert.equal(badge.style.top,'50%');
+  assert.match(badge.innerHTML, /<path /); assert.equal((badge.innerHTML.match(/<rect /g)||[]).length,1); assert.equal(badge.style.left,'62.5%'); assert.equal(badge.style.top,'50%');
   assert.equal(squares.get('e4').label,'e4 pawn'); assert.equal(squares.get('d5').label,'d5 pawn, Mistake');
   assert.equal(squares.get('e4').dataset.moveSymbolTone,undefined);
   assert.equal(squares.get('d5').dataset.moveSymbolTone,'question');

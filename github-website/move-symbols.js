@@ -43,10 +43,10 @@ export function setMoveSymbol(entity, moves, symbol) {
 
 // Fixed vector artwork keeps annotations legible without relying on a font.
 const BOARD_SYMBOL_ICONS = Object.freeze({
-  '!': '<svg viewBox="0 0 24 24" width="100%" height="100%" aria-hidden="true"><rect x="10" y="3" width="4" height="12" rx="2" fill="currentColor"/><circle cx="12" cy="19" r="2.2" fill="currentColor"/></svg>',
-  '!!': '<svg viewBox="0 0 24 24" width="100%" height="100%" aria-hidden="true"><rect x="5" y="3" width="4" height="12" rx="2" fill="currentColor"/><circle cx="7" cy="19" r="2.2" fill="currentColor"/><rect x="15" y="3" width="4" height="12" rx="2" fill="currentColor"/><circle cx="17" cy="19" r="2.2" fill="currentColor"/></svg>',
-  '?': '<svg viewBox="0 0 24 24" width="100%" height="100%" aria-hidden="true"><path d="M7.7 8.3c0-2.6 1.8-4.3 4.4-4.3 2.6 0 4.3 1.6 4.3 3.9 0 2-1.1 3-2.6 4.1-1.1.8-1.8 1.5-1.8 3" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="12" cy="19.5" r="2" fill="currentColor"/></svg>',
-  '??': '<svg viewBox="0 0 24 24" width="100%" height="100%" aria-hidden="true"><path d="M2 8c0-2.4 1.5-4 3.8-4s3.8 1.5 3.8 3.6c0 1.8-1 2.7-2.3 3.7-1 .8-1.5 1.4-1.5 2.8M14.4 8c0-2.4 1.5-4 3.8-4S22 5.5 22 7.6c0 1.8-1 2.7-2.3 3.7-1 .8-1.5 1.4-1.5 2.8" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><circle cx="5.8" cy="19" r="1.8" fill="currentColor"/><circle cx="18.2" cy="19" r="1.8" fill="currentColor"/></svg>'
+  '!': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 3h5l-.7 12h-3.6z" fill="currentColor"/><rect x="10" y="18" width="4" height="4" fill="currentColor"/></svg>',
+  '!!': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.7 3h4.8l-.6 12H4.3zM15.5 3h4.8l-.6 12h-3.6z" fill="currentColor"/><rect x="4.1" y="18" width="4" height="4" fill="currentColor"/><rect x="15.9" y="18" width="4" height="4" fill="currentColor"/></svg>',
+  '?': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 8V6l2.5-3h6l2.5 3v3l-4 4v2h-3.5v-3.4l4-4V7l-.8-.8h-2.4L10 7v1z" fill="currentColor"/><rect x="10" y="18" width="4" height="4" fill="currentColor"/></svg>',
+  '??': '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor" transform="translate(-4 2) scale(.82)"><path d="M6.5 8V6l2.5-3h6l2.5 3v3l-4 4v2h-3.5v-3.4l4-4V7l-.8-.8h-2.4L10 7v1z"/><rect x="10" y="18" width="4" height="4"/></g><g fill="currentColor" transform="translate(8 2) scale(.82)"><path d="M6.5 8V6l2.5-3h6l2.5 3v3l-4 4v2h-3.5v-3.4l4-4V7l-.8-.8h-2.4L10 7v1z"/><rect x="10" y="18" width="4" height="4"/></g></svg>'
 });
 
 /** Display the current move's saved symbol without changing board markings. */

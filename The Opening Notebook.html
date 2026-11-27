@@ -71,6 +71,14 @@ dialog{border-radius:3px;background:#30312f}.modal-head h2{font-family:inherit;f
   .study-game-card .study-note-section{min-width:0}
   .study-game-card .study-note-section+.study-note-section{margin:0;padding:0 0 0 12px;border-top:0;border-left:1px solid #454745}
 }
+/* Compact opening rows: identity on the left, editable note on the right. */
+.study-opening-card{display:grid;grid-template-columns:minmax(105px,0.85fr) minmax(0,1.15fr);gap:8px 14px;align-items:start;padding:9px 0}
+.study-opening-info,.study-opening-note{min-width:0}
+.study-opening-info h3{font-size:15px;line-height:1.3;overflow-wrap:anywhere;margin:2px 0 4px;color:#f1f2f0}
+.study-opening-note .study-edit{float:right;margin:0 0 3px 8px}
+.study-opening-note .study-note-text{min-width:0;overflow-wrap:anywhere}
+.study-opening-note textarea.study-editor{clear:both;min-height:64px}
+@container (max-width: 280px){.study-opening-card{grid-template-columns:minmax(0,1fr);gap:5px}.study-opening-note .study-edit{float:right}}
 
 .move-tree{margin-top:18px;border:1px solid #4b5b50;border-radius:8px;background:#2c3530;color:#e6ede5;overflow:hidden;box-shadow:0 5px 20px #101b132c}
 .move-tree-heading{display:flex;align-items:start;justify-content:space-between;gap:12px;padding:10px 12px;border-bottom:1px solid #45554a}
@@ -87,29 +95,31 @@ dialog{border-radius:3px;background:#30312f}.modal-head h2{font-family:inherit;f
 .move-tree-number{font-size:12px;line-height:1;color:#91a395;margin:0 2px 0 5px;white-space:nowrap}
 .move-tree-move{border:0;border-radius:4px;background:transparent;color:#e2e9de;font-size:14px;font-weight:600;line-height:1.3;padding:4px 5px;white-space:nowrap}
 .move-tree-move:hover{background:#44594a}.move-tree-move.is-current{background:#769371;color:#fff}.move-tree-move:focus-visible,.move-tree-disclosure:focus-visible{outline:3px solid #b6d4a9;outline-offset:2px}
-.move-tree-blunder{font-size:12px;margin-left:3px;color:#ff9490}.move-tree-folder{display:inline-block;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:#415649;color:#c6dbc7;border-radius:3px;padding:2px 5px;font-size:10px;font-weight:700;line-height:1.4;margin:0 3px}
+.move-tree-blunder{font-size:12px;margin-left:3px;color:#ff7770}.move-tree-folder{display:inline-block;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:#415649;color:#c6dbc7;border-radius:3px;padding:2px 5px;font-size:10px;font-weight:700;line-height:1.4;margin:0 3px}
 .move-tree-disclosure{flex:none;border:0;background:transparent;color:#b7c7b9;width:20px;height:27px;line-height:1;padding:0;font-size:14px}.move-tree-branch-mark{flex:none;width:20px;text-align:center;color:#83998a;font-size:13px;line-height:27px}
 .move-tree-empty{color:#a5b3a7;font-size:13px;line-height:1.4;margin:0;padding:8px 12px}.move-tree-content .move-tree-empty{padding:4px 0}
 @media(max-width:500px){.move-tree-heading{padding:10px 12px;gap:8px}.move-tree-heading h2{font-size:15px}.move-tree-legend{font-size:10px;white-space:normal;text-align:right;max-width:85px}.move-tree-content{padding:8px 10px}.move-tree-line{padding-left:calc(var(--branch-depth,0) * 8px)}.move-tree-folder{max-width:105px}}
 .move-tree-start-row{margin:0 0 4px}.move-tree-start{font-size:12px;color:#a9b9ac}
 .move-tree-move.is-analysis{opacity:.48}
 
-.move-tree-symbol{font-weight:800;margin-left:3px}.move-tree-symbol.symbol-question{color:#f4b56b}.move-tree-symbol.symbol-only{color:#76cfee}.move-tree-symbol.symbol-brilliant{color:#7fe2d7}.move-tree-symbol.symbol-blunder{color:#ff9490}
+.move-tree-symbol{font-weight:800;margin-left:3px}.move-tree-symbol.symbol-question{color:#f4b56b}.move-tree-symbol.symbol-only{color:#76cfee}.move-tree-symbol.symbol-brilliant{color:#45d0c6}.move-tree-symbol.symbol-blunder{color:#ff7770}
 /* The badge sits above the drawing overlay and never intercepts board input. */
 .board-move-symbol{position:absolute;z-index:6;transform:translate(-70%,-25%);display:grid;place-items:center;width:clamp(24px,3.4vw,34px);height:clamp(24px,3.4vw,34px);padding:0;border-radius:50%;font:700 clamp(14px,1.8vw,18px)/1 system-ui,sans-serif;color:#182022;border:2px solid #eee;box-shadow:0 1px 3px #0008;pointer-events:none}
 .board-move-symbol[data-edge-right="true"]{transform:translate(-100%,-25%)}
 .board-move-symbol[data-edge-top="true"]{transform:translate(-70%,0)}
 .board-move-symbol[data-edge-right="true"][data-edge-top="true"]{transform:translate(-100%,0)}
-.board-move-symbol.symbol-only{background:#7ac2e7}.board-move-symbol.symbol-brilliant{background:#69d5c8}.board-move-symbol.symbol-question{background:#f5b45b}.board-move-symbol.symbol-blunder{background:#f17b72}
+.board-move-symbol.symbol-only{background:#7ac2e7}.board-move-symbol.symbol-brilliant{background:#1baca6;color:#fff}.board-move-symbol.symbol-question{background:#f5b45b}.board-move-symbol.symbol-blunder{background:#c83d37;color:#fff}
 
 /* A display-only tint sits below pieces and coordinates, independent of drawn marks. */
 .square[data-move-symbol-tone]::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none}
 .square[data-move-symbol-tone="only"]::before{background:rgba(110,196,239,.48)}
-.square[data-move-symbol-tone="brilliant"]::before{background:rgba(85,213,196,.48)}
+.square[data-move-symbol-tone="brilliant"]::before{background:rgba(27,172,166,.42)}
 .square[data-move-symbol-tone="question"]::before{background:rgba(255,190,96,.48)}
-.square[data-move-symbol-tone="blunder"]::before{background:rgba(250,123,112,.48)}
+.square[data-move-symbol-tone="blunder"]::before{background:rgba(200,61,55,.42)}
 
-.board-move-symbol svg{display:block;width:90%;height:90%;overflow:visible}
+.board-move-symbol svg{display:block;width:90%;height:90%;overflow:visible}.board-move-symbol.symbol-brilliant svg,.board-move-symbol.symbol-blunder svg{filter:drop-shadow(0 1px 1px #0008)}
+
+.move-tree-symbol{font-family:Georgia,serif}
 
 /* Board and notes are the main study workspace; the library sits underneath. */
 .app-layout{display:block;min-height:calc(100vh - 68px)}
@@ -170,7 +180,7 @@ footer{border-color:#454543;color:#999}footer a{color:#a3c4d8}
 .move-symbol-control .mark-symbol{min-width:36px;height:34px;padding:2px 6px;border:1px solid #555552;border-radius:2px;background:#3b3b39;font-size:17px;font-weight:700;line-height:1}
 .move-symbol-control .mark-symbol:hover:not(:disabled){background:#50504e}
 .move-symbol-control .mark-symbol[aria-pressed=true]{background:#525f65;border-color:#a9bec9;box-shadow:inset 0 0 0 1px #a9bec9}
-.move-symbol-control .symbol-only{color:#76cfee}.move-symbol-control .symbol-brilliant{color:#7fe2d7}.move-symbol-control .symbol-question{color:#f4b56b}.move-symbol-control .symbol-blunder{color:#ff9490}
+.move-symbol-control .symbol-only{color:#76cfee}.move-symbol-control .symbol-brilliant{color:#45d0c6}.move-symbol-control .symbol-question{color:#f4b56b}.move-symbol-control .symbol-blunder{color:#ff7770}
 /* Enlarge the artwork within each square and make coordinates easier to read. */
 .piece svg{transform:scale(1.06)}
 .coord{font-size:clamp(12px,1.1vw,15px)}
@@ -178,11 +188,13 @@ footer{border-color:#454543;color:#999}footer a{color:#a3c4d8}
 @media(max-width:500px){.coord{font-size:12px}.coord.rank{top:2px;left:2px}.coord.file{bottom:2px;right:2px}}
 
 .move-explorer-tools{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.move-explorer-tools .move-symbol-control{flex:1;min-width:0}.save-opening-line{margin:4px 10px 4px auto;border:1px solid #555552;border-radius:2px;background:#3b3b39;color:#e1e1e1;padding:6px 9px;font-size:13px;font-weight:600}.save-opening-line:hover:not(:disabled){background:#50504e}.save-opening-line[hidden]{display:none}
+
+.move-symbol-control .mark-symbol svg{display:block;width:22px;height:22px;margin:auto}
 </style></head>
 <body><header class="site-header"><div class="brand"><span class="brand-mark">♞</span><div><strong>The Opening Notebook</strong><small>YOUR CHESS STUDY</small></div></div><div class="header-side"><span>REPERTOIRE</span><div class="side-toggle" aria-label="Choose repertoire"><button id="sideWhite" aria-pressed="true"><span class="side-disc white"></span> White</button><button id="sideBlack" aria-pressed="false"><span class="side-disc black"></span> Black</button></div></div></header>
 <main class="app-layout">
 <section class="study-main"><div class="study-heading"><div><div class="eyebrow">STUDY BOARD</div><div id="breadcrumbs" class="breadcrumbs"></div><h1 id="boardTitle"></h1><p id="openingStatus" class="opening-status"></p><div id="storageWarning" class="storage-warning" role="alert" hidden><span id="storageWarningText"></span> <button id="downloadOriginal" type="button" class="text-button" hidden>Download original library</button> <button id="downloadOriginalMarks" type="button" class="text-button" hidden>Download original markings</button></div></div><button id="flip" class="text-button" title="Flip board without changing repertoire">⇅ &nbsp; Flip board</button></div><div class="study-grid"><div class="board-column"><div class="board-wrap"><div id="board" class="board" aria-label="Chess board"></div></div><div class="board-bottom"><div><strong id="positionLabel"></strong><span id="positionSub"></span></div><div class="board-actions"><button id="drawMode" class="tool-button" aria-pressed="false">✎ <span>Draw</span></button><button id="clearMarks" class="tool-button">Clear marks</button></div></div><p class="board-hint">Drag a piece to move it. Right-click a square or drag an arrow to annotate; on touchscreens, use Draw.</p></div>
-<section class="move-explorer" aria-label="Moves and variations"><div class="move-explorer-tools"><div id="moveSymbolControl" class="move-symbol-control" role="group" aria-label="Mark this move"><span>Marking:</span><button type="button" class="mark-symbol symbol-only" data-move-symbol="!" aria-label="Only move" title="Only move" aria-pressed="false" disabled>!</button><button type="button" class="mark-symbol symbol-brilliant" data-move-symbol="!!" aria-label="Brilliant move" title="Brilliant move" aria-pressed="false" disabled>!!</button><button type="button" class="mark-symbol symbol-question" data-move-symbol="?" aria-label="Mistake" title="Mistake" aria-pressed="false" disabled>?</button><button type="button" class="mark-symbol symbol-blunder" data-move-symbol="??" aria-label="Blunder" title="Blunder" aria-pressed="false" disabled>??</button></div><button type="button" id="saveOpeningLine" class="save-opening-line" title="Save this opening line without creating a folder">Save line</button></div><div id="moveTree" class="move-tree"></div><div class="control-buttons"><button id="first" aria-label="First move">|‹</button><button id="prev" aria-label="Previous move">‹</button><button id="next" aria-label="Next move">›</button><button id="last" aria-label="Last move">›|</button></div><button id="returnGame" class="text-button return-game" hidden>Return to game</button></section><div id="studyNotes" class="study-notes"></div>
+<section class="move-explorer" aria-label="Moves and variations"><div class="move-explorer-tools"><div id="moveSymbolControl" class="move-symbol-control" role="group" aria-label="Mark this move"><span>Marking:</span><button type="button" class="mark-symbol symbol-only" data-move-symbol="!" aria-label="Only move" title="Only move" aria-pressed="false" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 3h5l-.7 12h-3.6z" fill="currentColor"/><rect x="10" y="18" width="4" height="4" fill="currentColor"/></svg></button><button type="button" class="mark-symbol symbol-brilliant" data-move-symbol="!!" aria-label="Brilliant move" title="Brilliant move" aria-pressed="false" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.7 3h4.8l-.6 12H4.3zM15.5 3h4.8l-.6 12h-3.6z" fill="currentColor"/><rect x="4.1" y="18" width="4" height="4" fill="currentColor"/><rect x="15.9" y="18" width="4" height="4" fill="currentColor"/></svg></button><button type="button" class="mark-symbol symbol-question" data-move-symbol="?" aria-label="Mistake" title="Mistake" aria-pressed="false" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 8V6l2.5-3h6l2.5 3v3l-4 4v2h-3.5v-3.4l4-4V7l-.8-.8h-2.4L10 7v1z" fill="currentColor"/><rect x="10" y="18" width="4" height="4" fill="currentColor"/></svg></button><button type="button" class="mark-symbol symbol-blunder" data-move-symbol="??" aria-label="Blunder" title="Blunder" aria-pressed="false" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor" transform="translate(-4 2) scale(.82)"><path d="M6.5 8V6l2.5-3h6l2.5 3v3l-4 4v2h-3.5v-3.4l4-4V7l-.8-.8h-2.4L10 7v1z"/><rect x="10" y="18" width="4" height="4"/></g><g fill="currentColor" transform="translate(8 2) scale(.82)"><path d="M6.5 8V6l2.5-3h6l2.5 3v3l-4 4v2h-3.5v-3.4l4-4V7l-.8-.8h-2.4L10 7v1z"/><rect x="10" y="18" width="4" height="4"/></g></svg></button></div><button type="button" id="saveOpeningLine" class="save-opening-line" title="Save this opening line without creating a folder">Save line</button></div><div id="moveTree" class="move-tree"></div><div class="control-buttons"><button id="first" aria-label="First move">|‹</button><button id="prev" aria-label="Previous move">‹</button><button id="next" aria-label="Next move">›</button><button id="last" aria-label="Last move">›|</button></div><button id="returnGame" class="text-button return-game" hidden>Return to game</button></section><div id="studyNotes" class="study-notes"></div>
 <section class="library-area" aria-label="Library and games"><aside class="sidebar"><div class="sidebar-top"><div><div class="eyebrow">YOUR REPERTOIRE</div><h2 id="libraryTitle">White openings</h2></div><button id="addRoot" class="icon-button" aria-label="Add top-level opening" title="Add top-level opening">＋</button></div><p class="sidebar-description">Choose a line to explore its position.</p><div id="tree" class="tree"></div><div class="folder-actions"><button id="editFolder" class="edit-folder">Edit opening</button><button id="deleteFolder" class="edit-folder danger-link">Delete opening</button></div><button id="addChild" class="add-folder">＋ &nbsp; Add subfolder</button><div class="sidebar-help">Folders follow the moves of their parent. Your White and Black repertoires are separate.</div></aside>
 <aside class="analysis-panel"><div class="panel-top"><div><div class="eyebrow">YOUR LIBRARY</div><strong>Study tools</strong></div><button id="addGame" class="small-button">＋ Game</button></div><div class="line-tools"><button id="saveLine" class="text-button">Save position to this folder</button><button id="addBranch" class="text-button">＋ Save as subfolder</button></div><div class="games-section"><div class="section-header"><div><div class="eyebrow">GAME JOURNAL</div><h3 id="gamesHeading">Games in this folder</h3></div><button id="openingView" class="text-button">Opening view</button></div><div id="games" class="game-list"></div></div><section class="sync-section"><div class="eyebrow">LIBRARY STORAGE</div><p id="syncStatus" class="sync-status">Saved on this device</p><div class="sync-actions"><button id="syncNow" class="text-button">Synchronize</button><button id="useCloud" class="text-button" hidden>Use cloud copy</button><button id="useLocal" class="text-button" hidden>Upload this device</button><button id="exportData" class="text-button">Export backup</button><button id="importData" class="text-button">Import backup</button><button id="restoreData" class="text-button" hidden>Restore previous copy</button><input id="importFile" type="file" accept="application/json,.json" hidden></div></section></aside></section></div><footer><span>Chess pieces by Colin M. L. Burnett · <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a></span></footer></section></main>
 <dialog id="modal"><div class="modal-head"><div><div class="eyebrow">YOUR LIBRARY</div><h2 id="modalTitle"></h2></div><button id="closeModal" class="icon-button" aria-label="Close">×</button></div><form id="modalForm"></form></dialog><div id="toast" role="status"></div><script>
@@ -1220,8 +1232,10 @@ function createStudyNotes({container, onChange = () => {}, onJump = () => {}, ge
     }).join('');
   }
   function folderCard(folder,i) {
-    const field=editable({key:`idea:${folder.id}`,value:folder.note??[folder.idea,folder.plan].filter(Boolean).join('\n\n'),label:'Ideas and plans',placeholder:'Write the key ideas and plans for this line…',attributes:`data-idea="${escapeText(folder.id)}"`});
-    return `<article class="study-opening-card"><div class="study-card-heading"><div><span class="study-level">${i===0?'OPENING':`BRANCH ${i}`}</span><h3>${escapeText(folder.name)}</h3></div><span class="study-card-current">${folder.id===context.folder?.id?'CURRENT':'PARENT'}</span></div>${field}<div class="study-blunders-header"><h4>Blunders &amp; traps</h4><button type="button" class="study-add-warning" data-add-warning="${escapeText(folder.id)}">＋ Mark this position</button></div>${warningRows(folder)}</article>`;
+    const key=`idea:${folder.id}`, value=folder.note??[folder.idea,folder.plan].filter(Boolean).join('\n\n'), open=editing.has(key);
+    const name=escapeText(folder.name), label=`Ideas and plans for ${folder.name}`;
+    const field=open?`<textarea class="study-editor" data-editor-key="${escapeText(key)}" data-idea="${escapeText(folder.id)}" aria-label="${escapeText(label)}" placeholder="Write the key ideas and plans for this line…">${escapeText(value)}</textarea>`:`<div class="study-note-text ${value?'':'is-empty'}">${value?escapeText(value):'No note yet.'}</div>`;
+    return `<article class="study-opening-card"><div class="study-opening-info"><span class="study-level">${i===0?'OPENING':`BRANCH ${i}`}</span><h3>${name}</h3><span class="study-field-label">Ideas and plans</span></div><div class="study-opening-note"><button type="button" class="study-edit" data-edit-key="${escapeText(key)}" aria-label="${open?'Done editing':value?'Edit':'Add'} ${escapeText(label)}">${open?'Done':value?'Edit':'Add note'}</button>${field}</div></article>`;
   }
   function gameCard() {
     const game=context.game;if(!game)return '';
@@ -1235,8 +1249,8 @@ function createStudyNotes({container, onChange = () => {}, onJump = () => {}, ge
   function draw() {
     path=context.folder?folderPath(context.folders,context.folder.id):[];
     for(const folder of path)if(!visible.has(folder.id))visible.set(folder.id,true);
-    const toggles=path.map(folder=>`<button type="button" class="study-path-toggle ${visible.get(folder.id)?'is-on':''}" aria-pressed="${visible.get(folder.id)?'true':'false'}" data-toggle-opening="${escapeText(folder.id)}">${escapeText(folder.name)}</button>`).join('');
-    const cards=path.filter(folder=>visible.get(folder.id)).map(folder=>folderCard(folder,path.indexOf(folder))).join('');
+    const toggles=[...path].reverse().map(folder=>`<button type="button" class="study-path-toggle ${visible.get(folder.id)?'is-on':''}" aria-pressed="${visible.get(folder.id)?'true':'false'}" data-toggle-opening="${escapeText(folder.id)}">${escapeText(folder.name)}</button>`).join('');
+    const cards=[...path].reverse().filter(folder=>visible.get(folder.id)).map(folder=>folderCard(folder,path.indexOf(folder))).join('');
     container.innerHTML=`<div class="study-notes-bar"><span>${context.game?'GAME ANALYSIS':'OPENING THEORY'}</span><span class="study-autosave">${getSaveStatus()?'Changes not saved':'Saved as you type'}</span></div>${context.game?`<div class="study-game-section">${gameCard()}</div>`:path.length?`<div class="study-path-area"><span class="study-field-label">Opening path</span><div class="study-path-toggles">${toggles}</div></div><div class="study-cards">${cards||'<p class="study-empty">Choose a line above to show its notes.</p>'}</div>`:'<p class="study-empty study-no-opening">Choose an opening to add notes.</p>'}`;
   }
   function change(event) {
@@ -1524,10 +1538,10 @@ function setMoveSymbol(entity, moves, symbol) {
 
 // Fixed vector artwork keeps annotations legible without relying on a font.
 const BOARD_SYMBOL_ICONS = Object.freeze({
-  '!': '<svg viewBox="0 0 24 24" width="100%" height="100%" aria-hidden="true"><rect x="10" y="3" width="4" height="12" rx="2" fill="currentColor"/><circle cx="12" cy="19" r="2.2" fill="currentColor"/></svg>',
-  '!!': '<svg viewBox="0 0 24 24" width="100%" height="100%" aria-hidden="true"><rect x="5" y="3" width="4" height="12" rx="2" fill="currentColor"/><circle cx="7" cy="19" r="2.2" fill="currentColor"/><rect x="15" y="3" width="4" height="12" rx="2" fill="currentColor"/><circle cx="17" cy="19" r="2.2" fill="currentColor"/></svg>',
-  '?': '<svg viewBox="0 0 24 24" width="100%" height="100%" aria-hidden="true"><path d="M7.7 8.3c0-2.6 1.8-4.3 4.4-4.3 2.6 0 4.3 1.6 4.3 3.9 0 2-1.1 3-2.6 4.1-1.1.8-1.8 1.5-1.8 3" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="12" cy="19.5" r="2" fill="currentColor"/></svg>',
-  '??': '<svg viewBox="0 0 24 24" width="100%" height="100%" aria-hidden="true"><path d="M2 8c0-2.4 1.5-4 3.8-4s3.8 1.5 3.8 3.6c0 1.8-1 2.7-2.3 3.7-1 .8-1.5 1.4-1.5 2.8M14.4 8c0-2.4 1.5-4 3.8-4S22 5.5 22 7.6c0 1.8-1 2.7-2.3 3.7-1 .8-1.5 1.4-1.5 2.8" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><circle cx="5.8" cy="19" r="1.8" fill="currentColor"/><circle cx="18.2" cy="19" r="1.8" fill="currentColor"/></svg>'
+  '!': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9.5 3h5l-.7 12h-3.6z" fill="currentColor"/><rect x="10" y="18" width="4" height="4" fill="currentColor"/></svg>',
+  '!!': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.7 3h4.8l-.6 12H4.3zM15.5 3h4.8l-.6 12h-3.6z" fill="currentColor"/><rect x="4.1" y="18" width="4" height="4" fill="currentColor"/><rect x="15.9" y="18" width="4" height="4" fill="currentColor"/></svg>',
+  '?': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 8V6l2.5-3h6l2.5 3v3l-4 4v2h-3.5v-3.4l4-4V7l-.8-.8h-2.4L10 7v1z" fill="currentColor"/><rect x="10" y="18" width="4" height="4" fill="currentColor"/></svg>',
+  '??': '<svg viewBox="0 0 24 24" aria-hidden="true"><g fill="currentColor" transform="translate(-4 2) scale(.82)"><path d="M6.5 8V6l2.5-3h6l2.5 3v3l-4 4v2h-3.5v-3.4l4-4V7l-.8-.8h-2.4L10 7v1z"/><rect x="10" y="18" width="4" height="4"/></g><g fill="currentColor" transform="translate(8 2) scale(.82)"><path d="M6.5 8V6l2.5-3h6l2.5 3v3l-4 4v2h-3.5v-3.4l4-4V7l-.8-.8h-2.4L10 7v1z"/><rect x="10" y="18" width="4" height="4"/></g></svg>'
 });
 
 /** Display the current move's saved symbol without changing board markings. */
