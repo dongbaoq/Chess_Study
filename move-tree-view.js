@@ -1,4 +1,4 @@
-import { BOARD_SYMBOL_ICONS } from './move-symbols.js?v=icons-14';
+import { BOARD_SYMBOL_ICONS } from './move-symbols.js?v=icons-16';
 const moveSymbolLabels = {'?':'Mistake', '!':'Only move', '!!':'Brilliant move', '??':'Blunder'};
 const moveSymbolClasses = {'?':'question', '!':'only', '!!':'brilliant', '??':'blunder'};
 const escapeMoveTreeText = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
