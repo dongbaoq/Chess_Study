@@ -65,6 +65,8 @@ export function renderBoardMoveSymbol(board, lastMove, symbol, flipped = false) 
   let column = destination.charCodeAt(0) - 97, row = 8 - Number(destination[1]);
   if (flipped) { column = 7 - column; row = 7 - row; }
   badge.className = `board-move-symbol symbol-${kind}`;
+  badge.dataset.edgeRight = String(column === 7);
+  badge.dataset.edgeTop = String(row === 0);
   badge.style.left = `${(column + 1) * 12.5}%`;
   badge.style.top = `${row * 12.5}%`;
   badge.textContent = symbol;

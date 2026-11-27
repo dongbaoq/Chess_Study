@@ -94,10 +94,10 @@ test('legacy library migration and corrupt storage preserve original records', a
 
 test('board badge follows the current move, flips with the board, and clears cleanly', async () => {
   const {renderBoardMoveSymbol} = await get('move-symbols.js');
-  const squares=new Map(['e4','d5'].map(name=>[name,{dataset:{otherMark:'keep'},label:`${name} pawn`,getAttribute(key){return key==='aria-label'?this.label:null},setAttribute(key,value){if(key==='aria-label')this.label=value}}]));
+  const squares=new Map(['e4','d5','h8','a1'].map(name=>[name,{dataset:{otherMark:'keep'},label:`${name} pawn`,getAttribute(key){return key==='aria-label'?this.label:null},setAttribute(key,value){if(key==='aria-label')this.label=value}}]));
   let badge=null;
   const host={querySelector(){return badge},appendChild(node){badge=node}};
-  const board={parentElement:host,ownerDocument:{createElement(){return {style:{},setAttribute(){},remove(){badge=null}}}},querySelectorAll(){return [...squares.values()].filter(s=>s.dataset.symbolBaseLabel)},querySelector(selector){const match=selector.match(/data-square="([a-h][1-8])"/);return match?squares.get(match[1]):null}};
+  const board={parentElement:host,ownerDocument:{createElement(){return {style:{},dataset:{},setAttribute(){},remove(){badge=null}}}},querySelectorAll(){return [...squares.values()].filter(s=>s.dataset.symbolBaseLabel)},querySelector(selector){const match=selector.match(/data-square="([a-h][1-8])"/);return match?squares.get(match[1]):null}};
   renderBoardMoveSymbol(board,{to:'e4'},'!!');
   assert.equal(badge.textContent,'!!'); assert.equal(badge.style.left,'62.5%'); assert.equal(badge.style.top,'50%');
   assert.equal(squares.get('e4').label,'e4 pawn, Brilliant move');
@@ -112,6 +112,12 @@ test('board badge follows the current move, flips with the board, and clears cle
     assert.equal(squares.get('d5').dataset.moveSymbolTone,tone);
     assert.equal(squares.get('e4').dataset.moveSymbolTone,undefined);
   }
+  renderBoardMoveSymbol(board,{to:'h8'},'!');
+  assert.equal(badge.dataset.edgeRight,'true'); assert.equal(badge.dataset.edgeTop,'true');
+  renderBoardMoveSymbol(board,{to:'a1'},'!',true);
+  assert.equal(badge.dataset.edgeRight,'true'); assert.equal(badge.dataset.edgeTop,'true');
+  renderBoardMoveSymbol(board,{to:'e4'},'!');
+  assert.equal(badge.dataset.edgeRight,'false'); assert.equal(badge.dataset.edgeTop,'false');
   renderBoardMoveSymbol(board,null,'');
   assert.equal(badge,null); assert.equal(squares.get('d5').label,'d5 pawn');
   assert.equal(squares.get('d5').dataset.moveSymbolTone,undefined);

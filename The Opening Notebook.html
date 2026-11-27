@@ -96,15 +96,18 @@ dialog{border-radius:3px;background:#30312f}.modal-head h2{font-family:inherit;f
 
 .move-tree-symbol{font-weight:800;margin-left:3px}.move-tree-symbol.symbol-question{color:#f4b56b}.move-tree-symbol.symbol-only{color:#76cfee}.move-tree-symbol.symbol-brilliant{color:#7fe2d7}.move-tree-symbol.symbol-blunder{color:#ff9490}
 /* The badge sits above the drawing overlay and never intercepts board input. */
-.board-move-symbol{position:absolute;z-index:6;transform:translate(calc(-100% - 2px),2px);display:grid;place-items:center;min-width:clamp(22px,3.2vw,32px);height:clamp(22px,3.2vw,32px);padding:0 3px;border-radius:50%;font:700 clamp(14px,1.8vw,18px)/1 system-ui,sans-serif;color:#fff;box-shadow:0 1px 3px #0008;pointer-events:none}
-.board-move-symbol.symbol-only{background:#32718b}.board-move-symbol.symbol-brilliant{background:#237f78}.board-move-symbol.symbol-question{background:#ad6e24}.board-move-symbol.symbol-blunder{background:#ad4141}
+.board-move-symbol{position:absolute;z-index:6;transform:translate(-50%,-50%);display:grid;place-items:center;min-width:clamp(22px,3.2vw,32px);height:clamp(22px,3.2vw,32px);padding:0 3px;border-radius:50%;font:700 clamp(14px,1.8vw,18px)/1 system-ui,sans-serif;color:#182022;border:2px solid #eee;box-shadow:0 1px 3px #0008;pointer-events:none}
+.board-move-symbol[data-edge-right="true"]{transform:translate(-100%,-50%)}
+.board-move-symbol[data-edge-top="true"]{transform:translate(-50%,0)}
+.board-move-symbol[data-edge-right="true"][data-edge-top="true"]{transform:translate(-100%,0)}
+.board-move-symbol.symbol-only{background:#7ac2e7}.board-move-symbol.symbol-brilliant{background:#69d5c8}.board-move-symbol.symbol-question{background:#f5b45b}.board-move-symbol.symbol-blunder{background:#f17b72}
 
 /* A display-only tint sits below pieces and coordinates, independent of drawn marks. */
 .square[data-move-symbol-tone]::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none}
-.square[data-move-symbol-tone="only"]::before{background:rgba(50,113,139,.5)}
-.square[data-move-symbol-tone="brilliant"]::before{background:rgba(35,127,120,.5)}
-.square[data-move-symbol-tone="question"]::before{background:rgba(173,110,36,.5)}
-.square[data-move-symbol-tone="blunder"]::before{background:rgba(173,65,65,.5)}
+.square[data-move-symbol-tone="only"]::before{background:rgba(110,196,239,.48)}
+.square[data-move-symbol-tone="brilliant"]::before{background:rgba(85,213,196,.48)}
+.square[data-move-symbol-tone="question"]::before{background:rgba(255,190,96,.48)}
+.square[data-move-symbol-tone="blunder"]::before{background:rgba(250,123,112,.48)}
 
 /* Board and notes are the main study workspace; the library sits underneath. */
 .app-layout{display:block;min-height:calc(100vh - 68px)}
@@ -1514,6 +1517,8 @@ function renderBoardMoveSymbol(board, lastMove, symbol, flipped = false) {
   let column = destination.charCodeAt(0) - 97, row = 8 - Number(destination[1]);
   if (flipped) { column = 7 - column; row = 7 - row; }
   badge.className = `board-move-symbol symbol-${kind}`;
+  badge.dataset.edgeRight = String(column === 7);
+  badge.dataset.edgeTop = String(row === 0);
   badge.style.left = `${(column + 1) * 12.5}%`;
   badge.style.top = `${row * 12.5}%`;
   badge.textContent = symbol;
