@@ -31,10 +31,12 @@
 /* A display-only tint sits below pieces and coordinates, independent of drawn marks. */
 .square[data-move-symbol-tone]::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none}
 .square[data-move-symbol-tone="only"]::before{background:rgba(110,196,239,.48)}
-.square[data-move-symbol-tone="brilliant"]::before{background:rgba(27,172,166,.42)}
+.square[data-move-symbol-tone="brilliant"]::before{background:rgba(110,235,213,.60)}
 .square[data-move-symbol-tone="question"]::before{background:rgba(255,190,96,.48)}
 .square[data-move-symbol-tone="blunder"]::before{background:rgba(200,61,55,.42)}
 
 .board-move-symbol svg{display:block;width:90%;height:90%;overflow:visible}.board-move-symbol.symbol-brilliant svg,.board-move-symbol.symbol-blunder svg{filter:drop-shadow(0 1px 1px #0008)}
 
 .move-tree-symbol{font-family:Georgia,serif}
+
+.move-tree-symbol svg,.move-tree-blunder svg{display:inline-block;width:1em;height:1em;vertical-align:-.1em;overflow:visible}

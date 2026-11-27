@@ -41,12 +41,19 @@ export function setMoveSymbol(entity, moves, symbol) {
   return {ok:true, changed:true};
 }
 
-// Fixed vector artwork keeps annotations legible without relying on a font.
-const BOARD_SYMBOL_ICONS = Object.freeze({
-  '!': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 3h4v12h-4z" fill="currentColor"/><rect x="10" y="18" width="4" height="4" fill="currentColor"/></svg>',
-  '!!': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 3h4v12h-4zM15.5 3h4v12h-4z" fill="currentColor"/><rect x="4.5" y="18" width="4" height="4" fill="currentColor"/><rect x="15.5" y="18" width="4" height="4" fill="currentColor"/></svg>',
-  '?': '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 8c0-2.7 2-4.5 5-4.5s5 1.7 5 4.2c0 2-1.1 3-2.8 4.2-1.5 1.1-2.2 1.9-2.2 3.6" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="butt"/><rect x="10" y="18" width="4" height="4" fill="currentColor"/></svg>',
-  '??': '<svg viewBox="0 0 24 24" aria-hidden="true"><g transform="translate(-2 2) scale(.72)"><path d="M7 8c0-2.7 2-4.5 5-4.5s5 1.7 5 4.2c0 2-1.1 3-2.8 4.2-1.5 1.1-2.2 1.9-2.2 3.6" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="butt"/><rect x="10" y="18" width="4" height="4" fill="currentColor"/></g><g transform="translate(10 2) scale(.72)"><path d="M7 8c0-2.7 2-4.5 5-4.5s5 1.7 5 4.2c0 2-1.1 3-2.8 4.2-1.5 1.1-2.2 1.9-2.2 3.6" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="butt"/><rect x="10" y="18" width="4" height="4" fill="currentColor"/></g></svg>'
+// Font Awesome Free 6.7.2 “exclamation” and “question” icons, by Fonticons, Inc.
+// CC BY 4.0: https://creativecommons.org/licenses/by/4.0/ . Source and changes:
+// https://github.com/FortAwesome/Font-Awesome/tree/6.7.2/svgs/solid
+// Icons are recolored, resized and duplicated for paired move annotations.
+const FA_EXCLAMATION_PATH = 'M96 64c0-17.7-14.3-32-32-32S32 46.3 32 64l0 256c0 17.7 14.3 32 32 32s32-14.3 32-32L96 64zM64 480a40 40 0 1 0 0-80 40 40 0 1 0 0 80z';
+const FA_QUESTION_PATH = 'M80 160c0-35.3 28.7-64 64-64l32 0c35.3 0 64 28.7 64 64l0 3.6c0 21.8-11.1 42.1-29.4 53.8l-42.2 27.1c-25.2 16.2-40.4 44.1-40.4 74l0 1.4c0 17.7 14.3 32 32 32s32-14.3 32-32l0-1.4c0-8.2 4.2-15.8 11-20.2l42.2-27.1c36.6-23.6 58.8-64.1 58.8-107.7l0-3.6c0-70.7-57.3-128-128-128l-32 0C73.3 32 16 89.3 16 160c0 17.7 14.3 32 32 32s32-14.3 32-32zm80 320a40 40 0 1 0 0-80 40 40 0 1 0 0 80z';
+const iconPath = (path, x = 0) => `<path fill="currentColor"${x ? ` transform="translate(${x} 0)"` : ''} d="${path}"/>`;
+const iconSvg = (width, contents) => `<svg viewBox="0 0 ${width} 512" aria-hidden="true"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc. -->${contents}</svg>`;
+export const BOARD_SYMBOL_ICONS = Object.freeze({
+  '!': iconSvg(128, iconPath(FA_EXCLAMATION_PATH)),
+  '!!': iconSvg(384, iconPath(FA_EXCLAMATION_PATH, 32) + iconPath(FA_EXCLAMATION_PATH, 224)),
+  '?': iconSvg(320, iconPath(FA_QUESTION_PATH)),
+  '??': iconSvg(704, iconPath(FA_QUESTION_PATH) + iconPath(FA_QUESTION_PATH, 384))
 });
 
 /** Display the current move's saved symbol without changing board markings. */
