@@ -218,3 +218,26 @@ export function validateFolderLine(folders, folderId, fullLine) {
   }
   return candidate;
 }
+
+/** Return recognized saved opening paths, leaving future or unfamiliar records intact. */
+export function getOpeningVariations(folder) {
+  if (!Array.isArray(folder?.openingVariations)) return [];
+  return folder.openingVariations.filter(entry => {
+    if (!entry || typeof entry !== 'object' || Array.isArray(entry) || !Array.isArray(entry.moves) || !entry.moves.length || !entry.moves.every(move => typeof move === 'string' && move.length > 0 && !/\s/.test(move))) return false;
+    const parsed = parseLine(formatLine(entry.moves));
+    return parsed.ok && parsed.moves.length === entry.moves.length && parsed.moves.every((move, i) => move === entry.moves[i]);
+  }).map(entry => entry.moves.slice());
+}
+
+/** Save an opening path without changing its folder line or existing records. */
+export function saveOpeningVariation(folder, moves) {
+  if (!folder || typeof folder !== 'object' || Array.isArray(folder)) return {ok:false, error:'Choose an opening first.'};
+  if (!Array.isArray(moves) || !moves.length || !moves.every(move => typeof move === 'string' && move.length > 0 && !/\s/.test(move))) return {ok:false, error:'Play a move before saving a line.'};
+  const parsed = parseLine(formatLine(moves));
+  if (!parsed.ok || parsed.moves.length !== moves.length || !parsed.moves.every((move, i) => move === moves[i])) return {ok:false, error:'This line could not be read; it was not saved.'};
+  if (folder.openingVariations !== undefined && !Array.isArray(folder.openingVariations)) return {ok:false, error:'Saved opening lines could not be read. The original data was preserved.'};
+  if (getOpeningVariations(folder).some(path => path.length === moves.length && path.every((move, i) => move === moves[i]))) return {ok:true, changed:false};
+  if (folder.openingVariations === undefined) folder.openingVariations = [];
+  folder.openingVariations.push({moves:moves.slice()});
+  return {ok:true, changed:true};
+}
