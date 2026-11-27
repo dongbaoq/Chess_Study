@@ -49,6 +49,7 @@ export function renderBoardMoveSymbol(board, lastMove, symbol, flipped = false) 
   for (const square of board.querySelectorAll('[data-symbol-base-label]')) {
     square.setAttribute('aria-label', square.dataset.symbolBaseLabel);
     delete square.dataset.symbolBaseLabel;
+    delete square.dataset.moveSymbolTone;
   }
   const kind = {'!':'only','!!':'brilliant','?':'question','??':'blunder'}[symbol];
   const destination = lastMove?.to;
@@ -69,6 +70,7 @@ export function renderBoardMoveSymbol(board, lastMove, symbol, flipped = false) 
   badge.textContent = symbol;
   const square = board.querySelector(`[data-square="${destination}"]`);
   if (square) {
+    square.dataset.moveSymbolTone = kind;
     square.dataset.symbolBaseLabel = square.getAttribute('aria-label') || destination;
     square.setAttribute('aria-label', `${square.dataset.symbolBaseLabel}, ${MOVE_SYMBOL_LABELS[symbol]}`);
   }

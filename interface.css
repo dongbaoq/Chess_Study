@@ -28,7 +28,7 @@ footer{border-color:#454543;color:#999}footer a{color:#a3c4d8}
 /* Direct controls for marking the current move. Press the active mark to remove it. */
 .move-symbol-control{flex-wrap:wrap;gap:5px}
 .move-symbol-control>span{margin-right:4px}
-.move-symbol-control .mark-symbol{min-width:32px;height:30px;padding:2px 6px;border:1px solid #555552;border-radius:2px;background:#3b3b39;font-size:15px;font-weight:700;line-height:1}
+.move-symbol-control .mark-symbol{min-width:36px;height:34px;padding:2px 6px;border:1px solid #555552;border-radius:2px;background:#3b3b39;font-size:17px;font-weight:700;line-height:1}
 .move-symbol-control .mark-symbol:hover:not(:disabled){background:#50504e}
 .move-symbol-control .mark-symbol[aria-pressed=true]{background:#525f65;border-color:#a9bec9;box-shadow:inset 0 0 0 1px #a9bec9}
 .move-symbol-control .symbol-only{color:#76cfee}.move-symbol-control .symbol-brilliant{color:#7fe2d7}.move-symbol-control .symbol-question{color:#f4b56b}.move-symbol-control .symbol-blunder{color:#ff9490}
