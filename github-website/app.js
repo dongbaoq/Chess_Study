@@ -8,7 +8,7 @@ import { createSyncController } from './sync.js';
 import { inspectFolderDeletion, deleteFolder, deleteGame, moveGame, matchGameFolder } from './library-actions.js';
 import { createStudyNotes } from './study-notes.js?v=theory-12';
 import { buildMoveTree } from './move-tree.js?v=opening-lines-11';
-import { createMoveTreeView } from './move-tree-view.js?v=icons-17';
+import { createMoveTreeView } from './move-tree-view.js?v=legend-21';
 import { MOVE_SYMBOL_LABELS, readMoveSymbols, setMoveSymbol, renderBoardMoveSymbol } from './move-symbols.js?v=icons-17';
 import { getAnalysisVariations, saveAnalysisVariation, deleteAnalysisVariation } from './analysis-variations.js';
 import { parseGameResult, resultAtPosition, resultLabel, getResultSides } from './game-result.js?v=game-results-19';

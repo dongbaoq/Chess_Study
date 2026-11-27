@@ -1393,7 +1393,7 @@ function createMoveTreeView({container, onNavigate = () => {}, onDeleteAnalysis 
     }
     appendChildren(root,0,true);
     const gameMode=!!root.gameMode;
-    container.innerHTML=`<div class="move-tree-heading"><div><span class="move-tree-overline">${gameMode?'GAME ANALYSIS':'OPENING EXPLORER'}</span><h2>${gameMode?'Moves you played':'Moves &amp; continuations'}</h2><p>${gameMode?'Right-click an analysis move to delete it and its continuations.':'Explore saved opening lines and continuations.'}</p></div>${gameMode?'':'<span class="move-tree-legend"><span>??</span> Your blunder marks</span>'}</div><div class="move-tree-content" data-move-scroll="opening" aria-label="${gameMode?'Moves played in this game':'Saved moves and continuations'}">${start}${rows.length ? rows.join('') : '<p class="move-tree-empty">No moves recorded in this game.</p>'}</div>`;
+    container.innerHTML=`<div class="move-tree-heading"><div><span class="move-tree-overline">${gameMode?'GAME ANALYSIS':'OPENING EXPLORER'}</span><h2>${gameMode?'Moves you played':'Moves &amp; continuations'}</h2><p>${gameMode?'Right-click an analysis move to delete it and its continuations.':'Explore saved opening lines and continuations.'}</p></div></div><div class="move-tree-content" data-move-scroll="opening" aria-label="${gameMode?'Moves played in this game':'Saved moves and continuations'}">${start}${rows.length ? rows.join('') : '<p class="move-tree-empty">No moves recorded in this game.</p>'}</div>`;
     restoreScroll();
   }
   function click(event) {
