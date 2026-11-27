@@ -1,5 +1,5 @@
 import { ChessGame } from './chess.js';
-import { readLibrary, saveLibrary, restoreLibrary, checkLibraryCurrent, validStoredLibrary, folderChildren, folderPath, makeContinuation, validateFolderLine, formatLine, parseLine, migrateLibrary, saveOpeningVariation } from './library.js?v=opening-lines-11';
+import { readLibrary, saveLibrary, restoreLibrary, checkLibraryCurrent, validStoredLibrary, folderChildren, folderPath, makeContinuation, validateFolderLine, formatLine, parseLine, migrateLibrary, saveOpeningVariation, getOpeningVariations } from './library.js?v=opening-lines-11';
 import { createBoardAnnotations } from './annotations.js?v=arrows-24';
 import { PIECES } from './pieces.js';
 import { matchOpening } from './opening-match.js';
@@ -71,7 +71,46 @@ function setPosition(text,end=true){const next=new ChessGame();if(!next.load(tex
 function switchSide(value){side=value;flipped=value==='black';folderId=folders.find(f=>f.side===side)?.id||null;gameId=null;gameOwnerId=null;gameListScopeId=null;setPosition(currentFolder()?.line||'');updateMatch();render()}
 function selectFolder(id){folderId=id;gameId=null;gameOwnerId=null;gameListScopeId=null;setPosition(currentFolder()?.line||'');updateMatch();render()}
 function selectGame(id,ownerId=folderId){const owner=folders.find(f=>f.id===ownerId&&f.side===side),game=owner?.games.find(g=>g.id===id);if(!game)return;const next=new ChessGame();if(!next.load(game.pgn||'')){toast(`Could not open game: ${next.error}`);return}const scope=gameId&&gameListScopeId?gameListScopeId:currentFolder()?.id;gameListScopeId=openingContainsFolder(folders,scope,owner.id,side)?scope:owner.id;gameOwnerId=owner.id;gameId=id;engine=next;selected=null;updateMatch();render()}
-function updateMatch(){const selected=currentFolder(),root=selected&&folderPath(folders,selected.id)[0],matchingFolders=!currentGame()&&root?folders.filter(f=>folderPath(folders,f.id)[0]?.id===root.id):folders,moves=engine.moves.slice(0,engine.index);matched=matchOpening(matchingFolders,side,moves,{preferredId:folderId});const exact=!currentGame()&&selected&&moves.length?parseLine(selected.line||''):null;if(exact?.ok&&exact.moves.length===moves.length&&exact.moves.every((move,i)=>move===moves[i])){matched={...matched,folder:selected,matchedPlies:moves.length};folderId=selected.id}else if(matched.folder)folderId=matched.folder.id;else if(currentGame()&&gameOwner())folderId=gameOwner().id;}
+// Compare played prefixes against saved opening families without switching on shared moves.
+const liveOpeningLineCache=new WeakMap();
+function liveOpeningMoves(folder){const line=typeof folder.line==='string'?folder.line:'';const cached=liveOpeningLineCache.get(folder);if(cached?.line===line)return cached.moves;const parsed=parseLine(line),moves=parsed.ok?parsed.moves:[];liveOpeningLineCache.set(folder,{line,moves});return moves}
+function detectOpeningFamily(list,repertoireSide,moves,preferredRoot,{keepEmptyPreferred=true}={}){
+ if(!Array.isArray(moves)||!moves.length)return {root:preferredRoot,score:0};
+ const families=new Map();
+ for(const folder of list){if(!folder||folder.side!==repertoireSide)continue;const root=folderPath(list,folder.id)[0];if(!root||root.side!==repertoireSide)continue;
+  let entry=families.get(root.id);if(!entry){entry={root,score:0,hasPaths:false};families.set(root.id,entry)}
+  const rootMoves=liveOpeningMoves(root),line=liveOpeningMoves(folder),paths=line.length?[line]:[];
+  // Empty top-level openings may contain lines saved with Save line instead.
+  if(!rootMoves.length)paths.push(...getOpeningVariations(folder));
+  for(const path of paths){if(!path.length)continue;entry.hasPaths=true;const n=Math.min(path.length,moves.length);if(path.slice(0,n).every((move,i)=>move===moves[i]))entry.score=Math.max(entry.score,n)}
+ }
+ const preferred=preferredRoot&&families.get(preferredRoot.id);
+ // Keep an empty new opening selected while the user is building its first line.
+ if(keepEmptyPreferred&&preferred&&!liveOpeningMoves(preferredRoot).length&&!preferred.hasPaths)return {root:preferredRoot,score:0};
+ const best=Math.max(0,...Array.from(families.values(),entry=>entry.score));if(!best)return {root:null,score:0};
+ const leaders=Array.from(families.values()).filter(entry=>entry.score===best);
+ if(leaders.length===1)return {root:leaders[0].root,score:best};
+ const tied=leaders.find(entry=>entry.root.id===preferredRoot?.id);return tied?{root:tied.root,score:best}:{root:null,score:0};
+}
+function updateMatch(){
+ const selected=currentFolder(),root=selected&&folderPath(folders,selected.id)[0],moves=engine.moves.slice(0,engine.index);
+ if(currentGame()){
+  const detected=detectOpeningFamily(folders,side,moves,root,{keepEmptyPreferred:false}),family=detected.root?folders.filter(f=>folderPath(folders,f.id)[0]?.id===detected.root.id):folders;
+  matched=matchOpening(family,side,moves,{preferredId:folderId});
+  if(matched.folder)folderId=matched.folder.id;
+  else if(detected.root&&detected.score){folderId=detected.root.id;matched={...matched,folder:detected.root,matchedPlies:detected.score,partial:true}}
+  else if(gameOwner())folderId=gameOwner().id;
+  return
+ }
+ const detected=detectOpeningFamily(folders,side,moves,root),chosen=detected.root||root;
+ const matchingFolders=chosen?folders.filter(f=>folderPath(folders,f.id)[0]?.id===chosen.id):folders;
+ matched=matchOpening(matchingFolders,side,moves,{preferredId:folderId});
+ const exact=selected&&chosen?.id===root?.id&&moves.length?parseLine(selected.line||''):null;
+ if(exact?.ok&&exact.moves.length===moves.length&&exact.moves.every((move,i)=>move===moves[i])){matched={...matched,folder:selected,matchedPlies:moves.length};folderId=selected.id}
+ else if(matched.folder)folderId=matched.folder.id;
+ else if(detected.root&&detected.root.id!==root?.id){folderId=detected.root.id;matched={...matched,folder:detected.root,matchedPlies:detected.score,partial:true}}
+ else if(detected.root&&detected.score){matched={...matched,folder:detected.root,matchedPlies:detected.score,partial:true}}
+}
 function renderTree(){$('#addRoot').disabled=storageBlocked;let out='';function walk(parent,depth){for(const f of folderChildren(folders,side,parent)){const children=folderChildren(folders,side,f.id);out+=`<div class="tree-row" style="--depth:${depth}"><button class="tree-item ${f.id===folderId?'active':''}" data-folder="${esc(f.id)}"><span class="folder-icon">${children.length?'▾':'·'}</span><span class="folder-name">${esc(f.name)}</span><span class="tree-count">${f.games.length||''}</span></button></div>`;walk(f.id,depth+1)}}walk(null,0);$('#tree').innerHTML=out||'<p class="empty-tree">No openings yet. Add your first line.</p>';document.querySelectorAll('[data-folder]').forEach(b=>b.onclick=()=>selectFolder(b.dataset.folder));$('#libraryTitle').textContent=`${side==='white'?'White':'Black'} openings`;$('#sideWhite').setAttribute('aria-pressed',side==='white');$('#sideBlack').setAttribute('aria-pressed',side==='black');$('#addChild').disabled=$('#editFolder').disabled=$('#deleteFolder').disabled=!currentFolder();}
 function checkMarkingsCurrent(){
  if(marksBlocked)return {ok:false,error:'Saving markings is paused to protect the original data.'};
@@ -158,7 +197,7 @@ function renderGames(){
  document.querySelectorAll('[data-delete-game]').forEach(b=>b.onclick=()=>removeGame(b.dataset.gameOwner,b.dataset.deleteGame));
  $('#addGame').disabled=!currentFolder();$('#openingView').disabled=!gameId;
 }
-function renderContext(){const f=currentFolder(),path=folderPath(folders,folderId);renderTree();$('#breadcrumbs').innerHTML=`<span>${side==='white'?'White':'Black'}</span>${path.map(p=>`<span class="crumb-sep">/</span><span>${esc(p.name)}</span>`).join('')}${currentGame()?`<span class="crumb-sep">/</span><span>${esc(currentGame().name)}</span>`:''}`;$('#boardTitle').textContent=currentGame()?.name||f?.name||`${side==='white'?'White':'Black'} repertoire`;$('#openingStatus').textContent=(matched?.folder?`Matched: ${matched.folder.name}${matched.ambiguous?' (multiple saved lines match)':''}`:'No saved opening matched at this position')+(currentGame()&&gameOwner()?.id!==f?.id?` · Game filed in ${gameOwner().name}`:'');studyNotes.render({folders,folder:f,game:currentGame(),moves:engine.moves,index:engine.index});if(storageFailure){const label=document.querySelector('.study-autosave');if(label)label.textContent='Changes not saved'}$('#saveLine').disabled=$('#addBranch').disabled=!f;$('#saveOpeningLine').hidden=!!currentGame();$('#saveOpeningLine').disabled=!f||!engine.index||storageBlocked;$('#copyPgn').disabled=!engine.index;renderGames();renderMoveExplorer()}
+function renderContext(){const f=currentFolder(),path=folderPath(folders,folderId);renderTree();$('#breadcrumbs').innerHTML=`<span>${side==='white'?'White':'Black'}</span>${path.map(p=>`<span class="crumb-sep">/</span><span>${esc(p.name)}</span>`).join('')}${currentGame()?`<span class="crumb-sep">/</span><span>${esc(currentGame().name)}</span>`:''}`;$('#boardTitle').textContent=currentGame()?.name||f?.name||`${side==='white'?'White':'Black'} repertoire`;$('#openingStatus').textContent=(matched?.folder?`${matched.partial?'Exploring':'Matched'}: ${matched.folder.name}${matched.ambiguous?' (multiple saved lines match)':''}`:'No saved opening matched at this position')+(currentGame()&&gameOwner()?.id!==f?.id?` · Game filed in ${gameOwner().name}`:'');studyNotes.render({folders,folder:f,game:currentGame(),moves:engine.moves,index:engine.index});if(storageFailure){const label=document.querySelector('.study-autosave');if(label)label.textContent='Changes not saved'}$('#saveLine').disabled=$('#addBranch').disabled=!f;$('#saveOpeningLine').hidden=!!currentGame();$('#saveOpeningLine').disabled=!f||!engine.index||storageBlocked;$('#copyPgn').disabled=!engine.index;renderGames();renderMoveExplorer()}
 const gameMoveCache=new WeakMap();
 let currentMoveTree=null;
 function originalGameMoves(){const g=currentGame();if(!g)return [];const cached=gameMoveCache.get(g);if(cached?.pgn===g.pgn)return cached.moves;const parsed=parseLine(g.pgn||'');const result=parsed.ok?parsed.moves:[];gameMoveCache.set(g,{pgn:g.pgn,moves:result});return result}

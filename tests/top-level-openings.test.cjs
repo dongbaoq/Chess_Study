@@ -53,7 +53,7 @@ test('creates Sicilian as an independent root, preserving a nested Ruy library a
  box.addFolder();assert.match(h.dialog.title,/opening/i);h.submit('Sicilian Defense','1. e4 c5');
  const created=box.folders.find(f=>f.name==='Sicilian Defense');assert.ok(created);assert.equal(created.parentId,null);assert.equal(created.side,'white');assert.equal(created.line,'1. e4 c5');assert.equal(box.folderId,created.id);
  assert.deepEqual(clone(box.folders.slice(0,3)),h.initial);assert.equal(storage.getItem('opening-notebook-marks-v1'),h.storedMarks);
- box.setPosition(h.initial[0].line);box.updateMatch();assert.equal(box.folderId,created.id,'a matching different root must not steal the explicitly selected opening');
+ box.setPosition(h.initial[0].line);box.updateMatch();assert.ok(['ruy','child'].includes(box.folderId),'a clearly matching different opening family should be detected');
  const reloaded=lib.readLibrary(storage);assert.deepEqual(clone(reloaded.folders),clone(box.folders));
  const exporter=backupHarness(storage,reloaded.folders,lib);exporter.nodes.get('#exportData').onclick();const backup=JSON.parse(await exporter.exported().text());assert.deepEqual(backup,{version:1,folders:clone(box.folders),annotations:markings()});
  const target=new Store({[lib.LIBRARY_KEY]:JSON.stringify(fixture()),'opening-notebook-marks-v1':JSON.stringify(markings())});const targetFolders=lib.readLibrary(target).folders;const importer=backupHarness(target,targetFolders,lib);await importer.nodes.get('#importFile').onchange({target:{files:[{text:async()=>JSON.stringify(backup)}],value:'chosen'}});assert.deepEqual(clone(lib.readLibrary(target).folders),clone(box.folders));assert.deepEqual(JSON.parse(target.getItem('opening-notebook-marks-v1')),markings());
