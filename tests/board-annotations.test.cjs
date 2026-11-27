@@ -32,7 +32,8 @@ test('rendering existing annotations uses circles and arrows without writing; fl
   const x=await setup({one:record});
   assert.equal(x.writes.length,0);
   assert.match(x.svg.innerHTML,/<circle\b/);
-  assert.match(x.svg.innerHTML,/<line\b/);
+  assert.match(x.svg.innerHTML,/<path data-annotation-arrow="saved" /);
+  assert.doesNotMatch(x.svg.innerHTML,/<line\b|<marker\b|marker-end=/);
   assert.match(x.svg.innerHTML,/cx="0\.5" cy="7\.5"/);
   x.flip(true);x.controller.refresh();
   assert.match(x.svg.innerHTML,/cx="7\.5" cy="0\.5"/);
@@ -58,8 +59,8 @@ test('right-click toggles circles; drag previews without writing and toggles or 
 test('preview is visible but never saved; cancellation, position changes and normal clicks preserve records',async()=>{
   const record={squares:{a1:'green'},arrows:[],extra:'keep'},x=await setup({one:record,two:{squares:{b2:'blue'},arrows:[]}});
   x.fire('pointerdown','b2');x.fire('pointermove','c3');
-  assert.equal(x.writes.length,0);assert.match(x.svg.innerHTML,/<line\b/,'drag should show a temporary arrow');
-  x.fire('pointercancel','c3');assert.equal(x.writes.length,0);assert.deepEqual(x.released,[1]);assert.doesNotMatch(x.svg.innerHTML,/<line\b/,'cancelling removes the temporary arrow');
+  assert.equal(x.writes.length,0);assert.match(x.svg.innerHTML,/<path data-annotation-arrow="preview"/,'drag should show a temporary arrow');
+  x.fire('pointercancel','c3');assert.equal(x.writes.length,0);assert.deepEqual(x.released,[1]);assert.doesNotMatch(x.svg.innerHTML,/data-annotation-arrow="preview"/,'cancelling removes the temporary arrow');
   x.fire('pointerdown','b2');x.fire('pointermove','c3');x.position('two');x.controller.refresh();assert.deepEqual(x.released,[1,1]);x.fire('pointerup','c3');
   assert.equal(x.writes.length,0);assert.deepEqual(x.records.one,record);
   x.fire('pointerdown','b2',{button:0,buttons:1});x.fire('pointerup','b2',{button:0,buttons:0});
@@ -102,4 +103,46 @@ test('control-click drawing consumes its subsequent click, while the next ordina
   assert.equal(generated.immediateStopped,true,'the synthetic click must not select or move a piece');
   const next=x.fire('click','b2',{button:0,buttons:0});
   assert.notEqual(next.immediateStopped,true,'a later normal click should still select a piece');
+});
+
+
+test('arrows are single outlines composited together without shaded overlaps',async()=>{
+  const record={squares:{d4:'blue'},arrows:[{from:'a1',to:'b2',color:'green',note:'keep'},{from:'a1',to:'e5',color:'red',other:1}],extra:{keep:true}};
+  const x=await setup({one:record});
+  assert.equal(x.writes.length,0);
+  const group=x.svg.innerHTML.match(/<g opacity="\.75">([\s\S]*?)<\/g>/);assert.ok(group,'saved arrows must share one opacity group');
+  const arrows=[...group[1].matchAll(/<path data-annotation-arrow="saved" d="([^"]+)" fill="([^"]+)" \/>/g)];
+  assert.equal(arrows.length,2);
+  for(const [,d] of arrows){
+    assert.match(d,/^M [-\d.]+ [-\d.]+(?: L [-\d.]+ [-\d.]+){6} Q [-\d.]+ [-\d.]+ [-\d.]+ [-\d.]+ Z$/);
+    assert.doesNotMatch(d,/NaN|Infinity/);
+  }
+  const tip=d=>{const commands=[...d.matchAll(/L ([-\d.]+) ([-\d.]+)/g)];return commands[2].slice(1).map(Number)};
+  const near=tip(arrows[0][1]),far=tip(arrows[1][1]);
+  assert.ok(Math.abs(near[0]-1.4293)<0.001 && Math.abs(near[1]-6.5707)<0.001,'short arrow tip follows a1 to b2');
+  assert.ok(Math.abs(far[0]-4.4293)<0.001 && Math.abs(far[1]-3.5707)<0.001,'long arrow tip follows a1 to e5');
+  x.flip(true);x.controller.refresh();
+  const flipped=[...x.svg.innerHTML.matchAll(/<path data-annotation-arrow="saved" d="([^"]+)"/g)];
+  const flippedTip=tip(flipped[0][1]);assert.ok(Math.abs(flippedTip[0]-6.5707)<0.001 && Math.abs(flippedTip[1]-1.4293)<0.001);
+  assert.equal(x.writes.length,0);assert.deepEqual(x.records.one,record);
+});
+
+test('preview does not overlay its saved arrow and cancellation restores it without writes',async()=>{
+  const record={squares:{},arrows:[{from:'a1',to:'b2',color:'green',note:'keep'}]},x=await setup({one:record});
+  x.fire('pointerdown','a1');x.fire('pointermove','b2');
+  assert.equal(x.writes.length,0);
+  assert.equal((x.svg.innerHTML.match(/data-annotation-arrow="preview"/g)||[]).length,1);
+  assert.equal((x.svg.innerHTML.match(/data-annotation-arrow="saved"/g)||[]).length,0);
+  x.fire('pointercancel','b2');
+  assert.equal((x.svg.innerHTML.match(/data-annotation-arrow="preview"/g)||[]).length,0);
+  assert.equal((x.svg.innerHTML.match(/data-annotation-arrow="saved"/g)||[]).length,1);
+  assert.equal(x.writes.length,0);assert.deepEqual(x.records.one,record);
+});
+
+
+test('preview and saved arrows share the same opacity group at crossings',async()=>{
+  const record={squares:{},arrows:[{from:'a1',to:'e5',color:'green'}]},x=await setup({one:record});
+  x.fire('pointerdown','a1');x.fire('pointermove','b2');
+  assert.match(x.svg.innerHTML,/<g opacity="\.75">[\s\S]*data-annotation-arrow="saved"[\s\S]*<g opacity="\.733333"><path data-annotation-arrow="preview"/);
+  assert.equal(x.writes.length,0);assert.deepEqual(x.records.one,record);
 });

@@ -1,6 +1,5 @@
 // Board markings are keyed by position by the caller. The overlay lives beside,
 // rather than inside, the squares, so replacing board.innerHTML is safe.
-let annotationInstance = 0;
 const ANNOTATION_COLORS = {
   green: '#157f3b',
   red: '#cf3333',
@@ -36,7 +35,6 @@ export function createBoardAnnotations({ board, getFlipped = () => false, getKey
   svg.setAttribute('aria-hidden', 'true');
   Object.assign(svg.style, { position: 'absolute', inset: '0', width: '100%', height: '100%', pointerEvents: 'none', zIndex: '5', overflow: 'hidden' });
   host.appendChild(svg);
-  const prefix = `study-mark-${++annotationInstance}`;
   let mode = false, gesture = null, pending = null, currentKey = null, suppressClick = false, suppressTimer = null;
   function releaseGesture(active) {
     if (!active) return;
@@ -71,23 +69,33 @@ export function createBoardAnnotations({ board, getFlipped = () => false, getKey
       currentKey = key;
     }
     const markings = normalize(read(key));
-    let out = `<defs>${Object.entries(ANNOTATION_COLORS).map(([name,color])=>`<marker id="${prefix}-${name}" markerWidth="0.4" markerHeight="0.4" refX="0.3" refY="0.2" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L0.4,0.2 L0,0.4 Z" fill="${color}" fill-opacity=".75" /></marker>`).join('')}</defs>`;
+    let out = '';
     const circle = (square, color, opacity = .75) => {
       const [x,y] = point(square);
       return `<circle cx="${x}" cy="${y}" r=".42" fill="none" stroke="${ANNOTATION_COLORS[color]}" stroke-opacity="${opacity}" stroke-width=".09" />`;
     };
-    const arrow = (from, to, color, opacity = .75) => {
+    // One filled outline means the arrowhead and shaft are composited once.
+    const arrow = (from, to, color, preview = false) => {
       const [x1,y1] = point(from), [x2,y2] = point(to);
-      const length = Math.hypot(x2-x1,y2-y1);
-      const endX = x2-(x2-x1)/length*.2, endY = y2-(y2-y1)/length*.2;
-      return `<line x1="${x1}" y1="${y1}" x2="${endX}" y2="${endY}" stroke="${ANNOTATION_COLORS[color]}" stroke-opacity="${opacity}" stroke-width=".14" stroke-linecap="round" marker-end="url(#${prefix}-${color})" />`;
+      const length = Math.hypot(x2-x1,y2-y1), ux = (x2-x1)/length, uy = (y2-y1)/length;
+      const nx = -uy, ny = ux, tipX = x2-ux*.1, tipY = y2-uy*.1;
+      const baseX = tipX-ux*.35, baseY = tipY-uy*.35, shaft = .07, head = .2;
+      const xy = (x,y) => `${x.toFixed(4)} ${y.toFixed(4)}`;
+      const d = `M ${xy(x1+nx*shaft,y1+ny*shaft)} L ${xy(baseX+nx*shaft,baseY+ny*shaft)} L ${xy(baseX+nx*head,baseY+ny*head)} L ${xy(tipX,tipY)} L ${xy(baseX-nx*head,baseY-ny*head)} L ${xy(baseX-nx*shaft,baseY-ny*shaft)} L ${xy(x1-nx*shaft,y1-ny*shaft)} Q ${xy(x1-ux*shaft,y1-uy*shaft)} ${xy(x1+nx*shaft,y1+ny*shaft)} Z`;
+      return `<path data-annotation-arrow="${preview?'preview':'saved'}" d="${d}" fill="${ANNOTATION_COLORS[color]}" />`;
     };
     for (const [square,color] of Object.entries(markings.squares)) out += circle(square,color);
-    for (const {from,to,color} of markings.arrows) out += arrow(from,to,color);
-    if (pending) out += circle(pending.square,pending.color,.55);
-    if (gesture && gesture.key === key && gesture.to) {
-      out += gesture.from === gesture.to ? circle(gesture.from,gesture.color,.55) : arrow(gesture.from,gesture.to,gesture.color,.55);
+    const activeArrow = gesture && gesture.key === key && gesture.to && gesture.from !== gesture.to ? gesture : null;
+    // Composite saved arrows as a group so crossing arrows do not darken each other.
+    const savedArrows = markings.arrows.filter(({from,to}) => !activeArrow || from !== activeArrow.from || to !== activeArrow.to);
+    const previewArrow = activeArrow ? arrow(activeArrow.from,activeArrow.to,activeArrow.color,true) : '';
+    if (savedArrows.length || previewArrow) {
+      const saved = savedArrows.map(({from,to,color}) => arrow(from,to,color)).join('');
+      // Grouping preview with saved arrows avoids dark crossings during a drag.
+      out += `<g opacity=".75">${saved}${previewArrow ? `<g opacity=".733333">${previewArrow}</g>` : ''}</g>`;
     }
+    if (pending) out += circle(pending.square,pending.color,.55);
+    if (gesture && gesture.key === key && gesture.to && gesture.from === gesture.to) out += circle(gesture.from,gesture.color,.55);
     svg.innerHTML = out;
   }
   // Edit the stored record itself, rather than the display-only normalized view.

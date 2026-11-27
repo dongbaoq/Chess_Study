@@ -1,6 +1,6 @@
 import { ChessGame } from './chess.js';
 import { readLibrary, saveLibrary, restoreLibrary, checkLibraryCurrent, validStoredLibrary, folderChildren, folderPath, makeContinuation, validateFolderLine, formatLine, parseLine, migrateLibrary, saveOpeningVariation } from './library.js?v=opening-lines-11';
-import { createBoardAnnotations } from './annotations.js?v=board-22';
+import { createBoardAnnotations } from './annotations.js?v=arrows-24';
 import { PIECES } from './pieces.js';
 import { matchOpening } from './opening-match.js';
 import { createBoardDrag } from './drag.js?v=board-22';
