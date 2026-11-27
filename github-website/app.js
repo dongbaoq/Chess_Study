@@ -4,7 +4,8 @@ import { createBoardAnnotations } from './annotations.js?v=arrows-24';
 import { PIECES } from './pieces.js';
 import { matchOpening } from './opening-match.js';
 import { createBoardDrag } from './drag.js?v=board-22';
-import { createSyncController } from './sync.js';
+import { createSyncController } from './sync.js?v=cloud-sync-27';
+import { createCloudSync } from './cloud-sync.js?v=cloud-sync-27';
 import { inspectFolderDeletion, deleteFolder, deleteGame, moveGame, matchGameFolder } from './library-actions.js';
 import { createStudyNotes } from './study-notes.js?v=theory-12';
 import { buildMoveTree } from './move-tree.js?v=opening-lines-11';
@@ -26,7 +27,7 @@ function showStorageFailure(message){storageFailure=message;const banner=$('#sto
 function getStored(key){try{return storage.getItem(key)}catch{return null}}
 function setStored(key,value){try{storage.setItem(key,value);return true}catch{showStorageFailure('Browser storage is unavailable or full. Changes may not be saved; export a backup.');return false}}
 const existingLibrary=!!(getStored('opening-notebook-v1') || getStored('opening-notebook-v2'));
-let hasUserData=!!getStored('opening-notebook-user-data-v1') || (existingLibrary && getStored('opening-notebook-seed-only-v1')!=='1');
+let hasUserData=!!getStored('opening-notebook-user-data-v1') || existingLibrary;
 if(!existingLibrary)setStored('opening-notebook-seed-only-v1','1');
 let syncController=null;
 const libraryRead=readLibrary(storage,seed);
@@ -39,6 +40,7 @@ function validMarkings(value){return !!value&&typeof value==='object'&&!Array.is
 let annotations={},marksBlocked=false,originalMarksRaw=null;
 try{originalMarksRaw=storage.getItem('opening-notebook-marks-v1')}catch{marksBlocked=true;showStorageFailure('Saved board markings could not be read. Saving markings is paused to protect the original data.') }
 if(originalMarksRaw!==null){try{const parsed=JSON.parse(originalMarksRaw);if(!validMarkings(parsed))throw new Error();annotations=parsed}catch{marksBlocked=true;showStorageFailure('Saved board markings could not be read. The original markings have not been changed.');$('#downloadOriginalMarks').hidden=false;}}
+if(originalMarksRaw!==null)hasUserData=true;
 // Keep game markings tied to the game and position, even when the matched folder changes.
 function migrateGameMarkings(){
  if(marksBlocked)return;
@@ -323,9 +325,41 @@ $('#downloadOriginal').onclick=()=>{if(originalRaw===null)return;const blob=new 
 $('#restoreData').hidden=!getStored('opening-notebook-before-import');
 $('#restoreData').onclick=()=>{let previous;try{previous=JSON.parse(getStored('opening-notebook-before-import'));if(!validSnapshot(previous))throw new Error()}catch{toast('No previous copy is available');return}confirmAction('Restore previous copy','This replaces the current library on this device with the copy saved before the last import.','Restore copy',()=>{try{applySnapshot(previous);syncController?.markChanged();toast('Previous copy restored')}catch(error){toast(error.message||'Could not restore the previous copy')}})};
 $('#importFile').onchange=async e=>{const file=e.target.files[0];e.target.value='';if(!file)return;let data;try{data=JSON.parse(await file.text());if(!validSnapshot(data))throw new Error()}catch{toast('This is not a valid study backup');return}confirmAction('Import backup','This replaces the library on this device. The current copy will be kept in browser storage as a backup.','Import backup',()=>{try{applySnapshot(data);syncController?.markChanged();toast('Backup imported')}catch(error){toast(error.message||'Could not import the backup')}})};
-syncController=createSyncController({getSnapshot:snapshot,applySnapshot,hasLocalData:()=>hasUserData,onStatus:status=>{$('#syncStatus').textContent=status.message;$('#syncNow').disabled=status.kind==='checking'||status.kind==='syncing';$('#useCloud').hidden=status.kind!=='conflict';$('#useLocal').hidden=!['setup','conflict'].includes(status.kind)}});
-$('#syncNow').onclick=()=>{if(location.protocol==='file:'||['offline','local-only'].includes(syncController.getStatus().kind)){
- modal('Synchronize with a backup',`<p class="form-copy">Cloud synchronization is not connected. To move your study between devices, export a backup, save it somewhere both devices can access, then import it on the other device.</p><div class="form-actions sync-modal-actions"><button type="button" class="button secondary cancel">Close</button><button type="button" id="syncImport" class="button secondary">Import backup</button><button type="button" id="syncExport" class="button primary">Export backup</button></div>`,()=>{});
- $('#syncExport').onclick=()=>{$('#modal').close();$('#exportData').click()};$('#syncImport').onclick=()=>{$('#modal').close();$('#importFile').click()};
- }else syncController.syncNow()};$('#useCloud').onclick=()=>confirmAction('Use cloud copy','This replaces this device’s library with your cloud copy. A local backup will be retained.','Use cloud copy',()=>syncController.useCloud());$('#useLocal').onclick=()=>confirmAction('Upload this device','This saves this device’s library to your account, replacing the current cloud copy if there is one.','Upload library',()=>syncController.useLocal());
-if(!storageBlocked&&!marksBlocked)syncController.start();else{$('#syncStatus').textContent='Synchronization is paused to protect the saved data.';$('#syncNow').hidden=true;$('#exportData').disabled=originalRaw!==null;}
+let cloudSync=null;
+function syncStatus(status){
+ $('#syncStatus').textContent=status.message;
+ const busy=status.kind==='checking'||status.kind==='syncing';
+ $('#syncNow').disabled=busy;$('#syncSignOut').disabled=busy;
+ $('#useCloud').hidden=status.kind!=='conflict';$('#useLocal').hidden=!['setup','conflict'].includes(status.kind);
+}
+function canSyncLibrary(){
+ if(storageFailure||storageBlocked||marksBlocked)return false;
+ const library=checkLibraryCurrent(storage);if(!library.ok){showStorageFailure(library.error.message);return false}
+ const marking=checkMarkingsCurrent();if(!marking.ok){showStorageFailure(marking.error);return false}
+ return true;
+}
+function connectSync(){
+ if(storageBlocked||marksBlocked){showStorageFailure('Synchronization is paused to protect the saved data.');return}
+ let config={};try{config=JSON.parse(getStored('opening-notebook-cloud-config-v1')||'{}')}catch{}
+ modal('Connect phone and PC',`<p class="form-copy">Sign in with the same private sync account on both devices. Set up your cloud project first; see the sync setup guide. Your library stays on this device until you choose to upload it.</p><label>Project URL<input name="url" type="url" required value="${esc(config.url||'')}" placeholder="https://your-project.supabase.co"></label><label>Publishable key<input name="key" required value="${esc(config.key||'')}" autocomplete="off"></label><label>Email<input name="email" type="email" required autocomplete="username"></label><label>Password<input name="password" type="password" required autocomplete="current-password"></label><p id="connectError" class="form-hint" role="alert"></p><div class="form-actions"><button type="button" class="button secondary cancel">Cancel</button><button class="button primary">Sign in</button></div>`,async data=>{
+  const form=$('#modalForm'),button=form.querySelector('button[type="submit"], button:not([type])'),errorElement=$('#connectError');
+  const active=()=>$('#modal').open&&$('#connectError')===errorElement;
+  if(button.disabled)return;
+  button.disabled=true;errorElement.textContent='Signing in…';
+  let client;try{
+   const url=String(data.get('url')).trim(),key=String(data.get('key')).trim();
+   client=createCloudSync({url,key});await client.signIn(String(data.get('email')).trim(),String(data.get('password')));
+   if(!active()){await client.signOut();return}
+   try{storage.setItem('opening-notebook-cloud-config-v1',JSON.stringify({url,key}))}catch{}
+   cloudSync=client;
+   syncController=createSyncController({getSnapshot:snapshot,applySnapshot,hasLocalData:()=>hasUserData,canSync:canSyncLibrary,onStatus:syncStatus,fetchImpl:cloudSync.fetch,isFile:false});
+   $('#modal').close();$('#syncNow').textContent='Synchronize';$('#syncSignOut').hidden=false;await syncController.start();
+  }catch(error){if(active())errorElement.textContent=error.message||'Could not sign in. Check the project and account details.'}
+  finally{button.disabled=false}
+ });
+}
+$('#syncNow').onclick=()=>{if(syncController)void syncController.syncNow();else connectSync()};
+$('#syncSignOut').onclick=async()=>{const controller=syncController,client=cloudSync;if(!controller)return;$('#syncSignOut').disabled=true;$('#syncNow').disabled=true;await controller.stop();await client.signOut();syncController=null;cloudSync=null;$('#syncSignOut').hidden=true;$('#syncNow').disabled=false;$('#syncNow').textContent='Connect to sync';$('#useCloud').hidden=true;$('#useLocal').hidden=true;$('#syncStatus').textContent='Saved on this device. Sign in to synchronize.'};
+$('#useCloud').onclick=()=>confirmAction('Use cloud copy','This replaces this device’s library with your cloud copy. A local backup will be retained.','Use cloud copy',()=>syncController?.useCloud());
+$('#useLocal').onclick=()=>confirmAction('Upload this device','This saves this device’s library to your account, replacing the current cloud copy if there is one.','Upload library',()=>syncController?.useLocal());
+if(storageBlocked||marksBlocked){$('#syncStatus').textContent='Synchronization is paused to protect the saved data.';$('#syncNow').hidden=true;$('#exportData').disabled=originalRaw!==null;}

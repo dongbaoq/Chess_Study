@@ -1,0 +1,13 @@
+# Set up private phone–PC synchronization
+
+Synchronization requires your own Supabase project and account. Nothing in this repository deploys or configures one automatically. Keep an exported backup of each device's library before connecting it for the first time. Your existing browser library stays at its current origin; publishing the website does not copy that library.
+
+1. Create a Supabase project. In its SQL Editor, run the complete contents of `sync-backend.sql` as the project database owner. It creates a private table and two authenticated functions. The functions use the signed-in user's identity and require an atomic revision match before updating the cloud copy. Normal browser roles cannot read or write the table directly.
+2. In Supabase Authentication, create an email-and-password user. Use the same account on both devices. Email confirmation settings and account creation depend on your project's authentication configuration.
+3. In the project dashboard, find the project URL and the publishable API key (a legacy `anon` key also works). Enter these in the app's synchronization setup on both devices. These values are intended for browser use; never put a secret key, `service_role` key, database password, or personal backup in the website files.
+4. Open the site on the first device and sign in with the account. Review the prompts before uploading the device's library. On the second device, sign in and review which copy to use. If both devices have different studies, export each device's backup before resolving the conflict; choosing one copy replaces the other device's working copy. Changes are not automatically merged.
+5. Test by saving a small change on one device, synchronizing, and checking it on the other. If both devices change the library before synchronizing, resolve the conflict after reviewing and backing up both copies. Keep separate exported backups: sync is not a substitute for a backup.
+
+The sync session is held in memory, so sign in again after reloading. Devices need internet access and the Supabase project must remain available. Project administrators can access the database; it is not end-to-end encrypted. Deleting the Supabase user deletes its server copy. For a `file:` demo, use the hosted site if the browser restricts the necessary network requests; transferring a backup is another option.
+
+See Supabase's official documentation on [database functions and their permissions](https://supabase.com/docs/guides/database/functions), [Row Level Security](https://supabase.com/docs/guides/database/postgres/row-level-security), and [email and password authentication](https://supabase.com/docs/guides/auth/passwords).

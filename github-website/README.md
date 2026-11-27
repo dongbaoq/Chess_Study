@@ -4,9 +4,9 @@ A personal chess study website. White and Black repertoires are separate. Saved 
 
 ## Save and back up your study
 
-Notes save in the browser as you type. To make a separate backup, scroll to **Library Storage**, select **Synchronize**, then **Export backup**. Keep the downloaded `chess-study-backup.json` somewhere safe. On another browser or device, open the website, choose **Synchronize**, then **Import backup** and select that file. Importing replaces that browser's current library, so export its current library first if you need to keep it. Do not upload a personal backup to a public GitHub repository.
+Notes save in the browser as you type. To make a separate backup, scroll to **Library Storage** and select **Export backup**. Keep the downloaded `chess-study-backup.json` somewhere safe. On another browser or device, open the website, choose **Import backup** and select that file. Importing replaces that browser's current library, so export its current library first if you need to keep it. Do not upload a personal backup to a public GitHub repository.
 
-Browser storage can be lost if browser data is cleared. This prototype's private online sync is not deployed. If the site reports that saved data cannot be read, do not erase browser data; use the recovery controls and keep the original copy.
+Browser storage can be lost if browser data is cleared. Private online sync requires a separate Supabase project and account; follow [the sync setup guide](SYNC_SETUP.md). It is not deployed or configured by this repository. Sign in on both devices, and review any conflict before choosing a copy. The session lasts until the page is reloaded or you sign out. Keep independent backups. If the site reports that saved data cannot be read, do not erase browser data; use the recovery controls and keep the original copy.
 
 ## Upload to GitHub
 

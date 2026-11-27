@@ -212,7 +212,7 @@ footer{border-color:#454543;color:#999}footer a{color:#a3c4d8}
 <section class="study-main"><div class="study-heading"><div><div class="eyebrow">STUDY BOARD</div><div id="breadcrumbs" class="breadcrumbs"></div><h1 id="boardTitle"></h1><p id="openingStatus" class="opening-status"></p><div id="storageWarning" class="storage-warning" role="alert" hidden><span id="storageWarningText"></span> <button id="downloadOriginal" type="button" class="text-button" hidden>Download original library</button> <button id="downloadOriginalMarks" type="button" class="text-button" hidden>Download original markings</button></div></div><button id="flip" class="text-button" title="Flip board without changing repertoire">⇅ &nbsp; Flip board</button></div><div class="study-grid"><div class="board-column"><div id="boardResultTop" class="board-result-side" hidden></div><div class="board-wrap"><div id="board" class="board" aria-label="Chess board"></div></div><div id="boardResultBottom" class="board-result-side" hidden></div><div class="board-bottom"><div><strong id="positionLabel"></strong><span id="positionSub"></span></div><div class="board-actions"><button id="drawMode" class="tool-button" aria-pressed="false">✎ <span>Draw</span></button><button id="clearMarks" class="tool-button">Clear marks</button></div></div><p class="board-hint">Right-click a square to draw a circle, or right-drag to draw an arrow. Use Draw on touchscreens.</p></div>
 <section class="move-explorer" aria-label="Moves and variations"><div class="move-explorer-tools"><div id="moveSymbolControl" class="move-symbol-control" role="group" aria-label="Mark this move"><span>Marking:</span><button type="button" class="mark-symbol symbol-only" data-move-symbol="!" aria-label="Only move" title="Only move" aria-pressed="false" disabled><svg viewBox="0 0 512 512" aria-hidden="true"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc. --><path fill="currentColor" transform="translate(176 26) scale(1.25 0.9)" d="M96 64c0-17.7-14.3-32-32-32S32 46.3 32 64l0 256c0 17.7 14.3 32 32 32s32-14.3 32-32L96 64zM64 480a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/></svg></button><button type="button" class="mark-symbol symbol-brilliant" data-move-symbol="!!" aria-label="Brilliant move" title="Brilliant move" aria-pressed="false" disabled><svg viewBox="0 0 512 512" aria-hidden="true"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc. --><path fill="currentColor" transform="translate(110 26) scale(1.25 0.9)" d="M96 64c0-17.7-14.3-32-32-32S32 46.3 32 64l0 256c0 17.7 14.3 32 32 32s32-14.3 32-32L96 64zM64 480a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/><path fill="currentColor" transform="translate(242 26) scale(1.25 0.9)" d="M96 64c0-17.7-14.3-32-32-32S32 46.3 32 64l0 256c0 17.7 14.3 32 32 32s32-14.3 32-32L96 64zM64 480a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/></svg></button><button type="button" class="mark-symbol symbol-question" data-move-symbol="?" aria-label="Mistake" title="Mistake" aria-pressed="false" disabled><svg viewBox="0 0 512 512" aria-hidden="true"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc. --><path fill="currentColor" transform="translate(104 26) scale(0.95 0.9)" d="M80 160c0-35.3 28.7-64 64-64l32 0c35.3 0 64 28.7 64 64l0 3.6c0 21.8-11.1 42.1-29.4 53.8l-42.2 27.1c-25.2 16.2-40.4 44.1-40.4 74l0 1.4c0 17.7 14.3 32 32 32s32-14.3 32-32l0-1.4c0-8.2 4.2-15.8 11-20.2l42.2-27.1c36.6-23.6 58.8-64.1 58.8-107.7l0-3.6c0-70.7-57.3-128-128-128l-32 0C73.3 32 16 89.3 16 160c0 17.7 14.3 32 32 32s32-14.3 32-32zm80 320a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/></svg></button><button type="button" class="mark-symbol symbol-blunder" data-move-symbol="??" aria-label="Blunder" title="Blunder" aria-pressed="false" disabled><svg viewBox="0 0 512 512" aria-hidden="true"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc. --><path fill="currentColor" transform="translate(0 51.2) scale(0.8 0.8)" d="M80 160c0-35.3 28.7-64 64-64l32 0c35.3 0 64 28.7 64 64l0 3.6c0 21.8-11.1 42.1-29.4 53.8l-42.2 27.1c-25.2 16.2-40.4 44.1-40.4 74l0 1.4c0 17.7 14.3 32 32 32s32-14.3 32-32l0-1.4c0-8.2 4.2-15.8 11-20.2l42.2-27.1c36.6-23.6 58.8-64.1 58.8-107.7l0-3.6c0-70.7-57.3-128-128-128l-32 0C73.3 32 16 89.3 16 160c0 17.7 14.3 32 32 32s32-14.3 32-32zm80 320a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/><path fill="currentColor" transform="translate(256 51.2) scale(0.8 0.8)" d="M80 160c0-35.3 28.7-64 64-64l32 0c35.3 0 64 28.7 64 64l0 3.6c0 21.8-11.1 42.1-29.4 53.8l-42.2 27.1c-25.2 16.2-40.4 44.1-40.4 74l0 1.4c0 17.7 14.3 32 32 32s32-14.3 32-32l0-1.4c0-8.2 4.2-15.8 11-20.2l42.2-27.1c36.6-23.6 58.8-64.1 58.8-107.7l0-3.6c0-70.7-57.3-128-128-128l-32 0C73.3 32 16 89.3 16 160c0 17.7 14.3 32 32 32s32-14.3 32-32zm80 320a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/></svg></button></div><button type="button" id="saveOpeningLine" class="save-opening-line" title="Save this opening line without creating a folder">Save line</button><button type="button" id="copyPgn" class="copy-pgn" title="Copy moves through the current position" disabled>Copy PGN</button></div><div id="moveTree" class="move-tree"></div><div class="control-buttons"><button id="first" aria-label="First move">|‹</button><button id="prev" aria-label="Previous move">‹</button><button id="next" aria-label="Next move">›</button><button id="last" aria-label="Last move">›|</button></div><button id="returnGame" class="text-button return-game" hidden>Return to game</button></section><div id="studyNotes" class="study-notes"></div>
 <section class="library-area" aria-label="Library and games"><aside class="sidebar"><div class="sidebar-top"><div><div class="eyebrow">YOUR REPERTOIRE</div><h2 id="libraryTitle">White openings</h2></div><button id="addRoot" class="add-opening" title="Create a separate opening">＋ Add opening</button></div><p class="sidebar-description">Choose a line to explore its position.</p><div id="tree" class="tree"></div><div class="folder-actions"><button id="editFolder" class="edit-folder">Edit opening</button><button id="deleteFolder" class="edit-folder danger-link">Delete opening</button></div><button id="addChild" class="add-folder" title="Add a line that continues the selected opening">＋ &nbsp; Add subfolder</button><div class="sidebar-help">Folders follow the moves of their parent. Your White and Black repertoires are separate.</div></aside>
-<aside class="analysis-panel"><div class="panel-top"><div><div class="eyebrow">YOUR LIBRARY</div><strong>Study tools</strong></div><button id="addGame" class="small-button">＋ Game</button></div><div class="line-tools"><button id="saveLine" class="text-button">Save position to this folder</button><button id="addBranch" class="text-button">＋ Save as subfolder</button></div><div class="games-section"><div class="section-header"><div><div class="eyebrow">GAME JOURNAL</div><h3 id="gamesHeading">Games in this folder</h3></div><button id="openingView" class="text-button">Opening view</button></div><div id="games" class="game-list"></div></div><section class="sync-section"><div class="eyebrow">LIBRARY STORAGE</div><p id="syncStatus" class="sync-status">Saved on this device</p><div class="sync-actions"><button id="syncNow" class="text-button">Synchronize</button><button id="useCloud" class="text-button" hidden>Use cloud copy</button><button id="useLocal" class="text-button" hidden>Upload this device</button><button id="exportData" class="text-button">Export backup</button><button id="importData" class="text-button">Import backup</button><button id="restoreData" class="text-button" hidden>Restore previous copy</button><input id="importFile" type="file" accept="application/json,.json" hidden></div></section></aside></section></div><footer><span>Chess pieces by Colin M. L. Burnett · <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a></span><span>Move icons: <a href="https://fontawesome.com/" target="_blank" rel="noopener">Font Awesome</a> by Fonticons, adapted · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a></span></footer></section></main>
+<aside class="analysis-panel"><div class="panel-top"><div><div class="eyebrow">YOUR LIBRARY</div><strong>Study tools</strong></div><button id="addGame" class="small-button">＋ Game</button></div><div class="line-tools"><button id="saveLine" class="text-button">Save position to this folder</button><button id="addBranch" class="text-button">＋ Save as subfolder</button></div><div class="games-section"><div class="section-header"><div><div class="eyebrow">GAME JOURNAL</div><h3 id="gamesHeading">Games in this folder</h3></div><button id="openingView" class="text-button">Opening view</button></div><div id="games" class="game-list"></div></div><section class="sync-section"><div class="eyebrow">LIBRARY STORAGE</div><p id="syncStatus" class="sync-status">Saved on this device</p><div class="sync-actions"><button id="syncNow" class="text-button">Connect to sync</button><button id="syncSignOut" class="text-button" hidden>Sign out</button><button id="useCloud" class="text-button" hidden>Use cloud copy</button><button id="useLocal" class="text-button" hidden>Upload this device</button><button id="exportData" class="text-button">Export backup</button><button id="importData" class="text-button">Import backup</button><button id="restoreData" class="text-button" hidden>Restore previous copy</button><input id="importFile" type="file" accept="application/json,.json" hidden></div></section></aside></section></div><footer><span>Chess pieces by Colin M. L. Burnett · <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a></span><span>Move icons: <a href="https://fontawesome.com/" target="_blank" rel="noopener">Font Awesome</a> by Fonticons, adapted · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a></span></footer></section></main>
 <dialog id="modal"><div class="modal-head"><div><div class="eyebrow">YOUR LIBRARY</div><h2 id="modalTitle"></h2></div><button id="closeModal" class="icon-button" aria-label="Close">×</button></div><form id="modalForm"></form></dialog><div id="toast" role="status"></div><script>
 const FILES = 'abcdefgh';
 const inBounds = (r, c) => r >= 0 && r < 8 && c >= 0 && c < 8;
@@ -1139,6 +1139,7 @@ function createBoardDrag({board, canStart = () => false, onMove = () => {}, isDr
  *
  * hasLocalData() should report genuine user data, not untouched demo seed data.
  * applySnapshot() must synchronously replace the complete local snapshot.
+ * canSync() must return true only while local data can be safely read and saved.
  */
 function stableSyncValue(value) {
   if (Array.isArray(value)) return value.map(stableSyncValue);
@@ -1150,7 +1151,7 @@ function stableSyncValue(value) {
 function syncFingerprint(value) { return JSON.stringify(stableSyncValue(value)); }
 function syncClone(value) { return JSON.parse(JSON.stringify(value)); }
 
-function createSyncController({getSnapshot, applySnapshot, hasLocalData = () => true, onStatus = () => {}, fetchImpl = globalThis.fetch?.bind(globalThis), url = '/api/sync', debounceMs = 800, pollMs = 30000, isFile = globalThis.location?.protocol === 'file:'} = {}) {
+function createSyncController({getSnapshot, applySnapshot, hasLocalData = () => true, canSync = () => true, onStatus = () => {}, fetchImpl = globalThis.fetch?.bind(globalThis), url = '/api/sync', debounceMs = 800, pollMs = 30000, isFile = globalThis.location?.protocol === 'file:'} = {}) {
   if (typeof getSnapshot !== 'function' || typeof applySnapshot !== 'function') throw new Error('Sync requires snapshot callbacks.');
   let status = {kind:'local-only', message:'Saved on this device.'};
   let revision = null, observedRevision = null, remoteData = null, baseline = null;
@@ -1160,8 +1161,14 @@ function createSyncController({getSnapshot, applySnapshot, hasLocalData = () => 
   const serial = fn => {const operation=queue.then(()=>stopped ? false : fn()); queue=operation.catch(()=>{}); return operation;};
   const dirty = () => baseline !== syncFingerprint(getSnapshot());
   const clearTimer = () => {if(timer!==null){clearTimeout(timer);timer=null;}};
+  function allowed() {
+    if(stopped)return false;
+    let safe=false;try{safe=canSync()===true}catch{}
+    if(!safe){clearTimer();publish('paused','Synchronization is paused to protect local data. Review the storage warning before trying again.');}
+    return safe;
+  }
   function schedule() {
-    if(!enabled || stopped || needsResolution) return;
+    if(!enabled || stopped || needsResolution || !allowed()) return;
     clearTimer();timer=setTimeout(()=>{timer=null;void syncNow();},debounceMs);
   }
   async function request(method, body) {
@@ -1174,20 +1181,25 @@ function createSyncController({getSnapshot, applySnapshot, hasLocalData = () => 
     return json;
   }
   function adoptCloud() {
-    applySnapshot(syncClone(remoteData));
+    if(!allowed())return false;
+    try { applySnapshot(syncClone(remoteData)); }
+    catch (error) { const failure = new Error(error?.message || 'The cloud copy could not be saved on this device.'); failure.syncApplyFailure = true; throw failure; }
     revision=observedRevision;baseline=syncFingerprint(getSnapshot());enabled=true;needsResolution=false;
     publish('synced','Saved and synchronized.');
+    return true;
   }
   async function refresh() {
+    if(!allowed())return false;
     if(isFile){publish('local-only','Saved on this device. Open the hosted site to synchronize.');return false;}
     try {
       const result=await request('GET');
+      if(!allowed())return false;
       observedRevision=result.revision;remoteData=result.data;
       const here=syncFingerprint(getSnapshot());
       if(needsResolution){publish('conflict','The cloud study changed. Choose which copy to keep.');return true;}
       if(!enabled) {
         if(remoteData===null) {publish('setup','Cloud is empty. Choose to upload your local study.');return true;}
-        if(!hasLocalData()) {adoptCloud();return true;}
+        if(!hasLocalData()) return adoptCloud();
         if(here===syncFingerprint(remoteData)) {revision=observedRevision;baseline=here;enabled=true;publish('synced','Saved and synchronized.');return true;}
         publish('conflict','Local and cloud studies differ. Choose which copy to keep.');return true;
       }
@@ -1197,19 +1209,21 @@ function createSyncController({getSnapshot, applySnapshot, hasLocalData = () => 
         return true;
       }
       if(remoteData!==null && here===syncFingerprint(remoteData)) {revision=observedRevision;baseline=here;publish('synced','Saved and synchronized.');return true;}
-      if(!dirty() && remoteData!==null) {adoptCloud();return true;}
+      if(!dirty() && remoteData!==null) return adoptCloud();
       publish('conflict','The cloud study changed on another device. Choose which copy to keep.');return true;
-    } catch(error) {publish('offline','Saved on this device. Cloud sync is unavailable.');return false;}
+    } catch(error) {if(!allowed())return false;if(error.syncApplyFailure){needsResolution=true;publish('conflict',`Cloud copy could not be applied: ${error.message}`);}else publish('offline','Saved on this device. Cloud sync is unavailable. If it continues, sign out and sign in again.');return false;}
   }
   async function upload(expectedRevision) {
+    if(!allowed())return false;
     const snapshot=syncClone(getSnapshot()), sentHash=syncFingerprint(snapshot);
     publish('syncing','Saving to cloud…');
     try {
       const result=await request('PUT',{revision:expectedRevision,data:snapshot});
+      if(!allowed())return false;
       if(result.conflict) {
         // The cloud changed after our read. Fetch its latest copy without
         // adopting it: the current local edits must survive the conflict.
-        const fresh=await request('GET');observedRevision=fresh.revision;remoteData=fresh.data;
+        const fresh=await request('GET');if(!allowed())return false;observedRevision=fresh.revision;remoteData=fresh.data;
         if(remoteData!==null && syncFingerprint(remoteData)===sentHash && syncFingerprint(getSnapshot())===sentHash){revision=observedRevision;baseline=sentHash;enabled=true;needsResolution=false;publish('synced','Saved and synchronized.');return true;}
         publish('conflict','The cloud study changed. Choose which copy to keep.');return false;
       }
@@ -1217,7 +1231,7 @@ function createSyncController({getSnapshot, applySnapshot, hasLocalData = () => 
       if(dirty()){publish('pending','Changes saved on this device, waiting to sync.');schedule();}
       else publish('synced','Saved and synchronized.');
       return true;
-    } catch(error) {publish('offline','Saved on this device. Cloud sync is unavailable.');return false;}
+    } catch(error) {if(!allowed())return false;publish('offline','Saved on this device. Cloud sync is unavailable. If it continues, sign out and sign in again.');return false;}
   }
   async function start() {
     if(started)return false;started=true;stopped=false;
@@ -1225,7 +1239,7 @@ function createSyncController({getSnapshot, applySnapshot, hasLocalData = () => 
     return serial(async()=>{publish('checking','Checking cloud sync…');const ok=await refresh();if(ok && enabled && dirty() && status.kind!=='conflict')schedule();return ok;});
   }
   function markChanged() {
-    if(!started || stopped)return;
+    if(!started || stopped || !allowed())return;
     if(enabled && !needsResolution){publish('pending','Changes saved on this device, waiting to sync.');schedule();}
   }
   function syncNow() {
@@ -1235,19 +1249,122 @@ function createSyncController({getSnapshot, applySnapshot, hasLocalData = () => 
   function useCloud() {
     clearTimer();
     return serial(async()=>{
-      if(isFile)return false;
-      try {const fresh=await request('GET');observedRevision=fresh.revision;remoteData=fresh.data;
+      if(!allowed() || isFile)return false;
+      try {const fresh=await request('GET');if(!allowed())return false;observedRevision=fresh.revision;remoteData=fresh.data;
         if(remoteData===null){publish('setup','Cloud is empty. Choose to upload your local study.');return false;}
-        adoptCloud();return true;
-      } catch(error) {publish('offline','Saved on this device. Cloud sync is unavailable.');return false;}
+        return adoptCloud();
+      } catch(error) {if(!allowed())return false;if(error.syncApplyFailure){needsResolution=true;publish('conflict',`Cloud copy could not be applied: ${error.message}`);}else publish('offline','Saved on this device. Cloud sync is unavailable. If it continues, sign out and sign in again.');return false;}
     });
   }
   function useLocal() {
     clearTimer();
-    return serial(async()=>{if(isFile || observedRevision===null)return false;return upload(observedRevision);});
+    return serial(async()=>{if(!allowed() || isFile || observedRevision===null)return false;return upload(observedRevision);});
   }
-  function stop() {stopped=true;clearTimer();if(poll!==null)clearInterval(poll);poll=null;}
+  function stop() {stopped=true;clearTimer();if(poll!==null)clearInterval(poll);poll=null;return queue;}
   return {start,markChanged,syncNow,useCloud,useLocal,stop,getStatus:()=>({...status})};
+}
+
+/**
+ * Supabase Auth and database adapter for createSyncController.
+ * The project URL and publishable/legacy anon key are public configuration.
+ * Passwords and sessions are kept only in memory; signing in is required again
+ * after a page reload. No chess data or auth credentials are put in storage.
+ *
+ * Server contract: notebook_read() -> {revision,data};
+ * notebook_write(expected_revision,snapshot) -> {revision} or {conflict:true}.
+ */
+function createCloudSync({url, key, fetchImpl = globalThis.fetch?.bind(globalThis)} = {}) {
+  let base;
+  try { base = new URL(String(url)); } catch { throw new Error('Enter a valid Supabase project URL.'); }
+  if (base.protocol !== 'https:' || base.username || base.password || base.search || base.hash || !['', '/'].includes(base.pathname)) {
+    throw new Error('Use the HTTPS project URL without a path.');
+  }
+  base = base.origin;
+  key = String(key || '').trim();
+  // Only public client keys belong in a browser. Legacy anon keys are JWTs.
+  let publicKey = key.startsWith('sb_publishable_');
+  if (!publicKey && key.split('.').length === 3) {
+    try {
+      const payload = key.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+      publicKey = JSON.parse(atob(payload.padEnd(Math.ceil(payload.length / 4) * 4, '='))).role === 'anon';
+    } catch { publicKey = false; }
+  }
+  if (!publicKey) throw new Error('Use a Supabase publishable key or legacy anon key, never a secret key.');
+  if (typeof fetchImpl !== 'function') throw new Error('Network access is unavailable.');
+  let session = null, generation = 0, refreshing = null;
+  const headers = token => ({apikey:key, 'Content-Type':'application/json', ...(token ? {Authorization:`Bearer ${token}`} : {})});
+  const response = (status, value) => ({status, ok:status >= 200 && status < 300, json:async () => value});
+  function parseSession(data) {
+    if (!data || typeof data.access_token !== 'string' || typeof data.refresh_token !== 'string' || !data.user || typeof data.user.id !== 'string') {
+      throw new Error('The sign-in response was invalid.');
+    }
+    const expiry = Number(data.expires_at) || (Date.now() / 1000 + Number(data.expires_in || 3600));
+    return {accessToken:data.access_token, refreshToken:data.refresh_token, expiresAt:expiry, user:{id:data.user.id,email:data.user.email || ''}};
+  }
+  async function tokenRequest(grant, body) {
+    const res = await fetchImpl(`${base}/auth/v1/token?grant_type=${grant}`, {method:'POST', headers:headers(), body:JSON.stringify(body), cache:'no-store'});
+    if (!res.ok) throw new Error(grant === 'password' ? 'Sign-in failed. Check your email, password, and project settings.' : 'Your sign-in could not be refreshed. Please sign in again.');
+    return parseSession(await res.json());
+  }
+  async function signIn(email, password) {
+    const attempt = ++generation;
+    session = null;
+    refreshing = null;
+    const next = await tokenRequest('password', {email:String(email).trim(),password:String(password)});
+    if (generation !== attempt) throw new Error('Sign-in was cancelled.');
+    session = next;
+    return {...session.user};
+  }
+  async function signOut() {
+    const old = session;
+    ++generation; session = null; refreshing = null;
+    if (old) {
+      try { await fetchImpl(`${base}/auth/v1/logout?scope=local`, {method:'POST', headers:headers(old.accessToken), cache:'no-store'}); } catch { /* Local sign-out still succeeds. */ }
+    }
+  }
+  async function refresh() {
+    if (!session) throw new Error('Sign in to synchronize.');
+    if (!refreshing) {
+      const current = session, attempt = generation;
+      const promise = tokenRequest('refresh_token', {refresh_token:current.refreshToken}).then(next => {
+        if (generation !== attempt || session !== current) throw new Error('Sign-in changed during refresh.');
+        session = next;
+        return next;
+      });
+      refreshing = promise;
+      promise.finally(() => { if (refreshing === promise) refreshing = null; }).catch(() => {});
+    }
+    return refreshing;
+  }
+  async function adapterFetch(_url, options = {}) {
+    const method = (options.method || 'GET').toUpperCase();
+    if (method !== 'GET' && method !== 'PUT') return response(405, {error:'Unsupported method'});
+    if (!session) return response(401, {error:'Sign in to synchronize.'});
+    if (session.expiresAt <= Date.now() / 1000 + 60) await refresh();
+    const started = generation;
+    let body = {};
+    if (method === 'PUT') {
+      let input;
+      try { input = JSON.parse(options.body); } catch { return response(400, {error:'Invalid sync request'}); }
+      if (!Number.isSafeInteger(input?.revision) || input.revision < 0 || !input.data || typeof input.data !== 'object' || Array.isArray(input.data)) return response(400, {error:'Invalid sync request'});
+      body = {expected_revision:input.revision,snapshot:input.data};
+    }
+    const request = () => fetchImpl(`${base}/rest/v1/rpc/${method === 'GET' ? 'notebook_read' : 'notebook_write'}`, {method:'POST',headers:headers(session.accessToken),body:JSON.stringify(body),cache:'no-store'});
+    let result = await request();
+    if (generation !== started || !session) throw new Error('Sign-in changed during synchronization.');
+    if (result.status === 401) {
+      await refresh();
+      if (generation !== started || !session) throw new Error('Sign-in changed during synchronization.');
+      result = await request();
+    }
+    if (generation !== started || !session) throw new Error('Sign-in changed during synchronization.');
+    if (!result.ok) return response(result.status, {error:'Cloud request failed.'});
+    const value = await result.json();
+    if (generation !== started || !session) throw new Error('Sign-in changed during synchronization.');
+    if (value?.conflict === true) return response(409, value);
+    return response(result.status, value);
+  }
+  return {signIn, signOut, isSignedIn:() => !!session, getUser:() => session ? {...session.user} : null, fetch:adapterFetch};
 }
 
 const PIECES = {"bN": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><path fill=\"#000\" d=\"M22 10c10.5 1 16.5 8 16 29H15c0-9 10-6.5 8-21\"/><path fill=\"#000\" d=\"M24 18c.38 2.91-5.55 7.37-8 9-3 2-2.82 4.34-5 4-1.04-.94 1.41-3.04 0-3-1 0 .19 1.23-1 2-1 0-4 1-4-4 0-2 6-12 6-12s1.89-1.9 2-3.5c-.73-1-.5-2-.5-3 1-1 3 2.5 3 2.5h2s.78-2 2.5-3c1 0 1 3 1 3\"/><path fill=\"#ececec\" stroke=\"#ececec\" d=\"M9.5 25.5a.5.5 0 1 1-1 0 .5.5 0 1 1 1 0m5.43-9.75a.5 1.5 30 1 1-.86-.5.5 1.5 30 1 1 .86.5\"/><path fill=\"#ececec\" stroke=\"none\" d=\"m24.55 10.4-.45 1.45.5.15c3.15 1 5.65 2.49 7.9 6.75S35.75 29.06 35.25 39l-.05.5h2.25l.05-.5c.5-10.06-.88-16.85-3.25-21.34s-5.79-6.64-9.19-7.16z\"/></g></svg>", "wN": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><path fill=\"#fff\" d=\"M22 10c10.5 1 16.5 8 16 29H15c0-9 10-6.5 8-21\"/><path fill=\"#fff\" d=\"M24 18c.38 2.91-5.55 7.37-8 9-3 2-2.82 4.34-5 4-1.042-.94 1.41-3.04 0-3-1 0 .19 1.23-1 2-1 0-4.003 1-4-4 0-2 6-12 6-12s1.89-1.9 2-3.5c-.73-.994-.5-2-.5-3 1-1 3 2.5 3 2.5h2s.78-1.992 2.5-3c1 0 1 3 1 3\"/><path fill=\"#000\" d=\"M9.5 25.5a.5.5 0 1 1-1 0 .5.5 0 1 1 1 0m5.433-9.75a.5 1.5 30 1 1-.866-.5.5 1.5 30 1 1 .866.5\"/></g></svg>", "bK": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" viewBox=\"0 0 45 45\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><path stroke-linejoin=\"miter\" d=\"M22.5 11.6V6\"/><path fill=\"#000\" stroke-linecap=\"butt\" stroke-linejoin=\"miter\" d=\"M22.5 25s4.5-7.5 3-10.5c0 0-1-2.5-3-2.5s-3 2.5-3 2.5c-1.5 3 3 10.5 3 10.5\"/><path fill=\"#000\" d=\"M11.5 37a22.3 22.3 0 0 0 21 0v-7s9-4.5 6-10.5c-4-6.5-13.5-3.5-16 4V27v-3.5c-3.5-7.5-13-10.5-16-4-3 6 5 10 5 10z\"/><path stroke-linejoin=\"miter\" d=\"M20 8h5\"/><path stroke=\"#ececec\" d=\"M32 29.5s8.5-4 6-9.7C34.1 14 25 18 22.5 24.6v2.1-2.1C20 18 9.9 14 7 19.9c-2.5 5.6 4.8 9 4.8 9\"/><path stroke=\"#ececec\" d=\"M11.5 30c5.5-3 15.5-3 21 0m-21 3.5c5.5-3 15.5-3 21 0m-21 3.5c5.5-3 15.5-3 21 0\"/></g></svg>", "wK": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" viewBox=\"0 0 45 45\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><path stroke-linejoin=\"miter\" d=\"M22.5 11.63V6M20 8h5\"/><path fill=\"#fff\" stroke-linecap=\"butt\" stroke-linejoin=\"miter\" d=\"M22.5 25s4.5-7.5 3-10.5c0 0-1-2.5-3-2.5s-3 2.5-3 2.5c-1.5 3 3 10.5 3 10.5\"/><path fill=\"#fff\" d=\"M11.5 37c5.5 3.5 15.5 3.5 21 0v-7s9-4.5 6-10.5c-4-6.5-13.5-3.5-16 4V27v-3.5c-3.5-7.5-13-10.5-16-4-3 6 5 10 5 10z\"/><path d=\"M11.5 30c5.5-3 15.5-3 21 0m-21 3.5c5.5-3 15.5-3 21 0m-21 3.5c5.5-3 15.5-3 21 0\"/></g></svg>", "bP": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><path stroke=\"#000\" stroke-linecap=\"round\" stroke-width=\"1.5\" d=\"M22.5 9a4 4 0 0 0-3.22 6.38 6.48 6.48 0 0 0-.87 10.65c-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47a6.46 6.46 0 0 0-.87-10.65A4.01 4.01 0 0 0 22.5 9z\"/></svg>", "wQ": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><g fill=\"#fff\" fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><path d=\"M8 12a2 2 0 1 1-4 0 2 2 0 1 1 4 0m16.5-4.5a2 2 0 1 1-4 0 2 2 0 1 1 4 0M41 12a2 2 0 1 1-4 0 2 2 0 1 1 4 0M16 8.5a2 2 0 1 1-4 0 2 2 0 1 1 4 0M33 9a2 2 0 1 1-4 0 2 2 0 1 1 4 0\"/><path stroke-linecap=\"butt\" d=\"M9 26c8.5-1.5 21-1.5 27 0l2-12-7 11V11l-5.5 13.5-3-15-3 15-5.5-14V25L7 14z\"/><path stroke-linecap=\"butt\" d=\"M9 26c0 2 1.5 2 2.5 4 1 1.5 1 1 .5 3.5-1.5 1-1.5 2.5-1.5 2.5-1.5 1.5.5 2.5.5 2.5 6.5 1 16.5 1 23 0 0 0 1.5-1 0-2.5 0 0 .5-1.5-1-2.5-.5-2.5-.5-2 .5-3.5 1-2 2.5-2 2.5-4-8.5-1.5-18.5-1.5-27 0z\"/><path fill=\"none\" d=\"M11.5 30c3.5-1 18.5-1 22 0M12 33.5c6-1 15-1 21 0\"/></g></svg>", "wP": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><path fill=\"#fff\" stroke=\"#000\" stroke-linecap=\"round\" stroke-width=\"1.5\" d=\"M22.5 9c-2.21 0-4 1.79-4 4 0 .89.29 1.71.78 2.38C17.33 16.5 16 18.59 16 21c0 2.03.94 3.84 2.41 5.03-3 1.06-7.41 5.55-7.41 13.47h23c0-7.92-4.41-12.41-7.41-13.47 1.47-1.19 2.41-3 2.41-5.03 0-2.41-1.33-4.5-3.28-5.62.49-.67.78-1.49.78-2.38 0-2.21-1.79-4-4-4z\"/></svg>", "bQ": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><g fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><g stroke=\"none\"><circle cx=\"6\" cy=\"12\" r=\"2.75\"/><circle cx=\"14\" cy=\"9\" r=\"2.75\"/><circle cx=\"22.5\" cy=\"8\" r=\"2.75\"/><circle cx=\"31\" cy=\"9\" r=\"2.75\"/><circle cx=\"39\" cy=\"12\" r=\"2.75\"/></g><path stroke-linecap=\"butt\" d=\"M9 26c8.5-1.5 21-1.5 27 0l2.5-12.5L31 25l-.3-14.1-5.2 13.6-3-14.5-3 14.5-5.2-13.6L14 25 6.5 13.5z\"/><path stroke-linecap=\"butt\" d=\"M9 26c0 2 1.5 2 2.5 4 1 1.5 1 1 .5 3.5-1.5 1-1.5 2.5-1.5 2.5-1.5 1.5.5 2.5.5 2.5 6.5 1 16.5 1 23 0 0 0 1.5-1 0-2.5 0 0 .5-1.5-1-2.5-.5-2.5-.5-2 .5-3.5 1-2 2.5-2 2.5-4-8.5-1.5-18.5-1.5-27 0z\"/><path fill=\"none\" stroke-linecap=\"butt\" d=\"M11 38.5a35 35 1 0 0 23 0\"/><path fill=\"none\" stroke=\"#ececec\" d=\"M11 29a35 35 1 0 1 23 0m-21.5 2.5h20m-21 3a35 35 1 0 0 22 0m-23 3a35 35 1 0 0 24 0\"/></g></svg>", "wR": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><g fill=\"#fff\" fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><path stroke-linecap=\"butt\" d=\"M9 39h27v-3H9zm3-3v-4h21v4zm-1-22V9h4v2h5V9h5v2h5V9h4v5\"/><path d=\"m34 14-3 3H14l-3-3\"/><path stroke-linecap=\"butt\" stroke-linejoin=\"miter\" d=\"M31 17v12.5H14V17\"/><path d=\"m31 29.5 1.5 2.5h-20l1.5-2.5\"/><path fill=\"none\" stroke-linejoin=\"miter\" d=\"M11 14h23\"/></g></svg>", "bR": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><g fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><path stroke-linecap=\"butt\" d=\"M9 39h27v-3H9zm3.5-7 1.5-2.5h17l1.5 2.5zm-.5 4v-4h21v4z\"/><path stroke-linecap=\"butt\" stroke-linejoin=\"miter\" d=\"M14 29.5v-13h17v13z\"/><path stroke-linecap=\"butt\" d=\"M14 16.5 11 14h23l-3 2.5zM11 14V9h4v2h5V9h5v2h5V9h4v5z\"/><path fill=\"none\" stroke=\"#ececec\" stroke-linejoin=\"miter\" stroke-width=\"1\" d=\"M12 35.5h21m-20-4h19m-18-2h17m-17-13h17M11 14h23\"/></g></svg>", "bB": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><g fill=\"#000\" stroke-linecap=\"butt\"><path d=\"M9 36c3.4-1 10.1.4 13.5-2 3.4 2.4 10.1 1 13.5 2 0 0 1.6.5 3 2-.7 1-1.6 1-3 .5-3.4-1-10.1.5-13.5-1-3.4 1.5-10.1 0-13.5 1-1.4.5-2.3.5-3-.5 1.4-2 3-2 3-2z\"/><path d=\"M15 32c2.5 2.5 12.5 2.5 15 0 .5-1.5 0-2 0-2 0-2.5-2.5-4-2.5-4 5.5-1.5 6-11.5-5-15.5-11 4-10.5 14-5 15.5 0 0-2.5 1.5-2.5 4 0 0-.5.5 0 2z\"/><path d=\"M25 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 1 1 5 0z\"/></g><path stroke=\"#ececec\" stroke-linejoin=\"miter\" d=\"M17.5 26h10M15 30h15m-7.5-14.5v5M20 18h5\"/></g></svg>", "wB": "<svg xmlns=\"http://www.w3.org/2000/svg\" style=\"color-scheme:light only\" width=\"45\" height=\"45\" viewBox=\"0 0 45 45\"><g fill=\"none\" fill-rule=\"evenodd\" stroke=\"#000\" stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1.5\"><g fill=\"#fff\" stroke-linecap=\"butt\"><path d=\"M9 36c3.39-.97 10.11.43 13.5-2 3.39 2.43 10.11 1.03 13.5 2 0 0 1.65.54 3 2-.68.97-1.65.99-3 .5-3.39-.97-10.11.46-13.5-1-3.39 1.46-10.11.03-13.5 1-1.35.49-2.32.47-3-.5 1.35-1.94 3-2 3-2z\"/><path d=\"M15 32c2.5 2.5 12.5 2.5 15 0 .5-1.5 0-2 0-2 0-2.5-2.5-4-2.5-4 5.5-1.5 6-11.5-5-15.5-11 4-10.5 14-5 15.5 0 0-2.5 1.5-2.5 4 0 0-.5.5 0 2z\"/><path d=\"M25 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 1 1 5 0z\"/></g><path stroke-linejoin=\"miter\" d=\"M17.5 26h10M15 30h15m-7.5-14.5v5M20 18h5\"/></g></svg>"};
@@ -1728,7 +1845,7 @@ function showStorageFailure(message){storageFailure=message;const banner=$('#sto
 function getStored(key){try{return storage.getItem(key)}catch{return null}}
 function setStored(key,value){try{storage.setItem(key,value);return true}catch{showStorageFailure('Browser storage is unavailable or full. Changes may not be saved; export a backup.');return false}}
 const existingLibrary=!!(getStored('opening-notebook-v1') || getStored('opening-notebook-v2'));
-let hasUserData=!!getStored('opening-notebook-user-data-v1') || (existingLibrary && getStored('opening-notebook-seed-only-v1')!=='1');
+let hasUserData=!!getStored('opening-notebook-user-data-v1') || existingLibrary;
 if(!existingLibrary)setStored('opening-notebook-seed-only-v1','1');
 let syncController=null;
 const libraryRead=readLibrary(storage,seed);
@@ -1741,6 +1858,7 @@ function validMarkings(value){return !!value&&typeof value==='object'&&!Array.is
 let annotations={},marksBlocked=false,originalMarksRaw=null;
 try{originalMarksRaw=storage.getItem('opening-notebook-marks-v1')}catch{marksBlocked=true;showStorageFailure('Saved board markings could not be read. Saving markings is paused to protect the original data.') }
 if(originalMarksRaw!==null){try{const parsed=JSON.parse(originalMarksRaw);if(!validMarkings(parsed))throw new Error();annotations=parsed}catch{marksBlocked=true;showStorageFailure('Saved board markings could not be read. The original markings have not been changed.');$('#downloadOriginalMarks').hidden=false;}}
+if(originalMarksRaw!==null)hasUserData=true;
 // Keep game markings tied to the game and position, even when the matched folder changes.
 function migrateGameMarkings(){
  if(marksBlocked)return;
@@ -2025,12 +2143,44 @@ $('#downloadOriginal').onclick=()=>{if(originalRaw===null)return;const blob=new 
 $('#restoreData').hidden=!getStored('opening-notebook-before-import');
 $('#restoreData').onclick=()=>{let previous;try{previous=JSON.parse(getStored('opening-notebook-before-import'));if(!validSnapshot(previous))throw new Error()}catch{toast('No previous copy is available');return}confirmAction('Restore previous copy','This replaces the current library on this device with the copy saved before the last import.','Restore copy',()=>{try{applySnapshot(previous);syncController?.markChanged();toast('Previous copy restored')}catch(error){toast(error.message||'Could not restore the previous copy')}})};
 $('#importFile').onchange=async e=>{const file=e.target.files[0];e.target.value='';if(!file)return;let data;try{data=JSON.parse(await file.text());if(!validSnapshot(data))throw new Error()}catch{toast('This is not a valid study backup');return}confirmAction('Import backup','This replaces the library on this device. The current copy will be kept in browser storage as a backup.','Import backup',()=>{try{applySnapshot(data);syncController?.markChanged();toast('Backup imported')}catch(error){toast(error.message||'Could not import the backup')}})};
-syncController=createSyncController({getSnapshot:snapshot,applySnapshot,hasLocalData:()=>hasUserData,onStatus:status=>{$('#syncStatus').textContent=status.message;$('#syncNow').disabled=status.kind==='checking'||status.kind==='syncing';$('#useCloud').hidden=status.kind!=='conflict';$('#useLocal').hidden=!['setup','conflict'].includes(status.kind)}});
-$('#syncNow').onclick=()=>{if(location.protocol==='file:'||['offline','local-only'].includes(syncController.getStatus().kind)){
- modal('Synchronize with a backup',`<p class="form-copy">Cloud synchronization is not connected. To move your study between devices, export a backup, save it somewhere both devices can access, then import it on the other device.</p><div class="form-actions sync-modal-actions"><button type="button" class="button secondary cancel">Close</button><button type="button" id="syncImport" class="button secondary">Import backup</button><button type="button" id="syncExport" class="button primary">Export backup</button></div>`,()=>{});
- $('#syncExport').onclick=()=>{$('#modal').close();$('#exportData').click()};$('#syncImport').onclick=()=>{$('#modal').close();$('#importFile').click()};
- }else syncController.syncNow()};$('#useCloud').onclick=()=>confirmAction('Use cloud copy','This replaces this device’s library with your cloud copy. A local backup will be retained.','Use cloud copy',()=>syncController.useCloud());$('#useLocal').onclick=()=>confirmAction('Upload this device','This saves this device’s library to your account, replacing the current cloud copy if there is one.','Upload library',()=>syncController.useLocal());
-if(!storageBlocked&&!marksBlocked)syncController.start();else{$('#syncStatus').textContent='Synchronization is paused to protect the saved data.';$('#syncNow').hidden=true;$('#exportData').disabled=originalRaw!==null;}
+let cloudSync=null;
+function syncStatus(status){
+ $('#syncStatus').textContent=status.message;
+ const busy=status.kind==='checking'||status.kind==='syncing';
+ $('#syncNow').disabled=busy;$('#syncSignOut').disabled=busy;
+ $('#useCloud').hidden=status.kind!=='conflict';$('#useLocal').hidden=!['setup','conflict'].includes(status.kind);
+}
+function canSyncLibrary(){
+ if(storageFailure||storageBlocked||marksBlocked)return false;
+ const library=checkLibraryCurrent(storage);if(!library.ok){showStorageFailure(library.error.message);return false}
+ const marking=checkMarkingsCurrent();if(!marking.ok){showStorageFailure(marking.error);return false}
+ return true;
+}
+function connectSync(){
+ if(storageBlocked||marksBlocked){showStorageFailure('Synchronization is paused to protect the saved data.');return}
+ let config={};try{config=JSON.parse(getStored('opening-notebook-cloud-config-v1')||'{}')}catch{}
+ modal('Connect phone and PC',`<p class="form-copy">Sign in with the same private sync account on both devices. Set up your cloud project first; see the sync setup guide. Your library stays on this device until you choose to upload it.</p><label>Project URL<input name="url" type="url" required value="${esc(config.url||'')}" placeholder="https://your-project.supabase.co"></label><label>Publishable key<input name="key" required value="${esc(config.key||'')}" autocomplete="off"></label><label>Email<input name="email" type="email" required autocomplete="username"></label><label>Password<input name="password" type="password" required autocomplete="current-password"></label><p id="connectError" class="form-hint" role="alert"></p><div class="form-actions"><button type="button" class="button secondary cancel">Cancel</button><button class="button primary">Sign in</button></div>`,async data=>{
+  const form=$('#modalForm'),button=form.querySelector('button[type="submit"], button:not([type])'),errorElement=$('#connectError');
+  const active=()=>$('#modal').open&&$('#connectError')===errorElement;
+  if(button.disabled)return;
+  button.disabled=true;errorElement.textContent='Signing in…';
+  let client;try{
+   const url=String(data.get('url')).trim(),key=String(data.get('key')).trim();
+   client=createCloudSync({url,key});await client.signIn(String(data.get('email')).trim(),String(data.get('password')));
+   if(!active()){await client.signOut();return}
+   try{storage.setItem('opening-notebook-cloud-config-v1',JSON.stringify({url,key}))}catch{}
+   cloudSync=client;
+   syncController=createSyncController({getSnapshot:snapshot,applySnapshot,hasLocalData:()=>hasUserData,canSync:canSyncLibrary,onStatus:syncStatus,fetchImpl:cloudSync.fetch,isFile:false});
+   $('#modal').close();$('#syncNow').textContent='Synchronize';$('#syncSignOut').hidden=false;await syncController.start();
+  }catch(error){if(active())errorElement.textContent=error.message||'Could not sign in. Check the project and account details.'}
+  finally{button.disabled=false}
+ });
+}
+$('#syncNow').onclick=()=>{if(syncController)void syncController.syncNow();else connectSync()};
+$('#syncSignOut').onclick=async()=>{const controller=syncController,client=cloudSync;if(!controller)return;$('#syncSignOut').disabled=true;$('#syncNow').disabled=true;await controller.stop();await client.signOut();syncController=null;cloudSync=null;$('#syncSignOut').hidden=true;$('#syncNow').disabled=false;$('#syncNow').textContent='Connect to sync';$('#useCloud').hidden=true;$('#useLocal').hidden=true;$('#syncStatus').textContent='Saved on this device. Sign in to synchronize.'};
+$('#useCloud').onclick=()=>confirmAction('Use cloud copy','This replaces this device’s library with your cloud copy. A local backup will be retained.','Use cloud copy',()=>syncController?.useCloud());
+$('#useLocal').onclick=()=>confirmAction('Upload this device','This saves this device’s library to your account, replacing the current cloud copy if there is one.','Upload library',()=>syncController?.useLocal());
+if(storageBlocked||marksBlocked){$('#syncStatus').textContent='Synchronization is paused to protect the saved data.';$('#syncNow').hidden=true;$('#exportData').disabled=originalRaw!==null;}
 
 
 </script></body></html>
