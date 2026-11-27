@@ -41,6 +41,14 @@ export function setMoveSymbol(entity, moves, symbol) {
   return {ok:true, changed:true};
 }
 
+// Fixed vector artwork keeps annotations legible without relying on a font.
+const BOARD_SYMBOL_ICONS = Object.freeze({
+  '!': '<svg viewBox="0 0 24 24" width="100%" height="100%" aria-hidden="true"><rect x="10" y="3" width="4" height="12" rx="2" fill="currentColor"/><circle cx="12" cy="19" r="2.2" fill="currentColor"/></svg>',
+  '!!': '<svg viewBox="0 0 24 24" width="100%" height="100%" aria-hidden="true"><rect x="5" y="3" width="4" height="12" rx="2" fill="currentColor"/><circle cx="7" cy="19" r="2.2" fill="currentColor"/><rect x="15" y="3" width="4" height="12" rx="2" fill="currentColor"/><circle cx="17" cy="19" r="2.2" fill="currentColor"/></svg>',
+  '?': '<svg viewBox="0 0 24 24" width="100%" height="100%" aria-hidden="true"><path d="M7.7 8.3c0-2.6 1.8-4.3 4.4-4.3 2.6 0 4.3 1.6 4.3 3.9 0 2-1.1 3-2.6 4.1-1.1.8-1.8 1.5-1.8 3" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="12" cy="19.5" r="2" fill="currentColor"/></svg>',
+  '??': '<svg viewBox="0 0 24 24" width="100%" height="100%" aria-hidden="true"><path d="M2 8c0-2.4 1.5-4 3.8-4s3.8 1.5 3.8 3.6c0 1.8-1 2.7-2.3 3.7-1 .8-1.5 1.4-1.5 2.8M14.4 8c0-2.4 1.5-4 3.8-4S22 5.5 22 7.6c0 1.8-1 2.7-2.3 3.7-1 .8-1.5 1.4-1.5 2.8" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><circle cx="5.8" cy="19" r="1.8" fill="currentColor"/><circle cx="18.2" cy="19" r="1.8" fill="currentColor"/></svg>'
+});
+
 /** Display the current move's saved symbol without changing board markings. */
 export function renderBoardMoveSymbol(board, lastMove, symbol, flipped = false) {
   const host = board?.parentElement;
@@ -51,7 +59,7 @@ export function renderBoardMoveSymbol(board, lastMove, symbol, flipped = false) 
     delete square.dataset.symbolBaseLabel;
     delete square.dataset.moveSymbolTone;
   }
-  const kind = {'!':'only','!!':'brilliant','?':'question','??':'blunder'}[symbol];
+  const kind = Object.hasOwn(BOARD_SYMBOL_ICONS, symbol) ? {'!':'only','!!':'brilliant','?':'question','??':'blunder'}[symbol] : null;
   const destination = lastMove?.to;
   if (!kind || !/^[a-h][1-8]$/.test(destination || '')) {
     badge?.remove();
@@ -69,7 +77,7 @@ export function renderBoardMoveSymbol(board, lastMove, symbol, flipped = false) 
   badge.dataset.edgeTop = String(row === 0);
   badge.style.left = `${(column + 1) * 12.5}%`;
   badge.style.top = `${row * 12.5}%`;
-  badge.textContent = symbol;
+  badge.innerHTML = BOARD_SYMBOL_ICONS[symbol];
   const square = board.querySelector(`[data-square="${destination}"]`);
   if (square) {
     square.dataset.moveSymbolTone = kind;

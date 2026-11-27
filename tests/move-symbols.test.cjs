@@ -99,11 +99,11 @@ test('board badge follows the current move, flips with the board, and clears cle
   const host={querySelector(){return badge},appendChild(node){badge=node}};
   const board={parentElement:host,ownerDocument:{createElement(){return {style:{},dataset:{},setAttribute(){},remove(){badge=null}}}},querySelectorAll(){return [...squares.values()].filter(s=>s.dataset.symbolBaseLabel)},querySelector(selector){const match=selector.match(/data-square="([a-h][1-8])"/);return match?squares.get(match[1]):null}};
   renderBoardMoveSymbol(board,{to:'e4'},'!!');
-  assert.equal(badge.textContent,'!!'); assert.equal(badge.style.left,'62.5%'); assert.equal(badge.style.top,'50%');
+  assert.match(badge.innerHTML, /^<svg/); assert.equal((badge.innerHTML.match(/<rect /g)||[]).length,2); assert.equal(badge.style.left,'62.5%'); assert.equal(badge.style.top,'50%');
   assert.equal(squares.get('e4').label,'e4 pawn, Brilliant move');
   assert.equal(squares.get('e4').dataset.moveSymbolTone,'brilliant');
   renderBoardMoveSymbol(board,{to:'d5'},'?',true);
-  assert.equal(badge.textContent,'?'); assert.equal(badge.style.left,'62.5%'); assert.equal(badge.style.top,'50%');
+  assert.match(badge.innerHTML, /<path /); assert.equal((badge.innerHTML.match(/<circle /g)||[]).length,1); assert.equal(badge.style.left,'62.5%'); assert.equal(badge.style.top,'50%');
   assert.equal(squares.get('e4').label,'e4 pawn'); assert.equal(squares.get('d5').label,'d5 pawn, Mistake');
   assert.equal(squares.get('e4').dataset.moveSymbolTone,undefined);
   assert.equal(squares.get('d5').dataset.moveSymbolTone,'question');
@@ -123,6 +123,7 @@ test('board badge follows the current move, flips with the board, and clears cle
   assert.equal(squares.get('d5').dataset.moveSymbolTone,undefined);
   assert.equal(squares.get('d5').dataset.otherMark,'keep');
   renderBoardMoveSymbol(board,{to:'x9'},'!'); assert.equal(badge,null);
+  renderBoardMoveSymbol(board,{to:'e4'},'__proto__'); assert.equal(badge,null);
 });
 
 test('actual marking click handler toggles, replaces, and rolls back on save failure', async () => {

@@ -22,9 +22,9 @@
 
 .move-tree-symbol{font-weight:800;margin-left:3px}.move-tree-symbol.symbol-question{color:#f4b56b}.move-tree-symbol.symbol-only{color:#76cfee}.move-tree-symbol.symbol-brilliant{color:#7fe2d7}.move-tree-symbol.symbol-blunder{color:#ff9490}
 /* The badge sits above the drawing overlay and never intercepts board input. */
-.board-move-symbol{position:absolute;z-index:6;transform:translate(-50%,-50%);display:grid;place-items:center;min-width:clamp(22px,3.2vw,32px);height:clamp(22px,3.2vw,32px);padding:0 3px;border-radius:50%;font:700 clamp(14px,1.8vw,18px)/1 system-ui,sans-serif;color:#182022;border:2px solid #eee;box-shadow:0 1px 3px #0008;pointer-events:none}
-.board-move-symbol[data-edge-right="true"]{transform:translate(-100%,-50%)}
-.board-move-symbol[data-edge-top="true"]{transform:translate(-50%,0)}
+.board-move-symbol{position:absolute;z-index:6;transform:translate(-70%,-25%);display:grid;place-items:center;width:clamp(24px,3.4vw,34px);height:clamp(24px,3.4vw,34px);padding:0;border-radius:50%;font:700 clamp(14px,1.8vw,18px)/1 system-ui,sans-serif;color:#182022;border:2px solid #eee;box-shadow:0 1px 3px #0008;pointer-events:none}
+.board-move-symbol[data-edge-right="true"]{transform:translate(-100%,-25%)}
+.board-move-symbol[data-edge-top="true"]{transform:translate(-70%,0)}
 .board-move-symbol[data-edge-right="true"][data-edge-top="true"]{transform:translate(-100%,0)}
 .board-move-symbol.symbol-only{background:#7ac2e7}.board-move-symbol.symbol-brilliant{background:#69d5c8}.board-move-symbol.symbol-question{background:#f5b45b}.board-move-symbol.symbol-blunder{background:#f17b72}
 
@@ -34,3 +34,5 @@
 .square[data-move-symbol-tone="brilliant"]::before{background:rgba(85,213,196,.48)}
 .square[data-move-symbol-tone="question"]::before{background:rgba(255,190,96,.48)}
 .square[data-move-symbol-tone="blunder"]::before{background:rgba(250,123,112,.48)}
+
+.board-move-symbol svg{display:block;width:90%;height:90%;overflow:visible}

@@ -96,9 +96,9 @@ dialog{border-radius:3px;background:#30312f}.modal-head h2{font-family:inherit;f
 
 .move-tree-symbol{font-weight:800;margin-left:3px}.move-tree-symbol.symbol-question{color:#f4b56b}.move-tree-symbol.symbol-only{color:#76cfee}.move-tree-symbol.symbol-brilliant{color:#7fe2d7}.move-tree-symbol.symbol-blunder{color:#ff9490}
 /* The badge sits above the drawing overlay and never intercepts board input. */
-.board-move-symbol{position:absolute;z-index:6;transform:translate(-50%,-50%);display:grid;place-items:center;min-width:clamp(22px,3.2vw,32px);height:clamp(22px,3.2vw,32px);padding:0 3px;border-radius:50%;font:700 clamp(14px,1.8vw,18px)/1 system-ui,sans-serif;color:#182022;border:2px solid #eee;box-shadow:0 1px 3px #0008;pointer-events:none}
-.board-move-symbol[data-edge-right="true"]{transform:translate(-100%,-50%)}
-.board-move-symbol[data-edge-top="true"]{transform:translate(-50%,0)}
+.board-move-symbol{position:absolute;z-index:6;transform:translate(-70%,-25%);display:grid;place-items:center;width:clamp(24px,3.4vw,34px);height:clamp(24px,3.4vw,34px);padding:0;border-radius:50%;font:700 clamp(14px,1.8vw,18px)/1 system-ui,sans-serif;color:#182022;border:2px solid #eee;box-shadow:0 1px 3px #0008;pointer-events:none}
+.board-move-symbol[data-edge-right="true"]{transform:translate(-100%,-25%)}
+.board-move-symbol[data-edge-top="true"]{transform:translate(-70%,0)}
 .board-move-symbol[data-edge-right="true"][data-edge-top="true"]{transform:translate(-100%,0)}
 .board-move-symbol.symbol-only{background:#7ac2e7}.board-move-symbol.symbol-brilliant{background:#69d5c8}.board-move-symbol.symbol-question{background:#f5b45b}.board-move-symbol.symbol-blunder{background:#f17b72}
 
@@ -108,6 +108,8 @@ dialog{border-radius:3px;background:#30312f}.modal-head h2{font-family:inherit;f
 .square[data-move-symbol-tone="brilliant"]::before{background:rgba(85,213,196,.48)}
 .square[data-move-symbol-tone="question"]::before{background:rgba(255,190,96,.48)}
 .square[data-move-symbol-tone="blunder"]::before{background:rgba(250,123,112,.48)}
+
+.board-move-symbol svg{display:block;width:90%;height:90%;overflow:visible}
 
 /* Board and notes are the main study workspace; the library sits underneath. */
 .app-layout{display:block;min-height:calc(100vh - 68px)}
@@ -1493,6 +1495,14 @@ function setMoveSymbol(entity, moves, symbol) {
   return {ok:true, changed:true};
 }
 
+// Fixed vector artwork keeps annotations legible without relying on a font.
+const BOARD_SYMBOL_ICONS = Object.freeze({
+  '!': '<svg viewBox="0 0 24 24" width="100%" height="100%" aria-hidden="true"><rect x="10" y="3" width="4" height="12" rx="2" fill="currentColor"/><circle cx="12" cy="19" r="2.2" fill="currentColor"/></svg>',
+  '!!': '<svg viewBox="0 0 24 24" width="100%" height="100%" aria-hidden="true"><rect x="5" y="3" width="4" height="12" rx="2" fill="currentColor"/><circle cx="7" cy="19" r="2.2" fill="currentColor"/><rect x="15" y="3" width="4" height="12" rx="2" fill="currentColor"/><circle cx="17" cy="19" r="2.2" fill="currentColor"/></svg>',
+  '?': '<svg viewBox="0 0 24 24" width="100%" height="100%" aria-hidden="true"><path d="M7.7 8.3c0-2.6 1.8-4.3 4.4-4.3 2.6 0 4.3 1.6 4.3 3.9 0 2-1.1 3-2.6 4.1-1.1.8-1.8 1.5-1.8 3" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"/><circle cx="12" cy="19.5" r="2" fill="currentColor"/></svg>',
+  '??': '<svg viewBox="0 0 24 24" width="100%" height="100%" aria-hidden="true"><path d="M2 8c0-2.4 1.5-4 3.8-4s3.8 1.5 3.8 3.6c0 1.8-1 2.7-2.3 3.7-1 .8-1.5 1.4-1.5 2.8M14.4 8c0-2.4 1.5-4 3.8-4S22 5.5 22 7.6c0 1.8-1 2.7-2.3 3.7-1 .8-1.5 1.4-1.5 2.8" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><circle cx="5.8" cy="19" r="1.8" fill="currentColor"/><circle cx="18.2" cy="19" r="1.8" fill="currentColor"/></svg>'
+});
+
 /** Display the current move's saved symbol without changing board markings. */
 function renderBoardMoveSymbol(board, lastMove, symbol, flipped = false) {
   const host = board?.parentElement;
@@ -1503,7 +1513,7 @@ function renderBoardMoveSymbol(board, lastMove, symbol, flipped = false) {
     delete square.dataset.symbolBaseLabel;
     delete square.dataset.moveSymbolTone;
   }
-  const kind = {'!':'only','!!':'brilliant','?':'question','??':'blunder'}[symbol];
+  const kind = Object.hasOwn(BOARD_SYMBOL_ICONS, symbol) ? {'!':'only','!!':'brilliant','?':'question','??':'blunder'}[symbol] : null;
   const destination = lastMove?.to;
   if (!kind || !/^[a-h][1-8]$/.test(destination || '')) {
     badge?.remove();
@@ -1521,7 +1531,7 @@ function renderBoardMoveSymbol(board, lastMove, symbol, flipped = false) {
   badge.dataset.edgeTop = String(row === 0);
   badge.style.left = `${(column + 1) * 12.5}%`;
   badge.style.top = `${row * 12.5}%`;
-  badge.textContent = symbol;
+  badge.innerHTML = BOARD_SYMBOL_ICONS[symbol];
   const square = board.querySelector(`[data-square="${destination}"]`);
   if (square) {
     square.dataset.moveSymbolTone = kind;
