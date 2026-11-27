@@ -47,15 +47,15 @@ export function setMoveSymbol(entity, moves, symbol) {
 // Icons are recolored, resized and duplicated for paired move annotations.
 const FA_EXCLAMATION_PATH = 'M96 64c0-17.7-14.3-32-32-32S32 46.3 32 64l0 256c0 17.7 14.3 32 32 32s32-14.3 32-32L96 64zM64 480a40 40 0 1 0 0-80 40 40 0 1 0 0 80z';
 const FA_QUESTION_PATH = 'M80 160c0-35.3 28.7-64 64-64l32 0c35.3 0 64 28.7 64 64l0 3.6c0 21.8-11.1 42.1-29.4 53.8l-42.2 27.1c-25.2 16.2-40.4 44.1-40.4 74l0 1.4c0 17.7 14.3 32 32 32s32-14.3 32-32l0-1.4c0-8.2 4.2-15.8 11-20.2l42.2-27.1c36.6-23.6 58.8-64.1 58.8-107.7l0-3.6c0-70.7-57.3-128-128-128l-32 0C73.3 32 16 89.3 16 160c0 17.7 14.3 32 32 32s32-14.3 32-32zm80 320a40 40 0 1 0 0-80 40 40 0 1 0 0 80z';
-// Normalize all four compositions to the same square canvas and cap height.
-// The question pair is slightly narrower so both marks fit without shrinking vertically.
-const iconPath = (path, x, scaleX) => `<path fill="currentColor" transform="translate(${x} 26) scale(${scaleX} 0.9)" d="${path}"/>`;
+// Normalize each composition to a square canvas. The question pair keeps
+// its original proportions and is centered as two equally scaled icons.
+const iconPath = (path, x, scaleX, y = 26, scaleY = 0.9) => `<path fill="currentColor" transform="translate(${x} ${y}) scale(${scaleX} ${scaleY})" d="${path}"/>`;
 const iconSvg = contents => `<svg viewBox="0 0 512 512" aria-hidden="true"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc. -->${contents}</svg>`;
 export const BOARD_SYMBOL_ICONS = Object.freeze({
   '!': iconSvg(iconPath(FA_EXCLAMATION_PATH, 176, 1.25)),
   '!!': iconSvg(iconPath(FA_EXCLAMATION_PATH, 110, 1.25) + iconPath(FA_EXCLAMATION_PATH, 242, 1.25)),
   '?': iconSvg(iconPath(FA_QUESTION_PATH, 104, 0.95)),
-  '??': iconSvg(iconPath(FA_QUESTION_PATH, 21.6, 0.74) + iconPath(FA_QUESTION_PATH, 253.6, 0.74))
+  '??': iconSvg(iconPath(FA_QUESTION_PATH, 0, 0.8, 51.2, 0.8) + iconPath(FA_QUESTION_PATH, 256, 0.8, 51.2, 0.8))
 });
 
 /** Display the current move's saved symbol without changing board markings. */

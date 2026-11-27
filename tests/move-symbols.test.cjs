@@ -92,23 +92,20 @@ test('legacy library migration and corrupt storage preserve original records', a
   assert.equal(corrupt.getItem(LIBRARY_KEY),'{bad');
 });
 
-test('all four move icons share a balanced canvas, visible height and safe spacing', async () => {
+test('move icons stay centered and paired question marks retain natural proportions', async () => {
   const {BOARD_SYMBOL_ICONS} = await get('move-symbols.js');
   for (const symbol of ['!','!!','?','??']) {
     const svg=BOARD_SYMBOL_ICONS[symbol];
     assert.match(svg, /viewBox="0 0 512 512"/);
     assert.match(svg, /aria-hidden="true"/);
-    const transforms=[...svg.matchAll(/transform="translate\(([\d.]+) 26\) scale\(([\d.]+) 0\.9\)"/g)];
+    const transforms=[...svg.matchAll(/transform="translate\(([\d.]+) ([\d.]+)\) scale\(([\d.]+) ([\d.]+)\)"/g)];
     assert.equal(transforms.length,symbol.length);
     const [sourceLeft,sourceRight]=symbol[0]==='!'?[24,104]:[16,304];
-    const boxes=transforms.map(([,x,sx])=>({left:Number(x)+sourceLeft*Number(sx),right:Number(x)+sourceRight*Number(sx)}));
-    for(const box of boxes){assert.ok(box.left>=0 && box.right<=512);}
-    const center=(boxes[0].left+boxes.at(-1).right)/2;
-    assert.ok(Math.abs(center-256)<0.1);
+    const boxes=transforms.map(([,x,y,sx,sy])=>({left:Number(x)+sourceLeft*Number(sx),right:Number(x)+sourceRight*Number(sx),top:Number(y)+32*Number(sy),bottom:Number(y)+480*Number(sy),sx:Number(sx),sy:Number(sy)}));
+    for(const box of boxes){assert.ok(box.left>=0 && box.right<=512 && box.top>=0 && box.bottom<=512);assert.ok(Math.abs((box.top+box.bottom)/2-256)<0.5);}
+    assert.ok(Math.abs((boxes[0].left+boxes.at(-1).right)/2-256)<0.1);
     if(boxes.length===2)assert.ok(boxes[1].left-boxes[0].right>=16);
-    // Original source shapes run from y=32 to y=480; all use the same vertical transform.
-    assert.equal(26+32*0.9,54.8);
-    assert.equal(26+480*0.9,458);
+    if(symbol==='??')for(const box of boxes)assert.equal(box.sx,box.sy);
   }
 });
 

@@ -26,7 +26,7 @@
 .board-move-symbol[data-edge-right="true"]{transform:translate(-100%,-25%)}
 .board-move-symbol[data-edge-top="true"]{transform:translate(-70%,0)}
 .board-move-symbol[data-edge-right="true"][data-edge-top="true"]{transform:translate(-100%,0)}
-.board-move-symbol.symbol-only{background:#7ac2e7}.board-move-symbol.symbol-brilliant{background:#1baca6;color:#fff}.board-move-symbol.symbol-question{background:#f5b45b}.board-move-symbol.symbol-blunder{background:#c83d37;color:#fff}
+.board-move-symbol.symbol-only{background:#7ac2e7;color:#fff}.board-move-symbol.symbol-brilliant{background:#1baca6;color:#fff}.board-move-symbol.symbol-question{background:#f5b45b}.board-move-symbol.symbol-blunder{background:#c83d37;color:#fff}
 
 /* A display-only tint sits below pieces and coordinates, independent of drawn marks. */
 .square[data-move-symbol-tone]::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none}
