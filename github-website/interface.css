@@ -41,3 +41,5 @@ footer{border-color:#454543;color:#999}footer a{color:#a3c4d8}
 .move-explorer-tools{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.move-explorer-tools .move-symbol-control{flex:1;min-width:0}.save-opening-line{margin:4px 10px 4px auto;border:1px solid #555552;border-radius:2px;background:#3b3b39;color:#e1e1e1;padding:6px 9px;font-size:13px;font-weight:600}.save-opening-line:hover:not(:disabled){background:#50504e}.save-opening-line[hidden]{display:none}
 
 .move-symbol-control .mark-symbol svg{display:block;width:22px;height:22px;margin:auto}
+
+.copy-pgn{margin:4px 10px 4px 0;border:1px solid #555552;border-radius:2px;background:#3b3b39;color:#e1e1e1;padding:6px 9px;font-size:13px;font-weight:600}.copy-pgn:hover:not(:disabled){background:#50504e}
