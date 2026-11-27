@@ -17,9 +17,9 @@ const fixture=()=>[
 const esc=value=>String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const norm=value=>JSON.parse(JSON.stringify(value));
 const makeScope=()=>{
- const folders=fixture(),elements=new Map(),bindings={'[data-game]':[],'[data-move-game]':[],'[data-delete-game]':[]},calls=[];
+ const folders=fixture(),elements=new Map(),bindings={'[data-game]':[],'[data-rename-game]':[],'[data-move-game]':[],'[data-delete-game]':[]},calls=[];
  const $=key=>{if(!elements.has(key))elements.set(key,{});return elements.get(key)};
- const sandbox={folders,side:'white',folderId:'root',gameId:null,gameOwnerId:null,gameListScopeId:null,selected:null,engine:null,esc,$,
+ const sandbox={storageBlocked:false,folders,side:'white',folderId:'root',gameId:null,gameOwnerId:null,gameListScopeId:null,selected:null,engine:null,esc,$,
   currentFolder(){return sandbox.folders.find(x=>x.id===sandbox.folderId&&x.side===sandbox.side)||null},
   gameOwner(){return sandbox.folders.find(x=>x.id===sandbox.gameOwnerId&&x.side===sandbox.side)||null},
   currentGame(){return sandbox.gameOwner()?.games.find(g=>g.id===sandbox.gameId)||null},
@@ -27,7 +27,7 @@ const makeScope=()=>{
   document:{querySelectorAll(selector){return bindings[selector]||[]}},
   ChessGame:class{load(pgn){this.pgn=pgn;return !pgn.includes('INVALID')}},
   updateMatch(){sandbox.folderId='deep'},render(){calls.push(['render'])},toast(v){calls.push(['toast',v])},
-  transferGame:(owner,id)=>calls.push(['move',owner,id]),removeGame:(owner,id)=>calls.push(['delete',owner,id])};
+  renameGame:(owner,id)=>calls.push(['rename',owner,id]),transferGame:(owner,id)=>calls.push(['move',owner,id]),removeGame:(owner,id)=>calls.push(['delete',owner,id])};
  vm.createContext(sandbox);
  vm.runInContext(snippet('function selectGame(', 'function updateMatch(')+snippet('function openingContainsFolder(', 'function renderContext('),sandbox);
  return {sandbox,elements,bindings,calls,folders};
@@ -49,6 +49,7 @@ test('renders descendants with their folder, result, and unambiguous owner attri
  for(const name of ['Root game','Child game','Deep game','Sibling game'])assert.match(html,new RegExp(name));
  assert.doesNotMatch(html,/Different opening|Different repertoire/);
  assert.match(html,/data-game="g2" data-game-owner="deep"/);
+ assert.match(html,/data-rename-game="g2" data-game-owner="deep"/);
  assert.match(html,/data-move-game="g2" data-game-owner="deep"/);
  assert.match(html,/data-delete-game="g2" data-game-owner="deep"/);
  assert.match(html,/Child game[\s\S]*?Morphy[\s\S]*?0-1 · Black won · White lost/);
@@ -57,13 +58,13 @@ test('renders descendants with their folder, result, and unambiguous owner attri
 
 test('open, move and delete controls pass the game’s actual folder and keep the parent scope while open',()=>{
  const {sandbox,elements,bindings,calls,folders}=makeScope();
- const open={dataset:{game:'g2',gameOwner:'deep'}},move={dataset:{moveGame:'g2',gameOwner:'deep'}},del={dataset:{deleteGame:'g2',gameOwner:'deep'}};
- bindings['[data-game]']=[open];bindings['[data-move-game]']=[move];bindings['[data-delete-game]']=[del];
+ const rename={dataset:{renameGame:'g2',gameOwner:'deep'}},open={dataset:{game:'g2',gameOwner:'deep'}},move={dataset:{moveGame:'g2',gameOwner:'deep'}},del={dataset:{deleteGame:'g2',gameOwner:'deep'}};
+ bindings['[data-game]']=[open];bindings['[data-rename-game]']=[rename];bindings['[data-move-game]']=[move];bindings['[data-delete-game]']=[del];
  const before=JSON.stringify(folders);sandbox.renderGames();open.onclick();
  assert.equal(sandbox.gameId,'g2');assert.equal(sandbox.gameOwnerId,'deep');assert.equal(sandbox.gameListScopeId,'root');assert.equal(sandbox.engine.pgn,'1. e4 e5 2. Nf3 Nc6');
  assert.equal(sandbox.folderId,'deep'); // match can update board context without shrinking the game list
  sandbox.renderGames();assert.equal(elements.get('#gamesHeading').textContent,'Games in Ruy López');assert.match(elements.get('#games').innerHTML,/Sibling game/);
- move.onclick();del.onclick();assert.deepEqual(calls.filter(x=>x[0]==='move'||x[0]==='delete'),[['move','deep','g2'],['delete','deep','g2']]);assert.equal(JSON.stringify(folders),before);
+ rename.onclick();move.onclick();del.onclick();assert.deepEqual(calls.filter(x=>x[0]==='rename'||x[0]==='move'||x[0]==='delete'),[['rename','deep','g2'],['move','deep','g2'],['delete','deep','g2']]);assert.equal(JSON.stringify(folders),before);
 });
 
 test('duplicate game IDs mark only the actual owner row active and deletion is paused to protect shared annotations',()=>{
@@ -89,7 +90,7 @@ test('selecting a parent with an identical child line keeps the parent game list
  const {folderPath,parseLine}=await get('library.js'),{matchOpening}=await get('opening-match.js');
  const folders=fixture();folders[1].line=folders[0].line;folders[2].line='1. e4 e5 2. Nf3';
  const elems=new Map(),$=key=>{if(!elems.has(key))elems.set(key,{});return elems.get(key)};
- const sandbox={folders,side:'white',folderId:'deep',gameId:null,gameOwnerId:null,gameListScopeId:null,matched:null,engine:{moves:[],index:0},folderPath,parseLine,matchOpening,esc,$,
+ const sandbox={storageBlocked:false,folders,side:'white',folderId:'deep',gameId:null,gameOwnerId:null,gameListScopeId:null,matched:null,engine:{moves:[],index:0},folderPath,parseLine,matchOpening,esc,$,
   currentFolder(){return folders.find(f=>f.id===sandbox.folderId&&f.side===sandbox.side)||null},currentGame(){return null},gameOwner(){return null},
   setPosition(text){const parsed=parseLine(text);assert.equal(parsed.ok,true);sandbox.engine={moves:parsed.moves,index:parsed.moves.length}},render(){},gameResultHtml:()=>'',document:{querySelectorAll:()=>[]}};
  vm.createContext(sandbox);

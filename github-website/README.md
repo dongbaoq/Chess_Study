@@ -33,3 +33,5 @@ Right-click a square to circle it, or right-drag to draw an arrow. Use Shift or 
 The games list for an opening includes games filed in all its subfolders. Each game stays in its original folder.
 
 As you play, the board follows a uniquely matching saved opening in the selected White or Black repertoire. Shared moves keep the current opening selected until the line becomes distinguishable.
+
+Use **Rename** beside a game to change its title. The board opens at the starting position on reload and when switching repertoires; selecting an opening loads its saved line.

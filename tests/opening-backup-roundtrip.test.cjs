@@ -94,3 +94,68 @@ test('failed import restores original library and board marks', async () => {
   assert.deepEqual(JSON.parse(store.getItem('opening-notebook-marks-v1')),originalMarks);
   assert.match(harness.error(),/storage/i);
 });
+
+test('renaming a nested game preserves all other records through save, reload, export and import', async () => {
+  const lib=await library(), original=fixture(), originalMarks=marks(), raw=JSON.stringify(original);
+  const store=new MemoryStorage({[lib.LEGACY_LIBRARY_KEY]:raw,'opening-notebook-marks-v1':JSON.stringify(originalMarks)});
+  const loaded=lib.readLibrary(store); assert.equal(loaded.migrated,true); assert.equal(lib.saveLibrary(store,loaded.folders).ok,true);
+  const h=appHarness(store,loaded,lib), source=fs.readFileSync(path.join(root,'app.js'),'utf8');
+  const start=source.indexOf('function renameGame('),end=source.indexOf('function removeGame(',start);assert.ok(start>=0&&end>start);
+  let callback=null,closed=0,rendered=0,saves=0;const notices=[];
+  Object.assign(h.sandbox,{gameId:'game',gameOwnerId:'child',gameListScopeId:'root',storageBlocked:false,
+    esc:s=>String(s),modal(_title,_body,fn){callback=fn},renderContext(){rendered++},toast:s=>notices.push(s),
+    save(){saves++;return lib.saveLibrary(store,h.sandbox.folders).ok}});
+  h.element.set('#modal',{close(){closed++}});
+  vm.runInContext(source.slice(start,end),h.sandbox);
+  h.sandbox.renameGame('child','game'); assert.equal(typeof callback,'function');
+  callback({get:()=> '   '}); assert.equal(saves,0); assert.match(notices.at(-1),/title/i);
+  callback({get:()=> 'Game'}); assert.equal(saves,0); assert.equal(closed,1);
+  h.sandbox.renameGame('child','game'); callback({get:()=> ' New title '});
+  const expected=fixture();expected[1].games[0].name='New title';
+  assert.equal(saves,1);assert.equal(rendered,1);assert.equal(h.sandbox.gameId,'game');assert.equal(h.sandbox.gameOwnerId,'child');
+  assert.deepEqual(clone(lib.readLibrary(store).folders),expected);
+  assert.deepEqual(JSON.parse(store.getItem('opening-notebook-marks-v1')),originalMarks);
+  assert.equal(store.getItem(lib.LEGACY_LIBRARY_KEY),raw);
+  h.element.get('#exportData').onclick();const exported=JSON.parse(await h.exported().text());
+  assert.deepEqual(exported,{version:1,folders:expected,annotations:originalMarks});
+  const targetStore=new MemoryStorage({[lib.LIBRARY_KEY]:JSON.stringify(fixture()),'opening-notebook-marks-v1':JSON.stringify(originalMarks)});
+  const target=appHarness(targetStore,lib.readLibrary(targetStore),lib);
+  await target.element.get('#importFile').onchange({target:{files:[{text:async()=>JSON.stringify(exported)}],value:'chosen'}});
+  assert.deepEqual(clone(lib.readLibrary(targetStore).folders),expected);
+  assert.deepEqual(JSON.parse(targetStore.getItem('opening-notebook-marks-v1')),originalMarks);
+});
+
+test('rename rollback and duplicate-ID guard leave the original nested game and markings intact', async () => {
+  const lib=await library(), original=fixture(), originalMarks=marks();
+  const store=new MemoryStorage({[lib.LIBRARY_KEY]:JSON.stringify(original),'opening-notebook-marks-v1':JSON.stringify(originalMarks)});
+  const h=appHarness(store,lib.readLibrary(store),lib), source=fs.readFileSync(path.join(root,'app.js'),'utf8');
+  const start=source.indexOf('function renameGame('),end=source.indexOf('function removeGame(',start);assert.ok(start>=0&&end>start);
+  let callback=null,notice='';Object.assign(h.sandbox,{storageBlocked:false,esc:s=>String(s),modal(_t,_b,fn){callback=fn},renderContext(){},toast:s=>{notice=s},save(){return lib.saveLibrary(store,h.sandbox.folders).ok}});
+  h.element.set('#modal',{close(){}});vm.runInContext(source.slice(start,end),h.sandbox);
+  store.denyV2=true;h.sandbox.renameGame('child','game');callback({get:()=> 'New title'});
+  assert.deepEqual(clone(h.sandbox.folders),original);assert.deepEqual(JSON.parse(store.getItem(lib.LIBRARY_KEY)),original);
+  assert.deepEqual(JSON.parse(store.getItem('opening-notebook-marks-v1')),originalMarks);assert.match(notice,/not saved/i);
+  store.denyV2=false;h.sandbox.folders[1].games.push({...original[1].games[0],name:'Another game'});callback=null;
+  const before=JSON.stringify(h.sandbox.folders);h.sandbox.renameGame('child','game');
+  assert.equal(callback,null);assert.equal(JSON.stringify(h.sandbox.folders),before);assert.match(notice,/same ID/i);
+  h.sandbox.folders[1].games.pop();h.sandbox.folders.push({...h.sandbox.folders[1],name:'Duplicate folder'});callback=null;
+  const duplicateFolder=JSON.stringify(h.sandbox.folders);h.sandbox.renameGame('child','game');
+  assert.equal(callback,null);assert.equal(JSON.stringify(h.sandbox.folders),duplicateFolder);assert.match(notice,/opening shares an ID/i);
+});
+
+test('startup and repertoire switches use the starting position; selecting a folder opens its line', async () => {
+  const module=await load('chess.js');if(module.status==='linked')await module.evaluate();const {ChessGame}=module.namespace;
+  const source=fs.readFileSync(path.join(root,'app.js'),'utf8'), snippets=['function setPosition(','function switchSide(','function selectFolder('].map(prefix=>source.split('\n').find(line=>line.startsWith(prefix)));
+  assert.ok(snippets.every(Boolean));
+  const startup=source.match(/\}\);(setPosition\(''\);updateMatch\(\);render\(\);)/);assert.ok(startup,'startup uses the initial position');
+  const folders=[...fixture(),{id:'black',name:'Black line',side:'black',parentId:null,line:'1. d4 d5',games:[]}],before=JSON.stringify(folders);
+  const state={folders,side:'white',folderId:'root',gameId:'game',gameOwnerId:'child',gameListScopeId:'root',flipped:false,selected:'e2',engine:new ChessGame(),ChessGame,
+    currentFolder(){return state.folders.find(f=>f.id===state.folderId&&f.side===state.side)||null},updateMatch(){},render(){},toast(message){throw new Error(message)}};
+  vm.createContext(state);vm.runInContext(snippets.join('\n')+'\n'+startup[1],state);
+  assert.equal(state.engine.index,0);assert.equal(state.engine.moves.length,0);
+  state.selectFolder('child');assert.equal(state.engine.index,3);assert.equal(state.engine.moves.join(' '),'e4 e5 Nf3');
+  state.switchSide('black');assert.equal(state.engine.index,0);assert.equal(state.flipped,true);assert.equal(state.gameId,null);
+  state.selectFolder('black');assert.equal(state.engine.moves.join(' '),'d4 d5');
+  state.switchSide('white');assert.equal(state.engine.index,0);assert.equal(state.flipped,false);
+  assert.equal(JSON.stringify(folders),before);
+});
