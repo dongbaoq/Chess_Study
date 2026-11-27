@@ -29,3 +29,5 @@ Games with a recorded PGN result show the winning and losing sides (or a draw) i
 To create an independent opening such as the Sicilian Defense, choose **Add opening** above the opening list and enter its moves from the starting position (for example, `1. e4 c5`). **Add subfolder** continues the currently selected opening.
 
 Right-click a square to circle it, or right-drag to draw an arrow. Use Shift or Ctrl for red, Alt or Command for blue, and combine them for yellow. Repeat a mark to remove it. On touchscreens, use **Draw**. Existing saved square markings display as circles.
+
+The games list for an opening includes games filed in all its subfolders. Each game stays in its original folder.

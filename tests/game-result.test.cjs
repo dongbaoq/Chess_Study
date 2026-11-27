@@ -77,11 +77,12 @@ test('actual game list shows outcome only for games with explicit consistent res
  const {parseGameResult,resultLabel}=await get('game-result.js');
  const source=fs.readFileSync(path.join(root,'app.js'),'utf8');
  const helper=source.split('\n').find(s=>s.startsWith('function gameResultHtml('));
- const renderer=source.split('\n').find(s=>s.startsWith('function renderGames('));
- assert.ok(helper&&renderer);
+ const start=source.indexOf('function openingGameEntries('),end=source.indexOf('function renderContext(',start);
+ const renderer=source.slice(start,end);
+ assert.ok(helper&&start>=0&&end>start);
  const elements=new Map();const $=key=>{if(!elements.has(key))elements.set(key,{});return elements.get(key)};
  const games=[{id:'w',name:'White victory',pgn:'1. e4 e5 1-0'},{id:'b',name:'Black victory',pgn:'1. d4 d5 0-1'},{id:'d',name:'Draw',pgn:'1. e4 e5 1/2-1/2'},{id:'x',name:'Incomplete',pgn:'1. e4 e5 *'}];
- const folder={name:'Opening',games};const sandbox={$,parseGameResult,resultLabel,esc:s=>String(s),currentGame:()=>null,currentFolder:()=>folder,gameOwner:()=>folder,gameId:null,document:{querySelectorAll:()=>[]}};
+ const folder={id:'opening',side:'white',name:'Opening',games};const sandbox={$,parseGameResult,resultLabel,esc:s=>String(s),folders:[folder],side:'white',gameListScopeId:null,gameOwnerId:null,currentGame:()=>null,currentFolder:()=>folder,gameOwner:()=>folder,gameId:null,document:{querySelectorAll:()=>[]}};
  vm.runInNewContext(`${helper}\n${renderer}\nrenderGames();`,sandbox);
  const html=elements.get('#games').innerHTML;
  assert.match(html,/1-0 · White won · Black lost/);
