@@ -5,9 +5,10 @@
  * `canStart(square)` should return true only for a movable piece.
  * `onMove(from, to)` should validate and apply the move; it may re-render the board.
  * `isDrawing()` tells this handler when annotation mode owns the pointer.
+ * `onDragStart(from)` and `onDragEnd()` can show and clear move hints.
  * The board needs CSS `touch-action: none` for reliable dragging on touch screens.
  */
-export function createBoardDrag({board, canStart = () => false, onMove = () => {}, isDrawing = () => false}) {
+export function createBoardDrag({board, canStart = () => false, onMove = () => {}, isDrawing = () => false, onDragStart = () => {}, onDragEnd = () => {}}) {
   const host = board.parentElement;
   let gesture = null, suppressClick = false, clearClickTimer = null;
   const threshold = 6;
@@ -20,7 +21,9 @@ export function createBoardDrag({board, canStart = () => false, onMove = () => {
     if (!gesture) return;
     gesture.sourcePiece.style.visibility = gesture.oldVisibility;
     gesture.ghost?.remove();
+    const wasDragging = gesture.dragging;
     gesture = null;
+    if (wasDragging) onDragEnd();
   }
   function onPointerDown(e) {
     if (gesture || isDrawing() || !e.isPrimary || e.button !== 0 || e.ctrlKey || e.metaKey || e.altKey) return;
@@ -43,6 +46,7 @@ export function createBoardDrag({board, canStart = () => false, onMove = () => {
       Object.assign(ghost.style, {position:'absolute',left:`${rect.left-boardRect.left}px`,top:`${rect.top-boardRect.top}px`,
         width:`${rect.width}px`,height:`${rect.height}px`,zIndex:'6',pointerEvents:'none',willChange:'transform',visibility:'visible'});
       host.appendChild(ghost);gesture.ghost=ghost;gesture.sourcePiece.style.visibility='hidden';
+      onDragStart(gesture.from);
       try { board.setPointerCapture(e.pointerId); } catch (_) { /* Optional on older browsers. */ }
     }
     e.preventDefault();

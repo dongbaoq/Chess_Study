@@ -202,10 +202,14 @@ footer{border-color:#454543;color:#999}footer a{color:#a3c4d8}
 .move-tree-result{display:inline-block;padding:4px 6px;color:#ddd;font-size:13px;font-weight:600}
 
 .sidebar-top{gap:8px}.add-opening{flex:none;border:1px solid #555552;border-radius:2px;background:#3b3b39;color:#ddd;padding:6px 8px;font-size:12px;font-weight:600}.add-opening:hover:not(:disabled){background:#50504e}
+
+/* Empty destinations use dots; captures use a ring around the target. */
+.square.legal:not(.legal-capture)::after{width:25%;height:25%;border:0;border-radius:50%;background:#25252555}
+.square.legal.legal-capture::after{width:100%;height:100%;border:clamp(4px,.7vw,8px) solid #25252555;border-radius:50%;background:transparent}
 </style></head>
 <body><header class="site-header"><div class="brand"><span class="brand-mark">♞</span><div><strong>The Opening Notebook</strong><small>YOUR CHESS STUDY</small></div></div><div class="header-side"><span>REPERTOIRE</span><div class="side-toggle" aria-label="Choose repertoire"><button id="sideWhite" aria-pressed="true"><span class="side-disc white"></span> White</button><button id="sideBlack" aria-pressed="false"><span class="side-disc black"></span> Black</button></div></div></header>
 <main class="app-layout">
-<section class="study-main"><div class="study-heading"><div><div class="eyebrow">STUDY BOARD</div><div id="breadcrumbs" class="breadcrumbs"></div><h1 id="boardTitle"></h1><p id="openingStatus" class="opening-status"></p><div id="storageWarning" class="storage-warning" role="alert" hidden><span id="storageWarningText"></span> <button id="downloadOriginal" type="button" class="text-button" hidden>Download original library</button> <button id="downloadOriginalMarks" type="button" class="text-button" hidden>Download original markings</button></div></div><button id="flip" class="text-button" title="Flip board without changing repertoire">⇅ &nbsp; Flip board</button></div><div class="study-grid"><div class="board-column"><div id="boardResultTop" class="board-result-side" hidden></div><div class="board-wrap"><div id="board" class="board" aria-label="Chess board"></div></div><div id="boardResultBottom" class="board-result-side" hidden></div><div class="board-bottom"><div><strong id="positionLabel"></strong><span id="positionSub"></span></div><div class="board-actions"><button id="drawMode" class="tool-button" aria-pressed="false">✎ <span>Draw</span></button><button id="clearMarks" class="tool-button">Clear marks</button></div></div><p class="board-hint">Drag a piece to move it. Right-click a square or drag an arrow to annotate; on touchscreens, use Draw.</p></div>
+<section class="study-main"><div class="study-heading"><div><div class="eyebrow">STUDY BOARD</div><div id="breadcrumbs" class="breadcrumbs"></div><h1 id="boardTitle"></h1><p id="openingStatus" class="opening-status"></p><div id="storageWarning" class="storage-warning" role="alert" hidden><span id="storageWarningText"></span> <button id="downloadOriginal" type="button" class="text-button" hidden>Download original library</button> <button id="downloadOriginalMarks" type="button" class="text-button" hidden>Download original markings</button></div></div><button id="flip" class="text-button" title="Flip board without changing repertoire">⇅ &nbsp; Flip board</button></div><div class="study-grid"><div class="board-column"><div id="boardResultTop" class="board-result-side" hidden></div><div class="board-wrap"><div id="board" class="board" aria-label="Chess board"></div></div><div id="boardResultBottom" class="board-result-side" hidden></div><div class="board-bottom"><div><strong id="positionLabel"></strong><span id="positionSub"></span></div><div class="board-actions"><button id="drawMode" class="tool-button" aria-pressed="false">✎ <span>Draw</span></button><button id="clearMarks" class="tool-button">Clear marks</button></div></div><p class="board-hint">Right-click a square to draw a circle, or right-drag to draw an arrow. Use Draw on touchscreens.</p></div>
 <section class="move-explorer" aria-label="Moves and variations"><div class="move-explorer-tools"><div id="moveSymbolControl" class="move-symbol-control" role="group" aria-label="Mark this move"><span>Marking:</span><button type="button" class="mark-symbol symbol-only" data-move-symbol="!" aria-label="Only move" title="Only move" aria-pressed="false" disabled><svg viewBox="0 0 512 512" aria-hidden="true"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc. --><path fill="currentColor" transform="translate(176 26) scale(1.25 0.9)" d="M96 64c0-17.7-14.3-32-32-32S32 46.3 32 64l0 256c0 17.7 14.3 32 32 32s32-14.3 32-32L96 64zM64 480a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/></svg></button><button type="button" class="mark-symbol symbol-brilliant" data-move-symbol="!!" aria-label="Brilliant move" title="Brilliant move" aria-pressed="false" disabled><svg viewBox="0 0 512 512" aria-hidden="true"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc. --><path fill="currentColor" transform="translate(110 26) scale(1.25 0.9)" d="M96 64c0-17.7-14.3-32-32-32S32 46.3 32 64l0 256c0 17.7 14.3 32 32 32s32-14.3 32-32L96 64zM64 480a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/><path fill="currentColor" transform="translate(242 26) scale(1.25 0.9)" d="M96 64c0-17.7-14.3-32-32-32S32 46.3 32 64l0 256c0 17.7 14.3 32 32 32s32-14.3 32-32L96 64zM64 480a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/></svg></button><button type="button" class="mark-symbol symbol-question" data-move-symbol="?" aria-label="Mistake" title="Mistake" aria-pressed="false" disabled><svg viewBox="0 0 512 512" aria-hidden="true"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc. --><path fill="currentColor" transform="translate(104 26) scale(0.95 0.9)" d="M80 160c0-35.3 28.7-64 64-64l32 0c35.3 0 64 28.7 64 64l0 3.6c0 21.8-11.1 42.1-29.4 53.8l-42.2 27.1c-25.2 16.2-40.4 44.1-40.4 74l0 1.4c0 17.7 14.3 32 32 32s32-14.3 32-32l0-1.4c0-8.2 4.2-15.8 11-20.2l42.2-27.1c36.6-23.6 58.8-64.1 58.8-107.7l0-3.6c0-70.7-57.3-128-128-128l-32 0C73.3 32 16 89.3 16 160c0 17.7 14.3 32 32 32s32-14.3 32-32zm80 320a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/></svg></button><button type="button" class="mark-symbol symbol-blunder" data-move-symbol="??" aria-label="Blunder" title="Blunder" aria-pressed="false" disabled><svg viewBox="0 0 512 512" aria-hidden="true"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc. --><path fill="currentColor" transform="translate(0 51.2) scale(0.8 0.8)" d="M80 160c0-35.3 28.7-64 64-64l32 0c35.3 0 64 28.7 64 64l0 3.6c0 21.8-11.1 42.1-29.4 53.8l-42.2 27.1c-25.2 16.2-40.4 44.1-40.4 74l0 1.4c0 17.7 14.3 32 32 32s32-14.3 32-32l0-1.4c0-8.2 4.2-15.8 11-20.2l42.2-27.1c36.6-23.6 58.8-64.1 58.8-107.7l0-3.6c0-70.7-57.3-128-128-128l-32 0C73.3 32 16 89.3 16 160c0 17.7 14.3 32 32 32s32-14.3 32-32zm80 320a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/><path fill="currentColor" transform="translate(256 51.2) scale(0.8 0.8)" d="M80 160c0-35.3 28.7-64 64-64l32 0c35.3 0 64 28.7 64 64l0 3.6c0 21.8-11.1 42.1-29.4 53.8l-42.2 27.1c-25.2 16.2-40.4 44.1-40.4 74l0 1.4c0 17.7 14.3 32 32 32s32-14.3 32-32l0-1.4c0-8.2 4.2-15.8 11-20.2l42.2-27.1c36.6-23.6 58.8-64.1 58.8-107.7l0-3.6c0-70.7-57.3-128-128-128l-32 0C73.3 32 16 89.3 16 160c0 17.7 14.3 32 32 32s32-14.3 32-32zm80 320a40 40 0 1 0 0-80 40 40 0 1 0 0 80z"/></svg></button></div><button type="button" id="saveOpeningLine" class="save-opening-line" title="Save this opening line without creating a folder">Save line</button><button type="button" id="copyPgn" class="copy-pgn" title="Copy moves through the current position" disabled>Copy PGN</button></div><div id="moveTree" class="move-tree"></div><div class="control-buttons"><button id="first" aria-label="First move">|‹</button><button id="prev" aria-label="Previous move">‹</button><button id="next" aria-label="Next move">›</button><button id="last" aria-label="Last move">›|</button></div><button id="returnGame" class="text-button return-game" hidden>Return to game</button></section><div id="studyNotes" class="study-notes"></div>
 <section class="library-area" aria-label="Library and games"><aside class="sidebar"><div class="sidebar-top"><div><div class="eyebrow">YOUR REPERTOIRE</div><h2 id="libraryTitle">White openings</h2></div><button id="addRoot" class="add-opening" title="Create a separate opening">＋ Add opening</button></div><p class="sidebar-description">Choose a line to explore its position.</p><div id="tree" class="tree"></div><div class="folder-actions"><button id="editFolder" class="edit-folder">Edit opening</button><button id="deleteFolder" class="edit-folder danger-link">Delete opening</button></div><button id="addChild" class="add-folder" title="Add a line that continues the selected opening">＋ &nbsp; Add subfolder</button><div class="sidebar-help">Folders follow the moves of their parent. Your White and Black repertoires are separate.</div></aside>
 <aside class="analysis-panel"><div class="panel-top"><div><div class="eyebrow">YOUR LIBRARY</div><strong>Study tools</strong></div><button id="addGame" class="small-button">＋ Game</button></div><div class="line-tools"><button id="saveLine" class="text-button">Save position to this folder</button><button id="addBranch" class="text-button">＋ Save as subfolder</button></div><div class="games-section"><div class="section-header"><div><div class="eyebrow">GAME JOURNAL</div><h3 id="gamesHeading">Games in this folder</h3></div><button id="openingView" class="text-button">Opening view</button></div><div id="games" class="game-list"></div></div><section class="sync-section"><div class="eyebrow">LIBRARY STORAGE</div><p id="syncStatus" class="sync-status">Saved on this device</p><div class="sync-actions"><button id="syncNow" class="text-button">Synchronize</button><button id="useCloud" class="text-button" hidden>Use cloud copy</button><button id="useLocal" class="text-button" hidden>Upload this device</button><button id="exportData" class="text-button">Export backup</button><button id="importData" class="text-button">Import backup</button><button id="restoreData" class="text-button" hidden>Restore previous copy</button><input id="importFile" type="file" accept="application/json,.json" hidden></div></section></aside></section></div><footer><span>Chess pieces by Colin M. L. Burnett · <a href="https://creativecommons.org/licenses/by-sa/3.0/" target="_blank" rel="noopener">CC BY-SA 3.0</a></span><span>Move icons: <a href="https://fontawesome.com/" target="_blank" rel="noopener">Font Awesome</a> by Fonticons, adapted · <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a></span></footer></section></main>
@@ -838,7 +842,10 @@ const ANNOTATION_COLORS = {
 };
 const VALID_SQUARE = /^[a-h][1-8]$/;
 const isKnownColor = color => typeof color === 'string' && Object.hasOwn(ANNOTATION_COLORS,color);
-const eventColor = event => event.shiftKey ? 'red' : event.altKey ? 'blue' : (event.ctrlKey || event.metaKey) ? 'yellow' : 'green';
+const eventColor = event => {
+  const red = !!(event.shiftKey || event.ctrlKey), blue = !!(event.altKey || event.metaKey || event.getModifierState?.('AltGraph'));
+  return red ? (blue ? 'yellow' : 'red') : (blue ? 'blue' : 'green');
+};
 
 /**
  * Attach study markings to a board.
@@ -863,7 +870,17 @@ function createBoardAnnotations({ board, getFlipped = () => false, getKey = () =
   Object.assign(svg.style, { position: 'absolute', inset: '0', width: '100%', height: '100%', pointerEvents: 'none', zIndex: '5', overflow: 'hidden' });
   host.appendChild(svg);
   const prefix = `study-mark-${++annotationInstance}`;
-  let mode = false, gesture = null, pending = null, currentKey = null;
+  let mode = false, gesture = null, pending = null, currentKey = null, suppressClick = false, suppressTimer = null;
+  function releaseGesture(active) {
+    if (!active) return;
+    try { board.releasePointerCapture(active.pointerId); } catch (_) { /* Pointer capture may be unavailable. */ }
+  }
+  function suppressGestureClick(active) {
+    if (!active?.suppressClick) return;
+    suppressClick = true;
+    clearTimeout(suppressTimer);
+    suppressTimer = setTimeout(() => { suppressClick = false; suppressTimer = null; }, 0);
+  }
 
   function normalize(value) {
     const squares = {}, arrows = [];
@@ -881,20 +898,29 @@ function createBoardAnnotations({ board, getFlipped = () => false, getKey = () =
   }
   function render() {
     const key = String(getKey() ?? '');
-    if (currentKey !== key) { pending = null; currentKey = key; }
-    const markings = normalize(read(key));
-    let out = `<defs>${Object.entries(ANNOTATION_COLORS).map(([name,color])=>`<marker id="${prefix}-${name}" markerWidth="0.38" markerHeight="0.38" refX="0.28" refY="0.19" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L0.38,0.19 L0,0.38 Z" fill="${color}" /></marker>`).join('')}</defs>`;
-    for (const [square,color] of Object.entries(markings.squares)) {
-      const [x,y] = point(square);
-      out += `<rect x="${x-.5}" y="${y-.5}" width="1" height="1" fill="${ANNOTATION_COLORS[color]}" fill-opacity="0.46" />`;
+    if (currentKey !== key) {
+      pending = null;
+      if (gesture && gesture.key !== key) { const active = gesture; gesture = null; releaseGesture(active); suppressGestureClick(active); }
+      currentKey = key;
     }
-    for (const {from,to,color} of markings.arrows) {
+    const markings = normalize(read(key));
+    let out = `<defs>${Object.entries(ANNOTATION_COLORS).map(([name,color])=>`<marker id="${prefix}-${name}" markerWidth="0.4" markerHeight="0.4" refX="0.3" refY="0.2" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L0.4,0.2 L0,0.4 Z" fill="${color}" fill-opacity=".75" /></marker>`).join('')}</defs>`;
+    const circle = (square, color, opacity = .75) => {
+      const [x,y] = point(square);
+      return `<circle cx="${x}" cy="${y}" r=".42" fill="none" stroke="${ANNOTATION_COLORS[color]}" stroke-opacity="${opacity}" stroke-width=".09" />`;
+    };
+    const arrow = (from, to, color, opacity = .75) => {
       const [x1,y1] = point(from), [x2,y2] = point(to);
       const length = Math.hypot(x2-x1,y2-y1);
-      const endX = x2-(x2-x1)/length*.19, endY = y2-(y2-y1)/length*.19;
-      out += `<line x1="${x1}" y1="${y1}" x2="${endX}" y2="${endY}" stroke="${ANNOTATION_COLORS[color]}" stroke-opacity=".88" stroke-width=".15" stroke-linecap="round" marker-end="url(#${prefix}-${color})" />`;
+      const endX = x2-(x2-x1)/length*.2, endY = y2-(y2-y1)/length*.2;
+      return `<line x1="${x1}" y1="${y1}" x2="${endX}" y2="${endY}" stroke="${ANNOTATION_COLORS[color]}" stroke-opacity="${opacity}" stroke-width=".14" stroke-linecap="round" marker-end="url(#${prefix}-${color})" />`;
+    };
+    for (const [square,color] of Object.entries(markings.squares)) out += circle(square,color);
+    for (const {from,to,color} of markings.arrows) out += arrow(from,to,color);
+    if (pending) out += circle(pending.square,pending.color,.55);
+    if (gesture && gesture.key === key && gesture.to) {
+      out += gesture.from === gesture.to ? circle(gesture.from,gesture.color,.55) : arrow(gesture.from,gesture.to,gesture.color,.55);
     }
-    if (pending) { const [x,y] = point(pending.square); out += `<rect x="${x-.46}" y="${y-.46}" width=".92" height=".92" fill="none" stroke="${ANNOTATION_COLORS[pending.color]}" stroke-width=".08" />`; }
     svg.innerHTML = out;
   }
   // Edit the stored record itself, rather than the display-only normalized view.
@@ -962,17 +988,24 @@ function createBoardAnnotations({ board, getFlipped = () => false, getKey = () =
     return square && board.contains(square) && VALID_SQUARE.test(square.dataset.square) ? square.dataset.square : null;
   }
   function pointerDown(event) {
-    const right = event.button === 2 && event.pointerType !== 'touch';
+    const right = event.pointerType !== 'touch' && (event.button === 2 || (event.button === 0 && event.ctrlKey));
     if (!right && !mode) return;
     const square = squareAt(event.clientX,event.clientY);
     if (!square) return;
     event.preventDefault(); event.stopPropagation();
-    gesture = { pointerId: event.pointerId, from: square, right, color: eventColor(event), key: String(getKey() ?? '') };
+    gesture = { pointerId: event.pointerId, from: square, to: square, right, suppressClick: right && event.button === 0, color: eventColor(event), key: String(getKey() ?? '') };
+    render();
     try { board.setPointerCapture(event.pointerId); } catch (_) { /* Pointer capture is optional. */ }
+  }
+  function pointerMove(event) {
+    if (!gesture || gesture.pointerId !== event.pointerId) return;
+    const end = squareAt(event.clientX,event.clientY);
+    if (gesture.to !== end) { gesture.to = end; render(); }
   }
   function pointerUp(event) {
     if (!gesture || gesture.pointerId !== event.pointerId) return;
     const active = gesture; gesture = null;
+    releaseGesture(active); suppressGestureClick(active);
     event.preventDefault(); event.stopPropagation();
     const end = squareAt(event.clientX,event.clientY);
     if (!end || active.key !== String(getKey() ?? '')) { pending = null; render(); return; }
@@ -981,10 +1014,11 @@ function createBoardAnnotations({ board, getFlipped = () => false, getKey = () =
     if (!pending) { pending = {square:end,color:active.color}; render(); }
     else { const start = pending; pending = null; toggle(start.square,end,start.color); }
   }
-  function pointerCancel() { gesture = null; }
+  function pointerCancel(event) { if (gesture && (event.pointerId == null || gesture.pointerId === event.pointerId)) { const active = gesture; gesture = null; releaseGesture(active); suppressGestureClick(active); render(); } }
   function contextMenu(event) { event.preventDefault(); }
-  function swallowClick(event) { if (mode) { event.preventDefault(); event.stopImmediatePropagation(); } }
+  function swallowClick(event) { if (mode || suppressClick) { suppressClick = false; clearTimeout(suppressTimer); suppressTimer = null; event.preventDefault(); event.stopImmediatePropagation(); } }
   board.addEventListener('pointerdown',pointerDown,true);
+  board.addEventListener('pointermove',pointerMove,true);
   board.addEventListener('pointerup',pointerUp,true);
   board.addEventListener('pointercancel',pointerCancel,true);
   board.addEventListener('contextmenu',contextMenu);
@@ -992,10 +1026,10 @@ function createBoardAnnotations({ board, getFlipped = () => false, getKey = () =
   render();
   return {
     refresh: render,
-    setMode(value) { mode = !!value; pending = null; board.style.touchAction = mode ? 'none' : ''; board.classList.toggle('drawing-mode',mode); render(); onModeChange(mode); },
+    setMode(value) { mode = !!value; pending = null; const active = gesture; gesture = null; releaseGesture(active); suppressGestureClick(active); board.style.touchAction = mode ? 'none' : ''; board.classList.toggle('drawing-mode',mode); render(); onModeChange(mode); },
     getMode() { return mode; },
     clear() { pending=null; clearVisible(); },
-    destroy() { board.removeEventListener('pointerdown',pointerDown,true); board.removeEventListener('pointerup',pointerUp,true); board.removeEventListener('pointercancel',pointerCancel,true); board.removeEventListener('contextmenu',contextMenu); board.removeEventListener('click',swallowClick,true); board.style.touchAction=''; board.classList.remove('drawing-mode'); svg.remove(); }
+    destroy() { releaseGesture(gesture); gesture = null; clearTimeout(suppressTimer); board.removeEventListener('pointerdown',pointerDown,true); board.removeEventListener('pointermove',pointerMove,true); board.removeEventListener('pointerup',pointerUp,true); board.removeEventListener('pointercancel',pointerCancel,true); board.removeEventListener('contextmenu',contextMenu); board.removeEventListener('click',swallowClick,true); board.style.touchAction=''; board.classList.remove('drawing-mode'); svg.remove(); }
   };
 }
 
@@ -1007,9 +1041,10 @@ function createBoardAnnotations({ board, getFlipped = () => false, getKey = () =
  * `canStart(square)` should return true only for a movable piece.
  * `onMove(from, to)` should validate and apply the move; it may re-render the board.
  * `isDrawing()` tells this handler when annotation mode owns the pointer.
+ * `onDragStart(from)` and `onDragEnd()` can show and clear move hints.
  * The board needs CSS `touch-action: none` for reliable dragging on touch screens.
  */
-function createBoardDrag({board, canStart = () => false, onMove = () => {}, isDrawing = () => false}) {
+function createBoardDrag({board, canStart = () => false, onMove = () => {}, isDrawing = () => false, onDragStart = () => {}, onDragEnd = () => {}}) {
   const host = board.parentElement;
   let gesture = null, suppressClick = false, clearClickTimer = null;
   const threshold = 6;
@@ -1022,7 +1057,9 @@ function createBoardDrag({board, canStart = () => false, onMove = () => {}, isDr
     if (!gesture) return;
     gesture.sourcePiece.style.visibility = gesture.oldVisibility;
     gesture.ghost?.remove();
+    const wasDragging = gesture.dragging;
     gesture = null;
+    if (wasDragging) onDragEnd();
   }
   function onPointerDown(e) {
     if (gesture || isDrawing() || !e.isPrimary || e.button !== 0 || e.ctrlKey || e.metaKey || e.altKey) return;
@@ -1045,6 +1082,7 @@ function createBoardDrag({board, canStart = () => false, onMove = () => {}, isDr
       Object.assign(ghost.style, {position:'absolute',left:`${rect.left-boardRect.left}px`,top:`${rect.top-boardRect.top}px`,
         width:`${rect.width}px`,height:`${rect.height}px`,zIndex:'6',pointerEvents:'none',willChange:'transform',visibility:'visible'});
       host.appendChild(ghost);gesture.ghost=ghost;gesture.sourcePiece.style.visibility='hidden';
+      onDragStart(gesture.from);
       try { board.setPointerCapture(e.pointerId); } catch (_) { /* Optional on older browsers. */ }
     }
     e.preventDefault();
@@ -1072,6 +1110,7 @@ function createBoardDrag({board, canStart = () => false, onMove = () => {}, isDr
   board.addEventListener('click',onClick,true);
   return { cancel:clean, destroy(){clean();clearTimeout(clearClickTimer);board.removeEventListener('pointerdown',onPointerDown);window.removeEventListener('pointermove',onPointerMove);window.removeEventListener('pointerup',onPointerUp);window.removeEventListener('pointercancel',onPointerCancel);board.removeEventListener('click',onClick,true)} };
 }
+
 
 /**
  * Revision-aware synchronization for a private hosted study.
@@ -1766,7 +1805,7 @@ function animateMotion(moves){
   animation.onfinish=()=>{target.style.visibility='';ghost.remove();activeMotions=activeMotions.filter(a=>a!==item)};
  }
 }
-function renderBoard(motion=[]){cancelMotions();const focus=document.activeElement?.closest?.('#board [data-square]')?.dataset.square;let html='';const game=currentGame(),played=game?originalGameMoves():[],position=engine.moves.slice(0,engine.index),analysis=!!game&&(position.length>played.length||position.some((move,i)=>move!==played[i]));$('#board').classList.toggle('is-analysis',analysis);const last=engine.lastMove,legal=selected?engine.legalMoves().filter(m=>m.from===selected):[];for(let vr=0;vr<8;vr++)for(let vc=0;vc<8;vc++){let r=flipped?7-vr:vr,c=flipped?7-vc:vc,sq='abcdefgh'[c]+(8-r),p=engine.board[r][c];html+=`<button class="square ${(r+c)%2?'dark':'light'} ${last&&(last.from===sq||last.to===sq)?'last-move':''} ${selected===sq?'selected':''} ${legal.some(m=>m.to===sq)?'legal':''}" data-square="${sq}" aria-label="${sq}${p?' '+p:''}">${vc===0?`<span class="coord rank">${8-r}</span>`:''}${vr===7?`<span class="coord file">${'abcdefgh'[c]}</span>`:''}${p?`<span class="piece" aria-hidden="true">${PIECES[p]}</span>`:''}</button>`}$('#board').innerHTML=html;if(focus)$('#board').querySelector(`[data-square="${focus}"]`)?.focus({preventScroll:true});animateMotion(motion);document.querySelectorAll('[data-square]').forEach(b=>b.onclick=()=>squareClick(b.dataset.square));marks.refresh();$('#positionLabel').textContent=engine.index===0?'Starting position':`${Math.ceil(engine.index/2)}${engine.index%2?'.':'...'} ${engine.moves[engine.index-1]}`;const finalResult=resultAtPosition(game,engine.moves,engine.index,played),resultSides=getResultSides(finalResult,flipped);$('#boardResultTop').hidden=$('#boardResultBottom').hidden=!finalResult;$('#boardResultTop').textContent=resultSides.top;$('#boardResultBottom').textContent=resultSides.bottom;$('#positionSub').textContent=finalResult?`${finalResult} · ${resultLabel(finalResult)}`:`${engine.turn==='w'?'White':'Black'} to move${analysis?' · Analysis variation':''}`;$('#prev').disabled=$('#first').disabled=engine.index===0;$('#next').disabled=$('#last').disabled=engine.index===engine.moves.length;}
+function renderBoard(motion=[]){cancelMotions();const focus=document.activeElement?.closest?.('#board [data-square]')?.dataset.square;let html='';const game=currentGame(),played=game?originalGameMoves():[],position=engine.moves.slice(0,engine.index),analysis=!!game&&(position.length>played.length||position.some((move,i)=>move!==played[i]));$('#board').classList.toggle('is-analysis',analysis);const last=engine.lastMove,legal=selected?engine.legalMoves().filter(m=>m.from===selected):[];for(let vr=0;vr<8;vr++)for(let vc=0;vc<8;vc++){let r=flipped?7-vr:vr,c=flipped?7-vc:vc,sq='abcdefgh'[c]+(8-r),p=engine.board[r][c];html+=`<button class="square ${(r+c)%2?'dark':'light'} ${last&&(last.from===sq||last.to===sq)?'last-move':''} ${selected===sq?'selected':''} ${legal.some(m=>m.to===sq)?'legal':''} ${legal.some(m=>m.to===sq&&m.san.includes('x'))?'legal-capture':''}" data-square="${sq}" aria-label="${sq}${p?' '+p:''}">${vc===0?`<span class="coord rank">${8-r}</span>`:''}${vr===7?`<span class="coord file">${'abcdefgh'[c]}</span>`:''}${p?`<span class="piece" aria-hidden="true">${PIECES[p]}</span>`:''}</button>`}$('#board').innerHTML=html;if(focus)$('#board').querySelector(`[data-square="${focus}"]`)?.focus({preventScroll:true});animateMotion(motion);document.querySelectorAll('[data-square]').forEach(b=>b.onclick=()=>squareClick(b.dataset.square));marks.refresh();$('#positionLabel').textContent=engine.index===0?'Starting position':`${Math.ceil(engine.index/2)}${engine.index%2?'.':'...'} ${engine.moves[engine.index-1]}`;const finalResult=resultAtPosition(game,engine.moves,engine.index,played),resultSides=getResultSides(finalResult,flipped);$('#boardResultTop').hidden=$('#boardResultBottom').hidden=!finalResult;$('#boardResultTop').textContent=resultSides.top;$('#boardResultBottom').textContent=resultSides.bottom;$('#positionSub').textContent=finalResult?`${finalResult} · ${resultLabel(finalResult)}`:`${engine.turn==='w'?'White':'Black'} to move${analysis?' · Analysis variation':''}`;$('#prev').disabled=$('#first').disabled=engine.index===0;$('#next').disabled=$('#last').disabled=engine.index===engine.moves.length;}
 
 function playMove(from,to,animate=true){
  const legal=engine.legalMoves().filter(m=>m.from===from&&m.to===to);if(!legal.length)return false;
@@ -1775,7 +1814,16 @@ function playMove(from,to,animate=true){
  finish('Q');return true
 }
 function squareClick(sq){let r=8-Number(sq[1]),c='abcdefgh'.indexOf(sq[0]),p=engine.board[r][c];if(selected&&playMove(selected,sq))return;selected=p&&p[0]===engine.turn?sq:null;renderBoard();renderMoveExplorer()}
-createBoardDrag({board:$('#board'),isDrawing:()=>marks.getMode(),canStart:sq=>engine.legalMoves().some(m=>m.from===sq),onMove:(from,to)=>playMove(from,to,false)});
+// Update destination hints in place so an active drag keeps its pointer capture.
+function showLegalHints(from){
+ const legal=from?engine.legalMoves().filter(move=>move.from===from):[];
+ for(const square of $('#board').querySelectorAll('[data-square]')){
+  const choices=legal.filter(move=>move.to===square.dataset.square);
+  square.classList.toggle('legal',choices.length>0);
+  square.classList.toggle('legal-capture',choices.some(move=>move.san.includes('x')));
+ }
+}
+createBoardDrag({board:$('#board'),isDrawing:()=>marks.getMode(),canStart:sq=>engine.legalMoves().some(m=>m.from===sq),onMove:(from,to)=>playMove(from,to,false),onDragStart:showLegalHints,onDragEnd:()=>showLegalHints(selected)});
 function gameResultHtml(game){const result=parseGameResult(game.pgn);return result?`<small class="game-result-label">${esc(result)} · ${esc(resultLabel(result))}</small>`:''}
 function renderGames(){const f=currentGame()?gameOwner():currentFolder();$('#gamesHeading').textContent=f?`Games in ${f.name}`:'Games';$('#games').innerHTML=f?.games.length?f.games.map(g=>`<div class="game-entry ${g.id===gameId?'active':''}"><button class="game-item" data-game="${esc(g.id)}"><span class="game-piece">♟</span><span><strong>${esc(g.name)}</strong><small>${esc(g.date||'Your game')}</small>${gameResultHtml(g)}</span><span class="chevron">›</span></button><div class="game-entry-actions"><button class="game-action" data-move-game="${esc(g.id)}" aria-label="Move ${esc(g.name)}">Move</button><button class="game-action danger" data-delete-game="${esc(g.id)}" aria-label="Delete ${esc(g.name)}">Delete</button></div></div>`).join(''):'<p class="empty-state">No games yet. Add a game to review it here.</p>';document.querySelectorAll('[data-game]').forEach(b=>b.onclick=()=>{folderId=f.id;selectGame(b.dataset.game)});document.querySelectorAll('[data-move-game]').forEach(b=>b.onclick=()=>transferGame(f.id,b.dataset.moveGame));document.querySelectorAll('[data-delete-game]').forEach(b=>b.onclick=()=>removeGame(f.id,b.dataset.deleteGame));$('#addGame').disabled=!currentFolder();$('#openingView').disabled=!gameId;}
 function renderContext(){const f=currentFolder(),path=folderPath(folders,folderId);renderTree();$('#breadcrumbs').innerHTML=`<span>${side==='white'?'White':'Black'}</span>${path.map(p=>`<span class="crumb-sep">/</span><span>${esc(p.name)}</span>`).join('')}${currentGame()?`<span class="crumb-sep">/</span><span>${esc(currentGame().name)}</span>`:''}`;$('#boardTitle').textContent=currentGame()?.name||f?.name||`${side==='white'?'White':'Black'} repertoire`;$('#openingStatus').textContent=(matched?.folder?`Matched: ${matched.folder.name}${matched.ambiguous?' (multiple saved lines match)':''}`:'No saved opening matched at this position')+(currentGame()&&gameOwner()?.id!==f?.id?` · Game filed in ${gameOwner().name}`:'');studyNotes.render({folders,folder:f,game:currentGame(),moves:engine.moves,index:engine.index});if(storageFailure){const label=document.querySelector('.study-autosave');if(label)label.textContent='Changes not saved'}$('#saveLine').disabled=$('#addBranch').disabled=!f;$('#saveOpeningLine').hidden=!!currentGame();$('#saveOpeningLine').disabled=!f||!engine.index||storageBlocked;$('#copyPgn').disabled=!engine.index;renderGames();renderMoveExplorer()}

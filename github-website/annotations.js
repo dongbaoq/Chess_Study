@@ -9,7 +9,10 @@ const ANNOTATION_COLORS = {
 };
 const VALID_SQUARE = /^[a-h][1-8]$/;
 const isKnownColor = color => typeof color === 'string' && Object.hasOwn(ANNOTATION_COLORS,color);
-const eventColor = event => event.shiftKey ? 'red' : event.altKey ? 'blue' : (event.ctrlKey || event.metaKey) ? 'yellow' : 'green';
+const eventColor = event => {
+  const red = !!(event.shiftKey || event.ctrlKey), blue = !!(event.altKey || event.metaKey || event.getModifierState?.('AltGraph'));
+  return red ? (blue ? 'yellow' : 'red') : (blue ? 'blue' : 'green');
+};
 
 /**
  * Attach study markings to a board.
@@ -34,7 +37,17 @@ export function createBoardAnnotations({ board, getFlipped = () => false, getKey
   Object.assign(svg.style, { position: 'absolute', inset: '0', width: '100%', height: '100%', pointerEvents: 'none', zIndex: '5', overflow: 'hidden' });
   host.appendChild(svg);
   const prefix = `study-mark-${++annotationInstance}`;
-  let mode = false, gesture = null, pending = null, currentKey = null;
+  let mode = false, gesture = null, pending = null, currentKey = null, suppressClick = false, suppressTimer = null;
+  function releaseGesture(active) {
+    if (!active) return;
+    try { board.releasePointerCapture(active.pointerId); } catch (_) { /* Pointer capture may be unavailable. */ }
+  }
+  function suppressGestureClick(active) {
+    if (!active?.suppressClick) return;
+    suppressClick = true;
+    clearTimeout(suppressTimer);
+    suppressTimer = setTimeout(() => { suppressClick = false; suppressTimer = null; }, 0);
+  }
 
   function normalize(value) {
     const squares = {}, arrows = [];
@@ -52,20 +65,29 @@ export function createBoardAnnotations({ board, getFlipped = () => false, getKey
   }
   function render() {
     const key = String(getKey() ?? '');
-    if (currentKey !== key) { pending = null; currentKey = key; }
-    const markings = normalize(read(key));
-    let out = `<defs>${Object.entries(ANNOTATION_COLORS).map(([name,color])=>`<marker id="${prefix}-${name}" markerWidth="0.38" markerHeight="0.38" refX="0.28" refY="0.19" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L0.38,0.19 L0,0.38 Z" fill="${color}" /></marker>`).join('')}</defs>`;
-    for (const [square,color] of Object.entries(markings.squares)) {
-      const [x,y] = point(square);
-      out += `<rect x="${x-.5}" y="${y-.5}" width="1" height="1" fill="${ANNOTATION_COLORS[color]}" fill-opacity="0.46" />`;
+    if (currentKey !== key) {
+      pending = null;
+      if (gesture && gesture.key !== key) { const active = gesture; gesture = null; releaseGesture(active); suppressGestureClick(active); }
+      currentKey = key;
     }
-    for (const {from,to,color} of markings.arrows) {
+    const markings = normalize(read(key));
+    let out = `<defs>${Object.entries(ANNOTATION_COLORS).map(([name,color])=>`<marker id="${prefix}-${name}" markerWidth="0.4" markerHeight="0.4" refX="0.3" refY="0.2" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L0.4,0.2 L0,0.4 Z" fill="${color}" fill-opacity=".75" /></marker>`).join('')}</defs>`;
+    const circle = (square, color, opacity = .75) => {
+      const [x,y] = point(square);
+      return `<circle cx="${x}" cy="${y}" r=".42" fill="none" stroke="${ANNOTATION_COLORS[color]}" stroke-opacity="${opacity}" stroke-width=".09" />`;
+    };
+    const arrow = (from, to, color, opacity = .75) => {
       const [x1,y1] = point(from), [x2,y2] = point(to);
       const length = Math.hypot(x2-x1,y2-y1);
-      const endX = x2-(x2-x1)/length*.19, endY = y2-(y2-y1)/length*.19;
-      out += `<line x1="${x1}" y1="${y1}" x2="${endX}" y2="${endY}" stroke="${ANNOTATION_COLORS[color]}" stroke-opacity=".88" stroke-width=".15" stroke-linecap="round" marker-end="url(#${prefix}-${color})" />`;
+      const endX = x2-(x2-x1)/length*.2, endY = y2-(y2-y1)/length*.2;
+      return `<line x1="${x1}" y1="${y1}" x2="${endX}" y2="${endY}" stroke="${ANNOTATION_COLORS[color]}" stroke-opacity="${opacity}" stroke-width=".14" stroke-linecap="round" marker-end="url(#${prefix}-${color})" />`;
+    };
+    for (const [square,color] of Object.entries(markings.squares)) out += circle(square,color);
+    for (const {from,to,color} of markings.arrows) out += arrow(from,to,color);
+    if (pending) out += circle(pending.square,pending.color,.55);
+    if (gesture && gesture.key === key && gesture.to) {
+      out += gesture.from === gesture.to ? circle(gesture.from,gesture.color,.55) : arrow(gesture.from,gesture.to,gesture.color,.55);
     }
-    if (pending) { const [x,y] = point(pending.square); out += `<rect x="${x-.46}" y="${y-.46}" width=".92" height=".92" fill="none" stroke="${ANNOTATION_COLORS[pending.color]}" stroke-width=".08" />`; }
     svg.innerHTML = out;
   }
   // Edit the stored record itself, rather than the display-only normalized view.
@@ -133,17 +155,24 @@ export function createBoardAnnotations({ board, getFlipped = () => false, getKey
     return square && board.contains(square) && VALID_SQUARE.test(square.dataset.square) ? square.dataset.square : null;
   }
   function pointerDown(event) {
-    const right = event.button === 2 && event.pointerType !== 'touch';
+    const right = event.pointerType !== 'touch' && (event.button === 2 || (event.button === 0 && event.ctrlKey));
     if (!right && !mode) return;
     const square = squareAt(event.clientX,event.clientY);
     if (!square) return;
     event.preventDefault(); event.stopPropagation();
-    gesture = { pointerId: event.pointerId, from: square, right, color: eventColor(event), key: String(getKey() ?? '') };
+    gesture = { pointerId: event.pointerId, from: square, to: square, right, suppressClick: right && event.button === 0, color: eventColor(event), key: String(getKey() ?? '') };
+    render();
     try { board.setPointerCapture(event.pointerId); } catch (_) { /* Pointer capture is optional. */ }
+  }
+  function pointerMove(event) {
+    if (!gesture || gesture.pointerId !== event.pointerId) return;
+    const end = squareAt(event.clientX,event.clientY);
+    if (gesture.to !== end) { gesture.to = end; render(); }
   }
   function pointerUp(event) {
     if (!gesture || gesture.pointerId !== event.pointerId) return;
     const active = gesture; gesture = null;
+    releaseGesture(active); suppressGestureClick(active);
     event.preventDefault(); event.stopPropagation();
     const end = squareAt(event.clientX,event.clientY);
     if (!end || active.key !== String(getKey() ?? '')) { pending = null; render(); return; }
@@ -152,10 +181,11 @@ export function createBoardAnnotations({ board, getFlipped = () => false, getKey
     if (!pending) { pending = {square:end,color:active.color}; render(); }
     else { const start = pending; pending = null; toggle(start.square,end,start.color); }
   }
-  function pointerCancel() { gesture = null; }
+  function pointerCancel(event) { if (gesture && (event.pointerId == null || gesture.pointerId === event.pointerId)) { const active = gesture; gesture = null; releaseGesture(active); suppressGestureClick(active); render(); } }
   function contextMenu(event) { event.preventDefault(); }
-  function swallowClick(event) { if (mode) { event.preventDefault(); event.stopImmediatePropagation(); } }
+  function swallowClick(event) { if (mode || suppressClick) { suppressClick = false; clearTimeout(suppressTimer); suppressTimer = null; event.preventDefault(); event.stopImmediatePropagation(); } }
   board.addEventListener('pointerdown',pointerDown,true);
+  board.addEventListener('pointermove',pointerMove,true);
   board.addEventListener('pointerup',pointerUp,true);
   board.addEventListener('pointercancel',pointerCancel,true);
   board.addEventListener('contextmenu',contextMenu);
@@ -163,9 +193,9 @@ export function createBoardAnnotations({ board, getFlipped = () => false, getKey
   render();
   return {
     refresh: render,
-    setMode(value) { mode = !!value; pending = null; board.style.touchAction = mode ? 'none' : ''; board.classList.toggle('drawing-mode',mode); render(); onModeChange(mode); },
+    setMode(value) { mode = !!value; pending = null; const active = gesture; gesture = null; releaseGesture(active); suppressGestureClick(active); board.style.touchAction = mode ? 'none' : ''; board.classList.toggle('drawing-mode',mode); render(); onModeChange(mode); },
     getMode() { return mode; },
     clear() { pending=null; clearVisible(); },
-    destroy() { board.removeEventListener('pointerdown',pointerDown,true); board.removeEventListener('pointerup',pointerUp,true); board.removeEventListener('pointercancel',pointerCancel,true); board.removeEventListener('contextmenu',contextMenu); board.removeEventListener('click',swallowClick,true); board.style.touchAction=''; board.classList.remove('drawing-mode'); svg.remove(); }
+    destroy() { releaseGesture(gesture); gesture = null; clearTimeout(suppressTimer); board.removeEventListener('pointerdown',pointerDown,true); board.removeEventListener('pointermove',pointerMove,true); board.removeEventListener('pointerup',pointerUp,true); board.removeEventListener('pointercancel',pointerCancel,true); board.removeEventListener('contextmenu',contextMenu); board.removeEventListener('click',swallowClick,true); board.style.touchAction=''; board.classList.remove('drawing-mode'); svg.remove(); }
   };
 }

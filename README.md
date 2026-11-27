@@ -27,3 +27,5 @@ Select **Copy PGN** beside the move list to copy the current path through the po
 Games with a recorded PGN result show the winning and losing sides (or a draw) in the game list and at the final recorded board position. Games without a clear result remain unlabelled.
 
 To create an independent opening such as the Sicilian Defense, choose **Add opening** above the opening list and enter its moves from the starting position (for example, `1. e4 c5`). **Add subfolder** continues the currently selected opening.
+
+Right-click a square to circle it, or right-drag to draw an arrow. Use Shift or Ctrl for red, Alt or Command for blue, and combine them for yellow. Repeat a mark to remove it. On touchscreens, use **Draw**. Existing saved square markings display as circles.
