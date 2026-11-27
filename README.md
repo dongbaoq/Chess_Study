@@ -25,3 +25,5 @@ To keep an opening variation without creating a subfolder, play to the position 
 Select **Copy PGN** beside the move list to copy the current path through the position on the board. It excludes later moves, other variations, and notes.
 
 Games with a recorded PGN result show the winning and losing sides (or a draw) in the game list and at the final recorded board position. Games without a clear result remain unlabelled.
+
+To create an independent opening such as the Sicilian Defense, choose **Add opening** above the opening list and enter its moves from the starting position (for example, `1. e4 c5`). **Add subfolder** continues the currently selected opening.

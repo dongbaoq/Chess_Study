@@ -49,3 +49,5 @@ footer{border-color:#454543;color:#999}footer a{color:#a3c4d8}
 .board-result-side[hidden]{display:none}
 .game-item .game-result-label{color:#d9d9d9;font-size:12px}
 .move-tree-result{display:inline-block;padding:4px 6px;color:#ddd;font-size:13px;font-weight:600}
+
+.sidebar-top{gap:8px}.add-opening{flex:none;border:1px solid #555552;border-radius:2px;background:#3b3b39;color:#ddd;padding:6px 8px;font-size:12px;font-weight:600}.add-opening:hover:not(:disabled){background:#50504e}
