@@ -23,3 +23,5 @@ Chess piece artwork attribution is in `ATTRIBUTION.md` and the site footer. `AGE
 To keep an opening variation without creating a subfolder, play to the position and select **Save line** beside the marking buttons. The saved moves remain in the opening’s move explorer when you return. Your existing folder position and subfolders are unchanged.
 
 Select **Copy PGN** beside the move list to copy the current path through the position on the board. It excludes later moves, other variations, and notes.
+
+Games with a recorded PGN result show the winning and losing sides (or a draw) in the game list and at the final recorded board position. Games without a clear result remain unlabelled.
