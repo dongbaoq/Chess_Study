@@ -239,8 +239,8 @@ function renderBranchHints(node){
   $('#board').parentElement.appendChild(branchHintSvg);
  }
  const point=square=>{
-  const x=square.charCodeAt(0)-97,y=8-Number(square[1]);
-  return flipped?[7-x,7-y]:[x,y];
+  const column=square.charCodeAt(0)-97,row=8-Number(square[1]);
+  return flipped?[7-column+.5,7-row+.5]:[column+.5,row+.5];
  };
  const xy=(x,y)=>`${x.toFixed(4)} ${y.toFixed(4)}`;
  const arrows=[...choices.values()].map(move=>{

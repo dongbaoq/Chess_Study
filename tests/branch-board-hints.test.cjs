@@ -52,6 +52,7 @@ test('game analysis branches display arrows for every available next move',async
   assert.match(d,/^M [-\d.]+ [-\d.]+(?: L [-\d.]+ [-\d.]+){6} Q [-\d.]+ [-\d.]+ [-\d.]+ [-\d.]+ Z$/);
   assert.doesNotMatch(d,/NaN|Infinity/);
  }
+ assert.match(paths[0][1],/^M 4\.4300 1\.5000/,'an arrow starts at the center of the e7 piece');
  assert.match(interfaceCss,/\.branch-hints path\{fill:#73777b\}/);
 });
 
