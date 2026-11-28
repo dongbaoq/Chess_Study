@@ -55,5 +55,4 @@ footer{border-color:#454543;color:#999}footer a{color:#a3c4d8}
 /* Empty destinations use dots; captures use a ring around the target. */
 .square.legal:not(.legal-capture)::after{width:25%;height:25%;border:0;border-radius:50%;background:#25252555}
 .square.legal.legal-capture::after{width:100%;height:100%;border:clamp(4px,.7vw,8px) solid #25252555;border-radius:50%;background:transparent}
-.square.last-move{outline:3px solid #8bd5ff;outline-offset:-3px}
-.branch-hints{opacity:.82}.branch-hints path{fill:#fff;filter:drop-shadow(0 1px 1px #0008)}
+.branch-hints{opacity:.82}.branch-hints path{fill:#f4a623;filter:drop-shadow(0 1px 1px #0008)}
