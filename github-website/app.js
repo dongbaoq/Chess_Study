@@ -243,12 +243,13 @@ function renderBranchHints(node){
   return flipped?[7-x,7-y]:[x,y];
  };
  const xy=(x,y)=>`${x.toFixed(4)} ${y.toFixed(4)}`;
- branchHintSvg.innerHTML=[...choices.values()].map(move=>{
+ const arrows=[...choices.values()].map(move=>{
   const [x1,y1]=point(move.from),[x2,y2]=point(move.to),length=Math.hypot(x2-x1,y2-y1),ux=(x2-x1)/length,uy=(y2-y1)/length,nx=-uy,ny=ux;
-  const startX=x1+ux*.16,startY=y1+uy*.16,tipX=x2-ux*.12,tipY=y2-uy*.12,baseX=tipX-ux*.28,baseY=tipY-uy*.28,shaft=.055,head=.16;
-  const path=`M ${xy(startX+nx*shaft,startY+ny*shaft)} L ${xy(baseX+nx*shaft,baseY+ny*shaft)} L ${xy(baseX+nx*head,baseY+ny*head)} L ${xy(tipX,tipY)} L ${xy(baseX-nx*head,baseY-ny*head)} L ${xy(baseX-nx*shaft,baseY-ny*shaft)} L ${xy(startX-nx*shaft,startY-ny*shaft)} Q ${xy(x1-ux*shaft,y1-uy*shaft)} ${xy(startX+nx*shaft,startY+ny*shaft)} Z`;
+  const tipX=x2-ux*.1,tipY=y2-uy*.1,baseX=tipX-ux*.35,baseY=tipY-uy*.35,shaft=.07,head=.2;
+  const path=`M ${xy(x1+nx*shaft,y1+ny*shaft)} L ${xy(baseX+nx*shaft,baseY+ny*shaft)} L ${xy(baseX+nx*head,baseY+ny*head)} L ${xy(tipX,tipY)} L ${xy(baseX-nx*head,baseY-ny*head)} L ${xy(baseX-nx*shaft,baseY-ny*shaft)} L ${xy(x1-nx*shaft,y1-ny*shaft)} Q ${xy(x1-ux*shaft,y1-uy*shaft)} ${xy(x1+nx*shaft,y1+ny*shaft)} Z`;
   return `<path data-branch-from="${move.from}" data-branch-to="${move.to}" d="${path}" />`;
  }).join('');
+ branchHintSvg.innerHTML=`<g>${arrows}</g>`;
 }
 function moveSymbolContext(){
  const game=currentGame(),owners=game?[game]:folderPath(folders,folderId),symbols={},key=engine.moves.slice(0,engine.index).join(' ');let owner=owners.at(-1)||null,unknown=false;

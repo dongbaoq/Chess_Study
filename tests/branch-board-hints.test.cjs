@@ -6,6 +6,7 @@ const path=require('node:path');
 const vm=require('node:vm');
 const root=path.resolve(__dirname,'..');
 const source=fs.readFileSync(path.join(root,'app.js'),'utf8');
+const interfaceCss=fs.readFileSync(path.join(root,'interface.css'),'utf8');
 const start=source.indexOf('let branchHintSvg=null;');
 const end=source.indexOf('\nfunction moveSymbolContext()',start);
 assert.ok(start>=0&&end>start,'branch hint renderer should exist');
@@ -45,7 +46,13 @@ test('game analysis branches display arrows for every available next move',async
  const view=makeRenderer(game);view.render(current);
  assert.match(view.svg.innerHTML,/data-branch-from="e7" data-branch-to="e5"/);
  assert.match(view.svg.innerHTML,/data-branch-from="c7" data-branch-to="c5"/);
- assert.equal((view.svg.innerHTML.match(/<path\b/g)||[]).length,2);
+ const paths=[...view.svg.innerHTML.matchAll(/<path\b[^>]*d="([^"]+)"/g)];
+ assert.equal(paths.length,2);
+ for(const [,d] of paths){
+  assert.match(d,/^M [-\d.]+ [-\d.]+(?: L [-\d.]+ [-\d.]+){6} Q [-\d.]+ [-\d.]+ [-\d.]+ [-\d.]+ Z$/);
+  assert.doesNotMatch(d,/NaN|Infinity/);
+ }
+ assert.match(interfaceCss,/\.branch-hints path\{fill:#73777b\}/);
 });
 
 test('repertoire branches display arrows, follow board flip, and clear at non-branch positions',async()=>{
