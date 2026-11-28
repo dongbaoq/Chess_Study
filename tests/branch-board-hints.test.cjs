@@ -53,7 +53,8 @@ test('game analysis branches display arrows for every available next move',async
   assert.doesNotMatch(d,/NaN|Infinity/);
  }
  assert.match(paths[0][1],/^M 4\.4300 1\.5000/,'an arrow starts at the center of the e7 piece');
- assert.match(interfaceCss,/\.branch-hints path\{fill:#73777b\}/);
+ assert.match(interfaceCss,/\.branch-hints\{opacity:\.82\}\.branch-hints path\{fill:#fff;filter:drop-shadow\(0 1px 1px #0008\)\}/);
+ assert.match(interfaceCss,/\.square\.last-move\{outline:3px solid #8bd5ff;outline-offset:-3px\}/);
 });
 
 test('repertoire branches display arrows, follow board flip, and clear at non-branch positions',async()=>{
