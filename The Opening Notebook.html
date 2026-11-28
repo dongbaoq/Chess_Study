@@ -206,6 +206,8 @@ footer{border-color:#454543;color:#999}footer a{color:#a3c4d8}
 /* Empty destinations use dots; captures use a ring around the target. */
 .square.legal:not(.legal-capture)::after{width:25%;height:25%;border:0;border-radius:50%;background:#25252555}
 .square.legal.legal-capture::after{width:100%;height:100%;border:clamp(4px,.7vw,8px) solid #25252555;border-radius:50%;background:transparent}
+.branch-hints path{fill:#4dad73;opacity:.82}
+.move-tree-note-indicator{color:#e7ce73;font-size:.72em;line-height:1;margin-left:2px;vertical-align:super}
 </style></head>
 <body><header class="site-header"><div class="brand"><span class="brand-mark">♞</span><div><strong>The Opening Notebook</strong><small>YOUR CHESS STUDY</small></div></div><div class="header-side"><span>REPERTOIRE</span><div class="side-toggle" aria-label="Choose repertoire"><button id="sideWhite" aria-pressed="true"><span class="side-disc white"></span> White</button><button id="sideBlack" aria-pressed="false"><span class="side-disc black"></span> Black</button></div></div></header>
 <main class="app-layout">
@@ -730,7 +732,8 @@ function buildMoveTree({folders = [], side = 'white', folderId = null, moves = [
     if (!parsed.ok) continue;
     const endpoint = add(parsed.moves);
     for (const variation of getOpeningVariations(folder)) add(variation);
-    endpoint.folders.push({id:folder.id, name:folder.name, side:folder.side});
+    const note=folder.note??[folder.idea,folder.plan].filter(Boolean).join('\n\n');
+    endpoint.folders.push({id:folder.id, name:folder.name, side:folder.side, hasNote:!!note});
     if (!Array.isArray(folder.blunders)) continue;
     for (const warning of folder.blunders) {
       if (!warning || !Array.isArray(warning.moves) || !warning.moves.every(m => typeof m === 'string' && m.length)) continue;
@@ -1475,10 +1478,12 @@ function createMoveTreeView({container, onNavigate = () => {}, onDeleteAnalysis 
     const warnings=Array.isArray(node.blunders) ? node.blunders : [];
     const explanation=warnings.map(w => [w.folderName,w.text].filter(Boolean).join(': ')).filter(Boolean).join(' | ');
     const symbol = Object.hasOwn(moveSymbolLabels,node.moveSymbol) ? node.moveSymbol : null;
-    const label=`${number ? number+' ' : ''}${node.san || ''}${symbol ? ', '+moveSymbolLabels[symbol] : ''}${warnings.length ? ', marked blunder' : ''}${explanation ? ': '+explanation : ''}`;
+    const hasNote=node.hasNote===true||(node.folders||[]).some(folder=>folder.hasNote);
+    const label=`${number ? number+' ' : ''}${node.san || ''}${symbol ? ', '+moveSymbolLabels[symbol] : ''}${warnings.length ? ', marked blunder' : ''}${hasNote?', position has a note':''}${explanation ? ': '+explanation : ''}`;
+    const title=[explanation||(node.isAnalysis?'Show this position. Right-click to delete analysis moves.':'Show this position'),hasNote?'Position has a note':null].filter(Boolean).join('. ');
     navigable.set(lookupId,node);
     const tag=(node.folders || []).map(folder => `<span class="move-tree-folder" title="Saved opening">${escapeMoveTreeText(folder.name)}</span>`).join('');
-    return `<span class="move-tree-token">${number?`<span class="move-tree-number">${number}</span>`:''}<button type="button" class="move-tree-move ${node.isCurrent?'is-current':''} ${node.onGameLine?'is-game':''} ${node.isAnalysis?'is-analysis':''}" data-tree-node="${lookupId}" aria-label="${escapeMoveTreeText(label)}" ${node.isCurrent?'aria-current="step"':''} title="${escapeMoveTreeText(explanation || (node.isAnalysis ? 'Show this position. Right-click to delete analysis moves.' : 'Show this position'))}">${escapeMoveTreeText(node.san || '')}${symbol?`<span class="move-tree-symbol symbol-${moveSymbolClasses[symbol]}" aria-hidden="true">${BOARD_SYMBOL_ICONS[symbol]}</span>`:''}${warnings.length&&symbol!=='??'?`<span class="move-tree-blunder" aria-hidden="true">${BOARD_SYMBOL_ICONS['??']}</span>`:''}</button>${tag}</span>`;
+    return `<span class="move-tree-token">${number?`<span class="move-tree-number">${number}</span>`:''}<button type="button" class="move-tree-move ${node.isCurrent?'is-current':''} ${node.onGameLine?'is-game':''} ${node.isAnalysis?'is-analysis':''}" data-tree-node="${lookupId}" aria-label="${escapeMoveTreeText(label)}" ${node.isCurrent?'aria-current="step"':''} title="${escapeMoveTreeText(title)}">${escapeMoveTreeText(node.san || '')}${symbol?`<span class="move-tree-symbol symbol-${moveSymbolClasses[symbol]}" aria-hidden="true">${BOARD_SYMBOL_ICONS[symbol]}</span>`:''}${warnings.length&&symbol!=='??'?`<span class="move-tree-blunder" aria-hidden="true">${BOARD_SYMBOL_ICONS['??']}</span>`:''}${hasNote?'<sup class="move-tree-note-indicator" aria-hidden="true">✎</sup>':''}</button>${tag}</span>`;
   }
 
   function draw() {
@@ -1728,15 +1733,15 @@ const BOARD_SYMBOL_ICONS = Object.freeze({
   '??': iconSvg(iconPath(FA_QUESTION_PATH, 0, 0.8, 51.2, 0.8) + iconPath(FA_QUESTION_PATH, 256, 0.8, 51.2, 0.8))
 });
 
-/** Display the current move's saved symbol without changing board markings. */
+/** Display the current move's saved symbol without changing saved board annotations. */
 function renderBoardMoveSymbol(board, lastMove, symbol, flipped = false) {
   const host = board?.parentElement;
   if (!host) return;
   let badge = host.querySelector('.board-move-symbol');
+  for (const square of board.querySelectorAll('[data-move-symbol-tone]')) delete square.dataset.moveSymbolTone;
   for (const square of board.querySelectorAll('[data-symbol-base-label]')) {
     square.setAttribute('aria-label', square.dataset.symbolBaseLabel);
     delete square.dataset.symbolBaseLabel;
-    delete square.dataset.moveSymbolTone;
   }
   const kind = Object.hasOwn(BOARD_SYMBOL_ICONS, symbol) ? {'!':'only','!!':'brilliant','?':'question','??':'blunder'}[symbol] : null;
   const destination = lastMove?.to;
@@ -1757,9 +1762,10 @@ function renderBoardMoveSymbol(board, lastMove, symbol, flipped = false) {
   badge.style.left = `${(column + 1) * 12.5}%`;
   badge.style.top = `${row * 12.5}%`;
   badge.innerHTML = BOARD_SYMBOL_ICONS[symbol];
+  const origin = board.querySelector(`[data-square="${lastMove.from}"]`);
   const square = board.querySelector(`[data-square="${destination}"]`);
+  for (const marked of [origin, square]) if (marked) marked.dataset.moveSymbolTone = kind;
   if (square) {
-    square.dataset.moveSymbolTone = kind;
     square.dataset.symbolBaseLabel = square.getAttribute('aria-label') || destination;
     square.setAttribute('aria-label', `${square.dataset.symbolBaseLabel}, ${MOVE_SYMBOL_LABELS[symbol]}`);
   }
@@ -2024,13 +2030,57 @@ let currentMoveTree=null;
 function originalGameMoves(){const g=currentGame();if(!g)return [];const cached=gameMoveCache.get(g);if(cached?.pgn===g.pgn)return cached.moves;const parsed=parseLine(g.pgn||'');const result=parsed.ok?parsed.moves:[];gameMoveCache.set(g,{pgn:g.pgn,moves:result});return result}
 const startsWithMoves=(line,prefix)=>prefix.length<=line.length&&prefix.every((move,i)=>line[i]===move);
 function treeNodeFor(prefix){let node=currentMoveTree;for(const move of prefix){node=node?.children?.find(child=>child.san===move);if(!node)return null}return node}
+function markGamePositionNotes(node,game,gameMoves){
+ const notes=game?.notes;
+ if(!notes||typeof notes!=='object'||Array.isArray(notes))return;
+ function visit(current){
+  const moves=Array.isArray(current.moves)?current.moves:[],key=moves.join(' ');
+  let note=Object.hasOwn(notes,key)?notes[key]:null;
+  if(note==null&&startsWithMoves(gameMoves,moves)&&Object.hasOwn(notes,moves.length))note=notes[moves.length];
+  current.hasNote=!!note;
+  for(const child of current.children||[])visit(child);
+ }
+ visit(node);
+}
+let branchHintSvg=null;
+function renderBranchHints(node){
+ const children=node?.children;
+ if(!Array.isArray(children)||children.length<2){if(branchHintSvg)branchHintSvg.innerHTML='';return}
+ const normalizeSan=san=>String(san).replace(/0/g,'O').replace(/[!?]+/g,'').replace(/[+#]+$/,'');
+ const legal=engine.legalMoves(), choices=new Map();
+ for(const child of children){
+  const move=legal.find(candidate=>normalizeSan(candidate.san)===normalizeSan(child.san));
+  if(move)choices.set(`${move.from}-${move.to}`,move);
+ }
+ if(choices.size<2){if(branchHintSvg)branchHintSvg.innerHTML='';return}
+ if(!branchHintSvg){
+  branchHintSvg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  branchHintSvg.setAttribute('class','branch-hints');
+  branchHintSvg.setAttribute('viewBox','0 0 8 8');
+  branchHintSvg.setAttribute('preserveAspectRatio','none');
+  branchHintSvg.setAttribute('aria-hidden','true');
+  Object.assign(branchHintSvg.style,{position:'absolute',inset:'0',width:'100%',height:'100%',pointerEvents:'none',zIndex:'4',overflow:'hidden'});
+  $('#board').parentElement.appendChild(branchHintSvg);
+ }
+ const point=square=>{
+  const x=square.charCodeAt(0)-97,y=8-Number(square[1]);
+  return flipped?[7-x,7-y]:[x,y];
+ };
+ const xy=(x,y)=>`${x.toFixed(4)} ${y.toFixed(4)}`;
+ branchHintSvg.innerHTML=[...choices.values()].map(move=>{
+  const [x1,y1]=point(move.from),[x2,y2]=point(move.to),length=Math.hypot(x2-x1,y2-y1),ux=(x2-x1)/length,uy=(y2-y1)/length,nx=-uy,ny=ux;
+  const startX=x1+ux*.16,startY=y1+uy*.16,tipX=x2-ux*.12,tipY=y2-uy*.12,baseX=tipX-ux*.28,baseY=tipY-uy*.28,shaft=.055,head=.16;
+  const path=`M ${xy(startX+nx*shaft,startY+ny*shaft)} L ${xy(baseX+nx*shaft,baseY+ny*shaft)} L ${xy(baseX+nx*head,baseY+ny*head)} L ${xy(tipX,tipY)} L ${xy(baseX-nx*head,baseY-ny*head)} L ${xy(baseX-nx*shaft,baseY-ny*shaft)} L ${xy(startX-nx*shaft,startY-ny*shaft)} Q ${xy(x1-ux*shaft,y1-uy*shaft)} ${xy(startX+nx*shaft,startY+ny*shaft)} Z`;
+  return `<path data-branch-from="${move.from}" data-branch-to="${move.to}" d="${path}" />`;
+ }).join('');
+}
 function moveSymbolContext(){
  const game=currentGame(),owners=game?[game]:folderPath(folders,folderId),symbols={},key=engine.moves.slice(0,engine.index).join(' ');let owner=owners.at(-1)||null,unknown=false;
  for(const item of owners){const result=readMoveSymbols(item);if(!result.ok){showStorageFailure(result.error);return {owner:null,symbols:{},unknown:true}}Object.assign(symbols,result.symbols);const raw=item.moveSymbols;if(raw&&Object.hasOwn(raw,key)){if(Object.hasOwn(MOVE_SYMBOL_LABELS,raw[key]))owner=item;else unknown=true}}
  if(unknown)showStorageFailure('This move has an unrecognized saved symbol. The original data was preserved.');
  return {owner,symbols,unknown}
 }
-function renderMoveExplorer(){const gameMoves=originalGameMoves(),symbolContext=moveSymbolContext(),currentSymbol=symbolContext.symbols[engine.moves.slice(0,engine.index).join(' ')]||'';renderBoardMoveSymbol($('#board'),engine.lastMove,currentSymbol,flipped);document.querySelectorAll('[data-move-symbol]').forEach(button=>{button.disabled=!symbolContext.owner||!engine.index||storageBlocked||symbolContext.unknown;button.setAttribute('aria-pressed',String(button.dataset.moveSymbol===currentSymbol))});currentMoveTree=buildMoveTree({folders,side,folderId,moves:engine.moves,index:engine.index,gameMoves,variations:getAnalysisVariations(currentGame()),moveSymbols:symbolContext.symbols,gameMode:!!currentGame()});moveView.render(currentMoveTree);const playedResult=parseGameResult(currentGame()?.pgn),playedList=$('#moveTree').querySelector('[data-move-scroll="game"] .move-tree-sequence');if(playedResult&&playedList){const result=document.createElement('span');result.className='move-tree-result';result.textContent=`${playedResult} · ${resultLabel(playedResult)}`;playedList.appendChild(result)}const current=treeNodeFor(engine.moves.slice(0,engine.index));$('#next').disabled=$('#last').disabled=engine.index>=engine.moves.length&&!current?.children?.length;$('#returnGame').hidden=!currentGame()||(gameMoves.length===engine.moves.length&&startsWithMoves(gameMoves,engine.moves));}
+function renderMoveExplorer(){const gameMoves=originalGameMoves(),game=currentGame(),symbolContext=moveSymbolContext(),currentSymbol=symbolContext.symbols[engine.moves.slice(0,engine.index).join(' ')]||'';renderBoardMoveSymbol($('#board'),engine.lastMove,currentSymbol,flipped);document.querySelectorAll('[data-move-symbol]').forEach(button=>{button.disabled=!symbolContext.owner||!engine.index||storageBlocked||symbolContext.unknown;button.setAttribute('aria-pressed',String(button.dataset.moveSymbol===currentSymbol))});currentMoveTree=buildMoveTree({folders,side,folderId,moves:engine.moves,index:engine.index,gameMoves,variations:getAnalysisVariations(game),moveSymbols:symbolContext.symbols,gameMode:!!game});if(game)markGamePositionNotes(currentMoveTree,game,gameMoves);moveView.render(currentMoveTree);const playedResult=parseGameResult(game?.pgn),playedList=$('#moveTree').querySelector('[data-move-scroll="game"] .move-tree-sequence');if(playedResult&&playedList){const result=document.createElement('span');result.className='move-tree-result';result.textContent=`${playedResult} · ${resultLabel(playedResult)}`;playedList.appendChild(result)}const current=treeNodeFor(engine.moves.slice(0,engine.index));renderBranchHints(current);$('#next').disabled=$('#last').disabled=engine.index>=engine.moves.length&&!current?.children?.length;$('#returnGame').hidden=!game||(gameMoves.length===engine.moves.length&&startsWithMoves(gameMoves,engine.moves));}
 function stepNext(){const current=engine.moves.slice(0,engine.index),game=currentGame(),recorded=game?originalGameMoves():[];if(game&&current.length<recorded.length&&startsWithMoves(recorded,current)){navigateTreeMove({moves:recorded.slice(0,current.length+1)});return}if(engine.index<engine.moves.length){go(engine.index+1);return}const children=treeNodeFor(current)?.children||[];if(game&&children.length>1){toast('Choose a variation in the move list.');return}if(children.length)navigateTreeMove(children[0])}
 function stepLast(){
  while(true){

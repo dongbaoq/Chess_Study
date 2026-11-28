@@ -111,32 +111,37 @@ test('move icons stay centered and paired question marks retain natural proporti
 
 test('board badge follows the current move, flips with the board, and clears cleanly', async () => {
   const {renderBoardMoveSymbol} = await get('move-symbols.js');
-  const squares=new Map(['e4','d5','h8','a1'].map(name=>[name,{dataset:{otherMark:'keep'},label:`${name} pawn`,getAttribute(key){return key==='aria-label'?this.label:null},setAttribute(key,value){if(key==='aria-label')this.label=value}}]));
+  const squares=new Map(['e2','d7','e4','d5','h8','a1'].map(name=>[name,{dataset:{square:name,otherMark:'keep'},label:`${name} pawn`,getAttribute(key){return key==='aria-label'?this.label:null},setAttribute(key,value){if(key==='aria-label')this.label=value}}]));
   let badge=null;
   const host={querySelector(){return badge},appendChild(node){badge=node}};
-  const board={parentElement:host,ownerDocument:{createElement(){return {style:{},dataset:{},setAttribute(){},remove(){badge=null}}}},querySelectorAll(){return [...squares.values()].filter(s=>s.dataset.symbolBaseLabel)},querySelector(selector){const match=selector.match(/data-square="([a-h][1-8])"/);return match?squares.get(match[1]):null}};
-  renderBoardMoveSymbol(board,{to:'e4'},'!!');
+  const board={parentElement:host,ownerDocument:{createElement(){return {style:{},dataset:{},setAttribute(){},remove(){badge=null}}}},querySelectorAll(selector){return [...squares.values()].filter(s=>selector==='[data-symbol-base-label]'?s.dataset.symbolBaseLabel:selector==='[data-move-symbol-tone]'?s.dataset.moveSymbolTone:null)},querySelector(selector){const match=selector.match(/data-square="([a-h][1-8])"/);return match?squares.get(match[1]):null}};
+  renderBoardMoveSymbol(board,{from:'e2',to:'e4'},'!!');
   assert.match(badge.innerHTML, /^<svg/); assert.equal((badge.innerHTML.match(/<path /g)||[]).length,2); assert.equal(badge.style.left,'62.5%'); assert.equal(badge.style.top,'50%');
   assert.equal(squares.get('e4').label,'e4 pawn, Brilliant move');
   assert.equal(squares.get('e4').dataset.moveSymbolTone,'brilliant');
-  renderBoardMoveSymbol(board,{to:'d5'},'?',true);
+  assert.equal(squares.get('e2').dataset.moveSymbolTone,'brilliant');
+  renderBoardMoveSymbol(board,{from:'d7',to:'d5'},'?',true);
   assert.match(badge.innerHTML, /^<svg/); assert.equal((badge.innerHTML.match(/<path /g)||[]).length,1); assert.equal(badge.style.left,'62.5%'); assert.equal(badge.style.top,'50%');
   assert.equal(squares.get('e4').label,'e4 pawn'); assert.equal(squares.get('d5').label,'d5 pawn, Mistake');
   assert.equal(squares.get('e4').dataset.moveSymbolTone,undefined);
   assert.equal(squares.get('d5').dataset.moveSymbolTone,'question');
+  assert.equal(squares.get('e2').dataset.moveSymbolTone,undefined);
+  assert.equal(squares.get('d7').dataset.moveSymbolTone,'question');
   for (const [symbol,tone] of [['!','only'],['!!','brilliant'],['?','question'],['??','blunder']]) {
-    renderBoardMoveSymbol(board,{to:'d5'},symbol);
+    renderBoardMoveSymbol(board,{from:'e2',to:'d5'},symbol);
     assert.equal(squares.get('d5').dataset.moveSymbolTone,tone);
-    assert.equal(squares.get('e4').dataset.moveSymbolTone,undefined);
+    assert.equal(squares.get('e2').dataset.moveSymbolTone,tone);
+    assert.equal(squares.get('d7').dataset.moveSymbolTone,undefined);
   }
   renderBoardMoveSymbol(board,{to:'h8'},'!');
   assert.equal(badge.dataset.edgeRight,'true'); assert.equal(badge.dataset.edgeTop,'true');
   renderBoardMoveSymbol(board,{to:'a1'},'!',true);
   assert.equal(badge.dataset.edgeRight,'true'); assert.equal(badge.dataset.edgeTop,'true');
-  renderBoardMoveSymbol(board,{to:'e4'},'!');
+  renderBoardMoveSymbol(board,{from:'e2',to:'e4'},'!');
   assert.equal(badge.dataset.edgeRight,'false'); assert.equal(badge.dataset.edgeTop,'false');
   renderBoardMoveSymbol(board,null,'');
   assert.equal(badge,null); assert.equal(squares.get('d5').label,'d5 pawn');
+  assert.equal(squares.get('e2').dataset.moveSymbolTone,undefined);
   assert.equal(squares.get('d5').dataset.moveSymbolTone,undefined);
   assert.equal(squares.get('d5').dataset.otherMark,'keep');
   renderBoardMoveSymbol(board,{to:'x9'},'!'); assert.equal(badge,null);

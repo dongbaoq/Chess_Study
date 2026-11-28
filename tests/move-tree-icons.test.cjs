@@ -45,3 +45,19 @@ test('legacy blunder warnings render an icon, a spoken label, and no duplicate w
  assert.ok(start.includes(`<span class="move-tree-blunder" aria-hidden="true">${BOARD_SYMBOL_ICONS['??']}</span>`));
  view.destroy();
 });
+
+test('a note at a played or saved opening position is marked in the move list',async()=>{
+ const {createMoveTreeView}=await get('move-tree-view.js');const {buildMoveTree}=await get('move-tree.js');const viewContainer=container();const view=createMoveTreeView({container:viewContainer});
+ const played=move('e4',null);played.hasNote=true;
+ view.render(root([played,move('c4',null)]));
+ const playedButton=buttonFor(viewContainer.innerHTML,'1\\. e4, position has a note');
+ assert.match(playedButton,/<sup class="move-tree-note-indicator" aria-hidden="true">✎<\/sup>/);
+ assert.match(playedButton,/title="Show this position\. Position has a note"/);
+ const plainButton=buttonFor(viewContainer.innerHTML,'1\\. c4');
+ assert.doesNotMatch(plainButton,/move-tree-note-indicator/);
+ const folders=[{id:'queen-pawn',name:'Queen pawn opening',side:'white',parentId:null,line:'1. d4',note:'Control the center.'}];
+ view.render(buildMoveTree({folders,side:'white',folderId:'queen-pawn',moves:['d4'],index:1}));
+ const openingButton=buttonFor(viewContainer.innerHTML,'1\\. d4, position has a note');
+ assert.match(openingButton,/<sup class="move-tree-note-indicator" aria-hidden="true">✎<\/sup>/);
+ view.destroy();
+});

@@ -1,4 +1,4 @@
-import { folderPath, parseLine, getOpeningVariations } from './library.js?v=opening-lines-11';
+import { folderPath, parseLine, getOpeningVariations } from './library.js?v=opening-notes-12';
 
 const treeLineCache = new WeakMap();
 function parsedFolderLine(folder) {
@@ -69,7 +69,8 @@ export function buildMoveTree({folders = [], side = 'white', folderId = null, mo
     if (!parsed.ok) continue;
     const endpoint = add(parsed.moves);
     for (const variation of getOpeningVariations(folder)) add(variation);
-    endpoint.folders.push({id:folder.id, name:folder.name, side:folder.side});
+    const note=folder.note??[folder.idea,folder.plan].filter(Boolean).join('\n\n');
+    endpoint.folders.push({id:folder.id, name:folder.name, side:folder.side, hasNote:!!note});
     if (!Array.isArray(folder.blunders)) continue;
     for (const warning of folder.blunders) {
       if (!warning || !Array.isArray(warning.moves) || !warning.moves.every(m => typeof m === 'string' && m.length)) continue;

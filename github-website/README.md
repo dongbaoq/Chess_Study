@@ -18,6 +18,10 @@ Select a move on the board or in the move list, then use the **Marking** buttons
 
 The move explorer shows saved continuations and game moves. Blunders are manually marked, not automatically evaluated. Pasted games must start from the standard chess position; PGN comments and variations remain in the pasted text but do not become displayed notes.
 
+At positions with multiple saved continuations, arrows on the board show the available next moves from your game analysis or opening repertoire. These are display hints and do not change saved board markings.
+
+The move list marks positions with notes using a small superscript pencil. A saved move symbol also tints both the piece’s starting and destination squares; these colors are display-only.
+
 Chess piece artwork attribution is in `ATTRIBUTION.md` and the site footer. `AGENTS.md` records how future development should protect existing saved libraries.
 
 To keep an opening variation without creating a subfolder, play to the position and select **Save line** beside the marking buttons. The saved moves remain in the opening’s move explorer when you return. Your existing folder position and subfolders are unchanged.

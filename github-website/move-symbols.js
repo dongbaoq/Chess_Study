@@ -58,15 +58,15 @@ export const BOARD_SYMBOL_ICONS = Object.freeze({
   '??': iconSvg(iconPath(FA_QUESTION_PATH, 0, 0.8, 51.2, 0.8) + iconPath(FA_QUESTION_PATH, 256, 0.8, 51.2, 0.8))
 });
 
-/** Display the current move's saved symbol without changing board markings. */
+/** Display the current move's saved symbol without changing saved board annotations. */
 export function renderBoardMoveSymbol(board, lastMove, symbol, flipped = false) {
   const host = board?.parentElement;
   if (!host) return;
   let badge = host.querySelector('.board-move-symbol');
+  for (const square of board.querySelectorAll('[data-move-symbol-tone]')) delete square.dataset.moveSymbolTone;
   for (const square of board.querySelectorAll('[data-symbol-base-label]')) {
     square.setAttribute('aria-label', square.dataset.symbolBaseLabel);
     delete square.dataset.symbolBaseLabel;
-    delete square.dataset.moveSymbolTone;
   }
   const kind = Object.hasOwn(BOARD_SYMBOL_ICONS, symbol) ? {'!':'only','!!':'brilliant','?':'question','??':'blunder'}[symbol] : null;
   const destination = lastMove?.to;
@@ -87,9 +87,10 @@ export function renderBoardMoveSymbol(board, lastMove, symbol, flipped = false) 
   badge.style.left = `${(column + 1) * 12.5}%`;
   badge.style.top = `${row * 12.5}%`;
   badge.innerHTML = BOARD_SYMBOL_ICONS[symbol];
+  const origin = board.querySelector(`[data-square="${lastMove.from}"]`);
   const square = board.querySelector(`[data-square="${destination}"]`);
+  for (const marked of [origin, square]) if (marked) marked.dataset.moveSymbolTone = kind;
   if (square) {
-    square.dataset.moveSymbolTone = kind;
     square.dataset.symbolBaseLabel = square.getAttribute('aria-label') || destination;
     square.setAttribute('aria-label', `${square.dataset.symbolBaseLabel}, ${MOVE_SYMBOL_LABELS[symbol]}`);
   }

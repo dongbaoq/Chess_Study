@@ -1,4 +1,4 @@
-import { BOARD_SYMBOL_ICONS } from './move-symbols.js?v=icons-17';
+import { BOARD_SYMBOL_ICONS } from './move-symbols.js?v=icons-18';
 const moveSymbolLabels = {'?':'Mistake', '!':'Only move', '!!':'Brilliant move', '??':'Blunder'};
 const moveSymbolClasses = {'?':'question', '!':'only', '!!':'brilliant', '??':'blunder'};
 const escapeMoveTreeText = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
@@ -22,10 +22,12 @@ export function createMoveTreeView({container, onNavigate = () => {}, onDeleteAn
     const warnings=Array.isArray(node.blunders) ? node.blunders : [];
     const explanation=warnings.map(w => [w.folderName,w.text].filter(Boolean).join(': ')).filter(Boolean).join(' | ');
     const symbol = Object.hasOwn(moveSymbolLabels,node.moveSymbol) ? node.moveSymbol : null;
-    const label=`${number ? number+' ' : ''}${node.san || ''}${symbol ? ', '+moveSymbolLabels[symbol] : ''}${warnings.length ? ', marked blunder' : ''}${explanation ? ': '+explanation : ''}`;
+    const hasNote=node.hasNote===true||(node.folders||[]).some(folder=>folder.hasNote);
+    const label=`${number ? number+' ' : ''}${node.san || ''}${symbol ? ', '+moveSymbolLabels[symbol] : ''}${warnings.length ? ', marked blunder' : ''}${hasNote?', position has a note':''}${explanation ? ': '+explanation : ''}`;
+    const title=[explanation||(node.isAnalysis?'Show this position. Right-click to delete analysis moves.':'Show this position'),hasNote?'Position has a note':null].filter(Boolean).join('. ');
     navigable.set(lookupId,node);
     const tag=(node.folders || []).map(folder => `<span class="move-tree-folder" title="Saved opening">${escapeMoveTreeText(folder.name)}</span>`).join('');
-    return `<span class="move-tree-token">${number?`<span class="move-tree-number">${number}</span>`:''}<button type="button" class="move-tree-move ${node.isCurrent?'is-current':''} ${node.onGameLine?'is-game':''} ${node.isAnalysis?'is-analysis':''}" data-tree-node="${lookupId}" aria-label="${escapeMoveTreeText(label)}" ${node.isCurrent?'aria-current="step"':''} title="${escapeMoveTreeText(explanation || (node.isAnalysis ? 'Show this position. Right-click to delete analysis moves.' : 'Show this position'))}">${escapeMoveTreeText(node.san || '')}${symbol?`<span class="move-tree-symbol symbol-${moveSymbolClasses[symbol]}" aria-hidden="true">${BOARD_SYMBOL_ICONS[symbol]}</span>`:''}${warnings.length&&symbol!=='??'?`<span class="move-tree-blunder" aria-hidden="true">${BOARD_SYMBOL_ICONS['??']}</span>`:''}</button>${tag}</span>`;
+    return `<span class="move-tree-token">${number?`<span class="move-tree-number">${number}</span>`:''}<button type="button" class="move-tree-move ${node.isCurrent?'is-current':''} ${node.onGameLine?'is-game':''} ${node.isAnalysis?'is-analysis':''}" data-tree-node="${lookupId}" aria-label="${escapeMoveTreeText(label)}" ${node.isCurrent?'aria-current="step"':''} title="${escapeMoveTreeText(title)}">${escapeMoveTreeText(node.san || '')}${symbol?`<span class="move-tree-symbol symbol-${moveSymbolClasses[symbol]}" aria-hidden="true">${BOARD_SYMBOL_ICONS[symbol]}</span>`:''}${warnings.length&&symbol!=='??'?`<span class="move-tree-blunder" aria-hidden="true">${BOARD_SYMBOL_ICONS['??']}</span>`:''}${hasNote?'<sup class="move-tree-note-indicator" aria-hidden="true">✎</sup>':''}</button>${tag}</span>`;
   }
 
   function draw() {
@@ -52,8 +54,9 @@ export function createMoveTreeView({container, onNavigate = () => {}, onDeleteAn
     navigable.set('0',root);
     const rootWarnings=Array.isArray(root.blunders)?root.blunders:[];
     const rootDescription=rootWarnings.map(w=>[w.folderName,w.text].filter(Boolean).join(': ')).filter(Boolean).join(' | ');
-    const startLabel=`Starting position${rootWarnings.length?', marked blunder':''}${rootDescription?': '+rootDescription:''}`;
-    const start=`<div class="move-tree-start-row"><button type="button" class="move-tree-move move-tree-start ${root.isCurrent?'is-current':''}" data-tree-node="0" aria-label="${escapeMoveTreeText(startLabel)}" ${root.isCurrent?'aria-current="step"':''} title="${escapeMoveTreeText(rootDescription || 'Show the starting position')}">Start${rootWarnings.length?`<span class="move-tree-blunder" aria-hidden="true">${BOARD_SYMBOL_ICONS['??']}</span>`:''}</button></div>`;
+    const startLabel=`Starting position${rootWarnings.length?', marked blunder':''}${root.hasNote?', position has a note':''}${rootDescription?': '+rootDescription:''}`;
+    const startTitle=[rootDescription||'Show the starting position',root.hasNote?'Position has a note':null].filter(Boolean).join('. ');
+    const start=`<div class="move-tree-start-row"><button type="button" class="move-tree-move move-tree-start ${root.isCurrent?'is-current':''}" data-tree-node="0" aria-label="${escapeMoveTreeText(startLabel)}" ${root.isCurrent?'aria-current="step"':''} title="${escapeMoveTreeText(startTitle)}">Start${rootWarnings.length?`<span class="move-tree-blunder" aria-hidden="true">${BOARD_SYMBOL_ICONS['??']}</span>`:''}${root.hasNote?'<sup class="move-tree-note-indicator" aria-hidden="true">✎</sup>':''}</button></div>`;
     if (root.gameMode) {
       // Keep the actual game in one uninterrupted sequence. Each analysis branch
       // names its parent position, including branches nested inside analysis.

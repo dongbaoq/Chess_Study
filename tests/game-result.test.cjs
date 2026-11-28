@@ -111,7 +111,7 @@ test('actual played-game move list appends the recorded result without inventing
  const children=[],list={appendChild(node){children.push(node)}};const elements=new Map();
  const $=key=>{if(!elements.has(key))elements.set(key,key==='#moveTree'?{querySelector:()=>list}:{});return elements.get(key)};
  let game={pgn:'1. e4 e5 0-1'};const engine={moves:['e4','e5'],index:1,lastMove:{from:'e2',to:'e4'}};
- const sandbox={$,engine,parseGameResult,resultLabel,currentGame:()=>game,originalGameMoves:()=>['e4','e5'],moveSymbolContext:()=>({symbols:{},owner:{},unknown:false}),renderBoardMoveSymbol(){},flipped:false,storageBlocked:false,buildMoveTree:()=>({}),folders:[],side:'white',folderId:'x',getAnalysisVariations:()=>[],moveView:{render(){children.length=0}},treeNodeFor:()=>null,startsWithMoves:(a,b)=>b.every((m,i)=>a[i]===m),document:{querySelectorAll:()=>[],createElement:()=>({})}};
+ const sandbox={$,engine,parseGameResult,resultLabel,currentGame:()=>game,originalGameMoves:()=>['e4','e5'],moveSymbolContext:()=>({symbols:{},owner:{},unknown:false}),renderBoardMoveSymbol(){},markGamePositionNotes(){},renderBranchHints(){},flipped:false,storageBlocked:false,buildMoveTree:()=>({}),folders:[],side:'white',folderId:'x',getAnalysisVariations:()=>[],moveView:{render(){children.length=0}},treeNodeFor:()=>null,startsWithMoves:(a,b)=>b.every((m,i)=>a[i]===m),document:{querySelectorAll:()=>[],createElement:()=>({})}};
  vm.runInNewContext(renderer,sandbox);sandbox.renderMoveExplorer();assert.equal(children.length,1);assert.equal(children[0].textContent,'0-1 · Black won · White lost');
  game={pgn:'1. e4 e5 *'};sandbox.renderMoveExplorer();assert.equal(children.length,0);
 });
